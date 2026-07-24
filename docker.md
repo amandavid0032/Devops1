@@ -805,3 +805,98 @@ The core part of an operating system responsible for managing hardware and syste
 Windows Subsystem for Linux that provides a real Linux Kernel on Windows, allowing Linux containers to run efficiently.
 
 ---
+
+
+binding the port with the specidfi paort for exmaple 
+docker run -p6000:6789 
+              |.   |
+
+            port.   container id 
+
+docker run -p6000:6789  -d redis 
+
+
+
+docker logs container_id
+docker logs name of container 
+
+
+docker run -d  -p6001:6379 --name redis-older redis:4.0
+missing ok 
+
+
+docker exec -it cae905656456 /bin/bash
+this cmd is use to go in side the container ok 
+
+
+docker run  it pul the image and start the container 
+and 
+docker start run th container not pull the image 
+
+docker run -d -p  --name 
+
+
+# Additional Docker Notes
+
+## Port Mapping Syntax
+
+```bash
+docker run -p <host_port>:<container_port> <image>
+```
+
+Example:
+
+```bash
+docker run -p 6000:6379 redis
+docker run -d -p 6000:6379 redis
+```
+
+- Host Port: Port exposed on your machine.
+- Container Port: Port used inside the container.
+
+## View Container Logs
+
+```bash
+docker logs <container_id>
+docker logs <container_name>
+```
+
+## Run a Named Redis Container
+
+```bash
+docker run -d -p 6001:6379 --name redis-older redis:4.0
+```
+
+## Enter a Running Container
+
+```bash
+docker exec -it <container_id> /bin/bash
+```
+
+This opens an interactive shell inside the container.
+
+## `docker run` vs `docker start`
+
+### `docker run`
+
+- Creates a new container.
+- Pulls the image automatically if it does not exist locally.
+- Starts the new container.
+
+### `docker start`
+
+- Starts an existing stopped container.
+- Does **not** create a new container.
+- Does **not** pull the image again.
+
+## Useful Docker Run Options
+
+```bash
+docker run -d -p 8080:80 --name my-nginx nginx
+```
+
+Where:
+
+- `-d` → Detached mode (run in background)
+- `-p` → Port mapping (`host_port:container_port`)
+- `--name` → Assign a custom container name
