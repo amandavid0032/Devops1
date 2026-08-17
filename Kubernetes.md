@@ -418,4 +418,3 @@ Kube-proxy      -> Helps forward network requests
 Runtime         -> Runs containers
 Pod             -> Smallest unit of Kubernetes
 ```
-::: ​​
