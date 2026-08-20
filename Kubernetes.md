@@ -1735,3 +1735,93 @@ Actual  = 3
 ```
 
 That **desired-state + reconciliation** concept is at the heart of Kubernetes.
+
+
+
+
+
+Name:                     mongodb-service
+Namespace:                default
+Labels:                   <none>
+Annotations:              <none>
+Selector:                 app=mongodb
+Type:                     ClusterIP
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.96.118.203
+IPs:                      10.96.118.203
+Port:                     <unset>  27017/TCP
+TargetPort:               27017/TCP
+Endpoints:                10.244.0.5:27017
+Session Affinity:         None
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+aman@ITs-MacBook-Pro devops % 
+
+
+
+
+aman@ITs-MacBook-Pro yaml % kubectl get namespace 
+NAME              STATUS   AGE
+default           Active   28h
+kube-node-lease   Active   28h
+kube-public       Active   28h
+kube-system       Active   28h
+aman@ITs-MacBook-Pro yaml % kubectl cluster-info 
+Kubernetes control plane is running at https://127.0.0.1:59466
+CoreDNS is running at https://127.0.0.1:59466/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+aman@ITs-MacBook-Pro yaml % 
+
+
+
+k8s comoponets 
+
+
+kubernetes namespaces explained 
+ what is a namespace?
+ 1.organise resources in namespace
+ 2.virtual cluster inside a cluster
+
+4 namespaces per default 
+
+kubernetes-dashboard only with minikube 
+
+kube-system
+don't create or modify in kube-system 
+system-processes
+master and kubectl process 
+
+
+kube-public
+publicely  accessible data 
+a configmap,which contains cluster information 
+
+
+
+
+kube-node-lease   
+
+heartbeats of nodes
+each node has associated lease object in name space 
+
+ what are the use cases?
+
+
+ how namespaces work and how to use it 
+
+
+ 
+          kubernets cluster
+       [                    ]
+       [   kube-system      ]
+       [                    ]
+       [                    ]
+       [   kube-public      ]
+       [                    ]
+       [                    ]
+
+how to make it an external service ?
+-type    "loadblancer"
+assings service an external ip address and so accepts external requests 
