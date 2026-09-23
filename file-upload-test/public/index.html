@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Upload Test</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="card">
+      <h1>File Upload Test</h1>
+      <p>Files are grouped by email. Uploads are saved in MongoDB and locally or in S3.</p>
+      <form id="upload-form">
+        <label>Email address<input name="email" type="email" placeholder="you@example.com" required /></label>
+        <label>Select file<input name="file" type="file" required /></label>
+        <button type="submit">Upload file</button>
+      </form>
+      <p id="status" role="status"></p>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

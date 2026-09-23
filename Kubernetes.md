@@ -1907,3 +1907,20 @@ mongodb-service    LoadBalancer   10.96.118.203   <external-ip>
 ```
 
 > **Important:** On local clusters such as Minikube, `LoadBalancer` may not automatically receive a real public IP. Minikube commonly uses `minikube tunnel` or other mechanisms to make LoadBalancer services accessible.
+
+
+minikube service mongo-express-service
+
+what is a namespace 
+. organise resource in namesapces 
+.virtual cluster inside a cluster 
+
+kubectl get namespace 
+
+
+what are the use cases ?
+how namespaces work and how to use it ?
+
+
+ 
+

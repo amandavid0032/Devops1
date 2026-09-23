@@ -1,0 +1,17 @@
+{
+  "name": "file-upload-test",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Simple email-based file uploader with MongoDB and optional S3 storage",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.750.0",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "mongodb": "^6.15.0",
+    "multer": "^2.0.2"
+  }
+}
