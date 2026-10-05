@@ -941,6 +941,38 @@ docker run --env-file .env my-api:1.0                 # load many from a file
 
 The app inside reads `NODE_ENV=production`.
 
+### 🔍 See the variables inside a running container
+
+```bash
+docker exec user-portal-app env          # print all variables
+docker exec -it user-portal-app sh       # or open a shell...
+/app $ env                               # ...and run env inside it
+```
+
+Real output from the User Portal app container, explained:
+
+| Variable | Value | Where it comes from | Meaning |
+|---|---|---|---|
+| `MONGO_URI` | `mongodb://admin:...@mongodb:27017/?authSource=admin` | `compose.yaml` → `environment:` | How the app connects to MongoDB — host `mongodb` = service name, `authSource=admin` = check the user in the `admin` DB |
+| `MONGO_DB_NAME` | `user_portal` | `compose.yaml` | Database the app uses |
+| `PORT` | `3000` | `compose.yaml` | Port the app listens on **inside** the container |
+| `SESSION_DAYS` | `7` | `compose.yaml` | How long a login lasts |
+| `STORAGE_DRIVER` | `local` | `compose.yaml` | Save uploads to `/app/uploads` (not S3) |
+| `NODE_ENV` | `production` | Our `Dockerfile` (`ENV NODE_ENV=production`) | Node/Express production mode |
+| `NODE_VERSION` | `22.x.x` | Base image `node:22-alpine` | Node.js version installed in the image |
+| `YARN_VERSION` | `1.22.22` | Base image | Yarn package manager version |
+| `HOSTNAME` | `a35093e68cdc` | Docker | The **container ID** (short) — each container gets its own hostname |
+| `HOME` | `/home/node` | `USER node` in the Dockerfile | Home folder of the user running the app (not root ✅) |
+| `PWD` | `/app` | `WORKDIR /app` | Current directory |
+| `PATH` | `/usr/local/sbin:/usr/local/bin:...` | Base image | Folders searched for commands (`node`, `npm`, `sh`) |
+| `SHLVL` | `1` | The shell | Shell nesting level (1 = first shell) |
+| `TERM` | `xterm` | `-t` (TTY) from `exec -it` | Terminal type, so colours/keys work |
+
+The prompt `/app $` means: current folder `/app`, `$` = **normal user** (`#` would mean root).
+
+> Order of priority: `docker run -e` / Compose `environment:` **override** `ENV` from the Dockerfile, which overrides the base image.
+> ⚠️ `env` shows passwords in plain text — anyone who can `docker exec` or `docker inspect` can read them.
+
 ### ⚠️ Never put real secrets in images or Git
 
 - ❌ Don't hardcode passwords in a Dockerfile (`ENV DB_PASSWORD=...`) — anyone with the image can read them via `docker history` / `docker inspect`.
@@ -1195,131 +1227,328 @@ Contains **only** your app and its runtime — no shell, no package manager, no 
 
 # 🟪 PART 6 — Volumes (Persistent Data)
 
-## 42. ❓ Why Do Containers Need Persistent Storage?
+## 42. ❓ When Do We Need Docker Volumes?
 
-Containers are **ephemeral**. Data written inside a container goes to its writable layer, which is **deleted with the container**.
+Containers are **ephemeral** (temporary). Everything a container writes goes into its **writable layer**, and that layer is **deleted together with the container**.
+
+```bash
+docker run -d --name mongodb mongo   # MongoDB writes its database inside the container
+docker rm -f mongodb                 # container deleted → database files deleted ❌
+```
 
 ```text
 Without volume:  container deleted → data ❌ gone
 With volume:     container deleted → volume remains → data ✅ → mount it into a new container
 ```
 
+**You need a volume when:**
+
+| Situation | Example |
+|---|---|
+| 💾 Data must survive container deletion | Databases: MySQL, MongoDB, PostgreSQL, Redis |
+| 🔄 You recreate/upgrade containers | `mongo:7` → `mongo:8`, new app image version |
+| 📤 Users upload files | `/app/uploads` in the User Portal app |
+| 📁 Several containers share data | One writes logs/files, another reads them |
+| 🗄️ You need backups | Back up one volume instead of a whole container |
+| 💻 Live code editing in development | Bind mount your source folder (§44) |
+
+You **don't** need one for stateless apps (an API that only reads from a DB) or temporary files.
+
 ---
 
 ## 43. 💾 What is a Docker Volume?
 
-A **Docker volume** is **persistent storage managed by Docker** (on Linux under `/var/lib/docker/volumes/`), independent of any container's lifecycle.
+**Definition:** a **Docker volume** is a **storage area managed by Docker, outside the container's writable layer**, that is mounted into a container at a path. Its **lifecycle is independent of the container** — deleting the container does not delete the volume.
 
-> **Volume = persistent data storage**
+> **Volume = persistent data storage that lives outside the container.**
 
 ### Analogy
 
 ```text
-Container = rented room       → leave the room, the room is gone
-Volume    = storage locker    → your things are still in the locker
+Container = rented room            → leave the room, the room is gone
+Volume    = storage cupboard/locker → your things are still there
 ```
 
 ```text
-Container = temporary application runtime
-Volume    = persistent data
-```
-
-```text
-┌─────────────────────┐
-│   MySQL Container   │  ← app (replaceable)
-└──────────┬──────────┘
+Container
+┌──────────────────────┐
+│   Application        │  ← replaceable
+│   Temporary files    │
+└──────────┬───────────┘
+           │ mounted at /data/db
            ▼
-┌─────────────────────┐
-│    MySQL Volume     │  ← database data (kept)
-└─────────────────────┘
+    ┌───────────────┐
+    │  mongo-data   │  ← kept
+    │  Persistent   │
+    │     Data      │
+    └───────────────┘
 ```
+
+### Proof: the data survives
+
+```bash
+docker volume create mongo-data
+docker run -d --name mongodb -v mongo-data:/data/db mongo     # 1. run with the volume
+docker rm -f mongodb                                          # 2. delete the container
+docker run -d --name mongodb-new -v mongo-data:/data/db mongo # 3. new container, same volume
+# → all databases are still there ✅
+```
+
+| 📦 Container | 💾 Volume |
+|---|---|
+| Runs the application | Stores persistent data |
+| Temporary, replaceable | Kept long-term |
+| Created from an image | Created by Docker (`volume create` or automatically) |
+| Example: `mongodb` | Example: `mongo-data` |
+
+> A volume is **mounted into** a container — it is not created from the container or the image. Flow: `Image → Container ← Volume mounted at a path`.
 
 ---
 
-## 44. 🛠️ Volume Commands
+## 44. 🧩 The 3 Mount Types (Volume · Bind Mount · tmpfs)
+
+| Type | Stored where | Survives container deletion? | Managed by | Best for |
+|---|---|---|---|---|
+| 🟢 **Volume** | Docker's storage area (`/var/lib/docker/volumes/...`) | ✅ Yes | Docker | Databases, uploads, **production data** |
+| 🔵 **Bind mount** | Any host folder **you choose** | ✅ Yes (it's your folder) | You | **Development**, source code, config files |
+| 🟡 **tmpfs** | Host **RAM** only | ❌ No — gone when container stops | Docker | Temporary/sensitive data that must not touch disk |
 
 ```bash
-docker volume create mongo-data      # create
-docker volume ls                     # list
-docker volume inspect mongo-data     # name, driver, mountpoint, created, scope
-docker volume rm mongo-data          # delete ⚠️ deletes the data
-docker volume prune                  # delete all unused volumes ⚠️
+# 🟢 Volume (named)
+docker run -d -v mysql-data:/var/lib/mysql mysql:8.0
+
+# 🔵 Bind mount (host path starts with / or ./ or $(pwd))
+docker run -d -v /Users/aman/project:/app my-app
+docker run -d -v $(pwd):/app my-app
+
+# 🟡 tmpfs (RAM)
+docker run -d --tmpfs /app/temp my-app
 ```
 
 ```text
-DRIVER    VOLUME NAME
-local     mongo-data
+Volume     → Docker manages the storage
+Bind mount → you manage the host folder (changes appear instantly in both directions)
+tmpfs      → RAM, temporary
 ```
 
-> ⚠️ Removing a volume **permanently deletes** its data. "Unused" does not mean "unimportant" — review before pruning.
+### Named vs anonymous volumes
+
+| | Named volume | Anonymous volume |
+|---|---|---|
+| How | `-v mongo-data:/data/db` | `-v /data/db` (no name) or created by `VOLUME` in a Dockerfile |
+| Name | `mongo-data` | Random 64-char ID (`04d08dc1f870...`) |
+| Reuse | Easy — refer to it by name | Hard — you don't know which one is which |
+| Cleanup | `docker volume rm mongo-data` | `docker rm -v <container>` or `docker volume prune` |
+
+> The `mongo` image declares `VOLUME /data/db /data/configdb`, so **every** `docker run mongo` without `-v` creates anonymous volumes. That's why `docker volume ls` often shows many random IDs. Always use **named** volumes.
+
+### How Docker tells `-v` types apart
+
+```text
+-v mongo-data:/data/db      → no slash at the start  → NAMED VOLUME
+-v /home/aman/db:/data/db   → starts with / or ./     → BIND MOUNT
+-v /data/db                 → only one path           → ANONYMOUS VOLUME
+-v mongo-data:/data/db:ro   → :ro at the end          → READ-ONLY mount
+```
+
+### `-v` vs `--mount` (same thing, longer but clearer)
+
+```bash
+docker run -v mongo-data:/data/db mongo
+docker run --mount type=volume,source=mongo-data,target=/data/db mongo
+
+docker run -v $(pwd):/app my-app
+docker run --mount type=bind,source="$(pwd)",target=/app my-app
+
+docker run --tmpfs /app/temp my-app
+docker run --mount type=tmpfs,target=/app/temp my-app
+```
+
+> Difference: with `-v`, a missing host folder is **created automatically**; with `--mount type=bind`, Docker gives an **error** — safer against typos.
 
 ---
 
-## 45. 🔗 Using a Volume with a Container
+## 45. 🛠️ Volume Commands & Usage
 
 ```bash
-docker run -d --name mycontainer -v my_volume:/data nginx
+docker volume create mongo-data             # create
+docker volume ls                            # list
+docker volume ls -f dangling=true           # volumes not used by any container
+docker volume inspect mongo-data            # name, driver, Mountpoint, labels, created
+docker volume rm mongo-data                 # delete ⚠️ deletes the data
+docker volume prune                         # delete unused anonymous volumes ⚠️
+docker volume prune -a                      # delete ALL unused volumes (named too) 🔴
+docker rm -v <container>                    # remove container + its anonymous volumes
+docker system df -v                         # size of every volume
 ```
 
 ```text
 -v my_volume:/data
    │          │
-   │          └── path inside the container
-   └───────────── Docker volume (auto-created if it doesn't exist)
+   │          └── path INSIDE the container
+   └───────────── volume name (auto-created if it doesn't exist)
 ```
 
-Anything written to `/data` is stored in `my_volume`.
+### Common data paths inside containers
 
-### Common database data paths
-
-| Database | Container data path | Example |
+| Image | Container data path | Example |
 |---|---|---|
-| MySQL | `/var/lib/mysql` | `-v mysql_data:/var/lib/mysql` |
+| MySQL / MariaDB | `/var/lib/mysql` | `-v mysql_data:/var/lib/mysql` |
 | PostgreSQL | `/var/lib/postgresql/data` | `-v pg_data:/var/lib/postgresql/data` |
 | MongoDB | `/data/db` | `-v mongo-data:/data/db` |
 | Redis | `/data` | `-v redis-data:/data` |
+| Nginx (static site) | `/usr/share/nginx/html` | `-v ./site:/usr/share/nginx/html:ro` |
+| User Portal app | `/app/uploads` | `-v portal-uploads:/app/uploads` |
 
-### MySQL example
+> Mount the volume on the **exact path the app writes to** — a wrong path means data still goes into the container layer and is lost.
 
-```bash
-docker volume create mysql_data
+### Volumes in `compose.yaml`
 
-docker run -d \
-  --name mysql \
-  -e MYSQL_ROOT_PASSWORD=change-this-password \
-  -v mysql_data:/var/lib/mysql \
-  mysql:8.0
+```yaml
+services:
+  mongodb:
+    image: mongo:8
+    volumes:
+      - mongo-data:/data/db                 # 🟢 named volume (declared below)
+      - ./init:/docker-entrypoint-initdb.d:ro   # 🔵 bind mount, read-only
+  app:
+    build: .
+    volumes:
+      - uploads:/app/uploads                # 🟢 named volume
+      - ./src:/app/src                      # 🔵 bind mount for live code (dev)
+    tmpfs:
+      - /app/tmp                            # 🟡 RAM only
 
-docker rm -f mysql        # container gone...
-docker volume ls          # ...mysql_data ✅ still there
+volumes:                                    # ← top level: DECLARE named volumes
+  mongo-data:
+  uploads:
+  shared-data:
+    external: true                          # created outside Compose (docker volume create shared-data)
 ```
+
+| Rule | Detail |
+|---|---|
+| Named volumes must be declared | Under top-level `volumes:` — otherwise `docker compose config` fails |
+| Compose adds the project name | `mongo-data` in folder `file-upload-test` becomes **`file-upload-test_mongo-data`** |
+| `external: true` | Use an existing volume as-is; Compose never creates or deletes it |
+| Relative bind paths | `./src` is relative to the folder containing `compose.yaml` |
+| `docker compose down` | Containers removed, **volumes kept** ✅ |
+| `docker compose down -v` | Named + anonymous volumes **deleted** 🔴 |
 
 ---
 
-## 46. 🆚 Volume vs Bind Mount
+## 46. 📍 Where Are Volumes Stored? (Local Mac / Windows / Linux VM / Cloud)
+
+`docker volume inspect` shows the **Mountpoint** — real example from this Mac:
 
 ```bash
--v my_volume:/data              # VOLUME     – Docker manages the storage
--v /Users/aman/project:/app     # BIND MOUNT – you choose a host folder
--v $(pwd):/app                  # BIND MOUNT – current directory
+docker volume inspect file-upload-test_mongo-data
 ```
 
-| | 💾 Volume | 📁 Bind Mount |
+```json
+"Mountpoint": "/var/lib/docker/volumes/file-upload-test_mongo-data/_data",
+"Name": "file-upload-test_mongo-data",
+"Labels": { "com.docker.compose.project": "file-upload-test", "com.docker.compose.volume": "mongo-data" }
+```
+
+Folder layout:
+
+```text
+/var/lib/docker/                 ← Docker root directory (docker info → DockerRootDir)
+└── volumes/
+    ├── file-upload-test_mongo-data/
+    │   └── _data/               ← the actual files (MongoDB's /data/db)
+    ├── mysql_data/
+    │   └── _data/
+    └── 04d08dc1f870.../         ← anonymous volume
+        └── _data/
+```
+
+### Where that path really is
+
+| Where Docker runs | Volume location | Can you open it directly? |
 |---|---|---|
-| Host location | Managed by Docker | Any path you choose |
-| Managed by | Docker CLI/Engine | You / host OS |
-| Portability | High (same on Linux/Mac/Win) | Low (depends on host paths) |
-| Performance on Mac/Win | Good | Slower |
-| Empty mount | Gets pre-filled with the image's files | Host folder **hides** the image's files |
-| Best for | Databases, persistent app data, **production** | **Local development**, live code reload, sharing source code |
+| 🐧 **Linux machine / Linux VM / cloud server** (Ubuntu, EC2, Azure VM, GCP VM) | `/var/lib/docker/volumes/<name>/_data` on that machine's disk | ✅ Yes, with root: `sudo ls /var/lib/docker/volumes/mongo-data/_data` |
+| 🍎 **macOS (Docker Desktop)** | `/var/lib/docker/volumes/...` **inside Docker Desktop's Linux VM**. The VM itself is one disk file: `~/Library/Containers/com.docker.docker/Data/vms/0/data/Docker.raw` | ❌ Not in Finder — `/var/lib/docker` does **not** exist on your Mac |
+| 🪟 **Windows (Docker Desktop + WSL 2)** | Inside the WSL 2 VM: `\\wsl.localhost\docker-desktop\mnt\docker-desktop-disk\data\docker\volumes` (older versions: `\\wsl$\docker-desktop-data\data\docker\volumes`) | ⚠️ Via File Explorer path, read-only use recommended |
+| 🔵 **Bind mount (any OS)** | Exactly the host folder **you** gave (`/Users/aman/project`) | ✅ Yes — it's a normal folder |
+| 🟡 **tmpfs** | Host RAM | ❌ Nowhere on disk |
+
+```text
+macOS
+└── Docker Desktop
+    └── Linux VM (Docker.raw disk file)
+        └── /var/lib/docker/volumes/<name>/_data   ← volumes live HERE
+```
+
+> That's why on a Mac `docker volume inspect` shows `/var/lib/docker/...` but `ls /var/lib/docker` says *No such file* — the path is inside the VM, not on macOS.
+
+### How to see volume files (works everywhere, including Mac)
+
+```bash
+# 1. Docker Desktop → Volumes tab → click a volume → "Stored data"
+
+# 2. Mount the volume into a throw-away Alpine container and look
+docker run --rm -v file-upload-test_mongo-data:/data alpine ls -la /data
+
+# 3. Look from inside the container that uses it
+docker exec -it user-portal-mongodb ls /data/db
+
+# 4. Copy a file out of a container to your Mac
+docker cp user-portal-app:/app/uploads ./uploads-copy
+```
+
+### Backup & restore a volume
+
+```bash
+# Backup → creates mongo-data-backup.tar.gz in the current folder
+docker run --rm \
+  -v file-upload-test_mongo-data:/data:ro \
+  -v "$(pwd)":/backup \
+  alpine tar czf /backup/mongo-data-backup.tar.gz -C /data .
+
+# Restore into a (new) volume
+docker volume create mongo-data-restored
+docker run --rm \
+  -v mongo-data-restored:/data \
+  -v "$(pwd)":/backup \
+  alpine tar xzf /backup/mongo-data-backup.tar.gz -C /data
+```
+
+> Stop the database container before a file-level backup (or use `mongodump` / `mysqldump`) so files aren't copied mid-write.
 
 ---
 
-## 47. 🧠 Volume Key Points
+## 47. 🧠 Volume Key Points & Volume vs Network
 
-- Named volumes survive `docker rm` and `docker compose down` — removed only by `docker volume rm`, `docker volume prune` or `docker compose down -v`.
-- Database lost all data after the container was recreated? → it was writing to the container layer, not a volume. **Fix:** mount a volume on the DB data path.
-- Volumes are the preferred choice for production data (managed by Docker, portable, easy to back up).
+- Named volumes survive `docker rm` and `docker compose down` — removed only by `docker volume rm`, `docker volume prune -a` or `docker compose down -v`.
+- Database lost all data after recreating the container? → it wrote to the container layer. **Fix:** mount a volume on the DB data path.
+- Use **volumes for production data**, **bind mounts for development**, **tmpfs for temporary data**.
+- On a Mac/Windows, volumes live **inside Docker Desktop's VM** — use `docker run --rm -v ...` or Docker Desktop to see them.
+
+### ⚠️ Volumes don't handle traffic
+
+A volume **only stores data**. Traffic is handled by ports, networks, firewalls and reverse proxies:
+
+| Job | Handled by |
+|---|---|
+| 🌍 Users reach your server | Firewall / security group → published port (`-p 443:443`) |
+| 🚪 HTTP/HTTPS routing | Reverse proxy: Nginx, Traefik |
+| 🔗 Container ↔ container | Docker **network** (`mysql:3306` by name) |
+| 💾 Persistent data | Docker **volume** |
+| 📈 Lots of traffic | More replicas + load balancer, caching, resource limits, monitoring |
+
+```text
+Internet
+   ↓  (firewall: allow 80/443 only)
+Nginx container :443          ← -p 443:443
+   ↓  Docker network
+Laravel container
+   ├──▶ MySQL :3306  ──▶ mysql-volume  (DB files)
+   └──▶ Redis :6379  ──▶ redis-volume
+```
+
+> 🧠 **Network = how containers talk. Volume = where data is stored.** MySQL/Redis never need `-p` — keep them internal on the Docker network.
 
 ---
 
@@ -2381,7 +2610,7 @@ docker push username/myapp:1.0                 # upload
 | 32 | Multi-stage build? | Several `FROM`s — build in a big image, copy only artifacts into a small runtime image. | 41 |
 | 33 | Dangling image? | Untagged `<none>` image left after rebuilding a tag; remove with `docker image prune`. | 24 |
 | 34 | Why volumes? | Data persists independently of the container lifecycle (databases). | 42 |
-| 35 | Volume vs bind mount? | Volume = Docker-managed, portable, for production data. Bind mount = your host folder, for dev/live code. | 46 |
+| 35 | Volume vs bind mount vs tmpfs? | Volume = Docker-managed, for production data. Bind mount = your host folder, for dev. tmpfs = RAM, temporary. | 44 |
 | 36 | Default network? | `bridge`. Containers on it can't resolve each other by name. | 48 |
 | 37 | How do containers communicate? | Put them on the same custom network and use the container/service name (Docker DNS). | 50 |
 | 38 | Why not `localhost` between containers? | `localhost` inside a container = that container itself. | 51 |
