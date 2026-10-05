@@ -3,6 +3,8 @@
 > One file for everything: DevOps basics, Docker concepts, architecture, commands, Dockerfile, volumes, networking, Docker Compose, hands-on projects, troubleshooting, security, interview answers and cheat sheets.
 >
 > **How to read commands:** anything in `<angle brackets>` is a placeholder. `docker logs <container>` → `docker logs mongodb` or `docker logs a83f92c12345` (name **or** ID both work).
+>
+> **What does `-d`, `-v`, `-p`, `up`, `down` mean?** → see the **Flag & Command Dictionary (§99)** at the end.
 
 ---
 
@@ -21,7 +23,7 @@
 - **Part 11 — Troubleshooting** (§69–83)
 - **Part 12 — Security & Production** (§84–90)
 - **Part 13 — Interview Quick Answers** (§91–93)
-- **Part 14 — Cheat Sheets & Mental Model** (§94–98)
+- **Part 14 — Cheat Sheets, Mental Model & Flag Dictionary** (§94–99)
 
 ---
 
@@ -1323,29 +1325,148 @@ docker volume ls          # ...mysql_data ✅ still there
 
 # 🟫 PART 7 — Networking
 
-## 48. 🌐 Docker Networks & Drivers
+## 48. 🌐 What is a Docker Network?
 
-Docker networking lets containers talk to **each other**, to the **host** and to the **internet**.
+**Definition:** a **Docker network** is a **virtual network created and managed by Docker** that connects containers and controls **who can talk to whom** — container ↔ container, host ↔ container and container ↔ internet.
 
-| Driver | What it does |
+> 🌐 **Docker Network = a virtual network that connects containers and controls how they communicate.**
+
+### Why do we need it?
+
+A real app is split into separate containers, and they must talk to each other:
+
+```text
+                    🌐 Internet
+                         │
+                         ▼
+                    📦 Nginx
+                         │
+                         ▼
+                    📦 Laravel
+                    /         \
+                   ▼           ▼
+              📦 MySQL      📦 Redis
+```
+
+Laravel → MySQL (database) and Laravel → Redis (cache) are only possible because the containers share a Docker network:
+
+```text
+🌐 my-app-network
+   ├── 📦 Laravel
+   ├── 📦 MySQL
+   ├── 📦 Redis
+   └── 📦 Nginx
+```
+
+### ⭐ Benefits
+
+| Benefit | What it gives you |
 |---|---|
-| **bridge** (default) | Private virtual network on the host. Unnamed containers join the default `bridge` (`docker0`, e.g. `172.17.0.0/16`) |
-| **custom bridge** | `docker network create my-net` — same as bridge **plus automatic DNS by container name** ✅ use this |
-| **host** | No network isolation — container uses the host's network & ports directly |
-| **none** | No networking at all (only loopback) |
+| 🔗 **Communication** | Containers can talk to each other (main reason) |
+| 🔍 **DNS by name** | Use `DB_HOST=mysql` instead of an IP address |
+| 🔄 **Survives IP changes** | Container IPs change when recreated (`172.x.x.x` → `172.x.x.y`); the **name** stays the same |
+| 🔒 **Isolation** | Separate networks for separate apps — Project A can't reach Project B |
+| 🏢 **Multi-project servers** | `project-a-network`, `project-b-network`, `project-c-network` on one server |
+| 🌍 **Internet access** | Containers can call external APIs (payment, email, ...) |
+| 🔌 **Port publishing** | Expose only chosen services to the host (`-p 8080:80`) |
+| 🛡️ **Security** | MySQL/Redis stay internal — never exposed to the internet |
+
+> ⚠️ **Never hard-code a container IP** (`DB_HOST=172.18.0.3`). When the container is recreated it gets a new IP and the app breaks. Use the **name** (`DB_HOST=mysql`).
+
+### 🧩 Network drivers (types)
+
+| Driver | What it does | When to use |
+|---|---|---|
+| **bridge** (default) | Private virtual network on **one host**. Containers without `--network` join the default `bridge` (`docker0`, e.g. `172.17.0.0/16`) — **no name DNS** there | Simple tests |
+| **custom (user-defined) bridge** | `docker network create my-net` — bridge **+ automatic DNS by container name** + isolation | ✅ Normal apps — use this |
+| **host** | Container shares the host's network directly — no isolation, `-p` is ignored | Special performance cases only |
+| **none** | No network at all (only loopback) | Containers that need no network |
+| **overlay** | One network **across multiple Docker hosts** (Docker Swarm) | Multi-server clusters |
+
+```text
+bridge:   🖥️ Server → 🌉 bridge → 📦 A, 📦 B, 📦 C
+host:     🖥️ Host network ── 📦 Container (no isolation)
+none:     📦 Container ✖ no network
+overlay:  🖥️ Server A ──── 🌐 overlay ──── 🖥️ Server B
+```
+
+### 🔒 One container, multiple networks (security pattern)
+
+A container can join **more than one** network. Put public-facing and internal services on different networks:
+
+```text
+🌐 frontend-network            🌐 backend-network
+   ├── 📦 Nginx                    ├── 📦 Laravel
+   └── 📦 Laravel                  ├── 📦 MySQL
+                                   └── 📦 Redis
+```
+
+- **Laravel is on both** → talks to Nginx *and* MySQL/Redis.
+- **Nginx cannot reach MySQL/Redis** → the database is never exposed.
+
+```bash
+docker network create frontend-network
+docker network create backend-network
+docker run -d --name laravel --network backend-network my-laravel
+docker network connect frontend-network laravel     # add a 2nd network
+```
 
 ---
 
-## 49. 🛠️ Network Commands
+## 49. 🛠️ Network Commands — With Meaning
+
+| Command | Meaning |
+|---|---|
+| `docker network create app-network` | Create a new custom **bridge** network named `app-network` |
+| `docker network create -d bridge app-network` | Same, driver written explicitly (`-d` here = `--driver`, **not** detach!) |
+| `docker network ls` | List all networks (`bridge`, `host`, `none` always exist) |
+| `docker network inspect app-network` | Show details: subnet, gateway, **which containers are connected** and their IPs |
+| `docker network connect app-network web` | Attach the **existing** container `web` to the network |
+| `docker network disconnect app-network web` | Detach `web` from the network |
+| `docker network rm app-network` | Delete the network (no containers may be using it) |
+| `docker network prune` | Delete all unused networks |
+| `docker run --network app-network ...` | Start a container already attached to the network |
+| `docker run --net app-network ...` | Same — `--net` is the older/short form of `--network` |
+
+### Example: MongoDB on a network
 
 ```bash
-docker network create app-network                   # create custom bridge network
-docker network ls                                   # list
-docker network inspect app-network                  # see connected containers, subnet
-docker network connect app-network my-container     # attach an existing container
-docker network disconnect app-network my-container  # detach
-docker network rm app-network                       # remove
-docker run -d --name db --network app-network mongo # start a container on the network
+docker network create mongo-network        # 1. the network must exist FIRST
+
+docker run -d \
+  -p 27017:27017 \
+  -e MONGO_INITDB_ROOT_USERNAME=admin \
+  -e MONGO_INITDB_ROOT_PASSWORD=password \
+  --name mongodb \
+  --network mongo-network \
+  mongo
+```
+
+| Part | Meaning |
+|---|---|
+| `docker run` | Create + start a new container |
+| `-d` | Detached — run in background |
+| `-p 27017:27017` | Host port 27017 → container port 27017 |
+| `-e MONGO_INITDB_ROOT_USERNAME=admin` | Env variable: MongoDB root username |
+| `-e MONGO_INITDB_ROOT_PASSWORD=password` | Env variable: MongoDB root password |
+| `--name mongodb` | Container name → also its **hostname** on the network |
+| `--network mongo-network` | Join the `mongo-network` network |
+| `mongo` | Image to use (always the **last** part, after all options) |
+
+> ⚠️ Common mistake: forgetting the image name at the end (`... --net mongo-network` with no `mongo`) → Docker reports *"requires at least 1 argument"*.
+
+Another container on `mongo-network` connects with `mongodb://admin:password@mongodb:27017` — using the name **`mongodb`**, not `localhost`.
+
+### `-p` vs `--network` — they do different jobs
+
+```text
+-p 27017:27017        → HOST ↔ CONTAINER        (your computer reaches the container)
+--network mongo-net   → CONTAINER ↔ CONTAINER   (containers reach each other by name)
+```
+
+```text
+Your computer ── localhost:27017 ──▶ host port 27017 ──▶ MongoDB :27017
+App container ── mongodb:27017 ─────────────────────────▶ MongoDB :27017
 ```
 
 ---
@@ -1452,6 +1573,30 @@ Application
 - Modern name: **`compose.yaml`** (also accepted: `compose.yml`, `docker-compose.yml`).
 - Compose automatically creates a **default network** for the project, so all services can reach each other **by service name**.
 - Command is `docker compose` (v2, built into Docker). The old `docker-compose` (with a hyphen) is v1.
+- The top line `version: '3'` is **obsolete** — modern Compose ignores it (and warns). Start directly with `services:`.
+- Custom file name? Use `-f`: `docker compose -f mongo-docker-compose.yaml up -d`.
+
+### ⚠️ YAML syntax rules (most common mistakes)
+
+```yaml
+# ❌ WRONG
+version:'3'          # no space after the colon
+services:
+mongodb:             # not indented under services
+  image:mongo        # no space after the colon
+
+# ✅ CORRECT
+services:
+  mongodb:           # 2 spaces = belongs to services
+    image: mongo     # 4 spaces = belongs to mongodb; space after ":"
+```
+
+1. **Always a space after `:`** → `image: mongo`.
+2. **Indent with spaces, never tabs** (2 spaces per level is standard).
+3. **Same level = same indentation.** A child is indented more than its parent.
+4. Lists start with `- ` → `ports:` then `  - "27017:27017"`.
+5. Quote port mappings (`"8080:80"`) so YAML doesn't misread them.
+6. Check the file with `docker compose config` — it prints the error line.
 
 ---
 
@@ -2473,3 +2618,127 @@ DEVOPS
 ```
 
 > ⭐ **Core idea:** Docker packages the application environment into an **image**, creates **containers** from it, connects them with **networks** and **ports**, keeps data safe in **volumes**, and **Docker Compose** runs the whole multi-container application from one YAML file.
+
+---
+
+## 99. 📖 Flag & Command Dictionary (what every `-x` / word means)
+
+> Rule: **one dash = short form** (`-d`), **two dashes = long form** (`--detach`). Both do the same thing. Short flags can be combined: `-it` = `-i -t`.
+
+### 🔤 Docker command words (verbs)
+
+| Word | Meaning |
+|---|---|
+| `run` | **Create + start** a new container from an image (pulls the image if missing) |
+| `create` | Create a container but **don't** start it |
+| `start` | Start an **existing** stopped container |
+| `stop` | Gracefully stop a running container (SIGTERM → SIGKILL after 10 s) |
+| `restart` | Stop + start |
+| `kill` | Stop immediately (SIGKILL) |
+| `pause` / `unpause` | Freeze / unfreeze the container's processes |
+| `rm` | Remove a **container** |
+| `rmi` | Remove an **image** (**rm** + **i**mage) |
+| `ps` | List containers (**p**rocess **s**tatus) |
+| `ls` | List (used with objects: `image ls`, `volume ls`, `network ls`) |
+| `pull` | Download an image from a registry |
+| `push` | Upload an image to a registry |
+| `build` | Build an image from a Dockerfile |
+| `tag` | Give an image an extra name/tag (`docker tag app:1.0 user/app:1.0`) |
+| `exec` | **Exec**ute a command inside a **running** container |
+| `logs` | Show a container's output |
+| `inspect` | Show full JSON details of any object |
+| `top` | Processes running inside a container |
+| `stats` | Live CPU / memory usage |
+| `cp` | Copy files host ↔ container (`docker cp web:/etc/nginx/nginx.conf .`) |
+| `login` / `logout` | Sign in to / out of a registry |
+| `prune` | Delete **unused** objects (`container prune`, `image prune`, `volume prune`, `system prune`) |
+| `connect` / `disconnect` | Attach / detach a container to a network |
+
+### 🚩 `docker run` flags
+
+| Short | Long | Meaning | Example |
+|---|---|---|---|
+| `-d` | `--detach` | Run in **background**, return the terminal | `docker run -d nginx` |
+| `-p` | `--publish` | **Port** mapping `HOST:CONTAINER` | `-p 8080:80` |
+| `-P` | `--publish-all` | Publish all `EXPOSE`d ports to random host ports | `-P` |
+| `-e` | `--env` | Set an **environment variable** | `-e NODE_ENV=production` |
+| | `--env-file` | Load env variables from a file | `--env-file .env` |
+| `-v` | `--volume` | Mount a **volume** or bind mount `SOURCE:CONTAINER_PATH` | `-v mongo-data:/data/db` |
+| | `--name` | Give the container a **name** | `--name mongodb` |
+| | `--network` / `--net` | Connect to a **network** | `--network app-network` |
+| `-i` | `--interactive` | Keep keyboard input (STDIN) open | |
+| `-t` | `--tty` | Give a **terminal** | |
+| `-it` | | `-i` + `-t` = interactive shell | `docker run -it ubuntu bash` |
+| | `--rm` | **Auto-remove** the container when it stops | `docker run --rm -it alpine sh` |
+| | `--restart` | Restart policy: `no`, `always`, `on-failure`, `unless-stopped` | `--restart unless-stopped` |
+| `-m` | `--memory` | Memory limit | `--memory 512m` |
+| | `--cpus` | CPU limit | `--cpus 1.5` |
+| `-u` | `--user` | Run as this user/UID | `--user 1000:1000` |
+| `-w` | `--workdir` | Working directory inside the container | `-w /app` |
+| | `--entrypoint` | Override the image's ENTRYPOINT | `--entrypoint sh` |
+| `-h` | `--hostname` | Container hostname | `-h web1` |
+
+### 🚩 Flags on other commands
+
+| Command | Flag | Meaning |
+|---|---|---|
+| `docker ps` | `-a` / `--all` | Show **all** containers, including stopped |
+| `docker ps` | `-q` / `--quiet` | Show **only IDs** |
+| `docker images` | `-a` | Include intermediate images |
+| `docker logs` | `-f` / `--follow` | **Follow** live logs |
+| `docker logs` | `--tail 100` | Only the last 100 lines |
+| `docker logs` | `--since 10m` | Only logs from the last 10 minutes |
+| `docker logs` | `-t` / `--timestamps` | Show timestamps |
+| `docker rm` / `rmi` | `-f` / `--force` | **Force** (remove even if running / in use) |
+| `docker build` | `-t` / `--tag` | Image **name:tag** |
+| `docker build` | `-f` / `--file` | Use a different Dockerfile |
+| `docker build` | `--no-cache` | Rebuild every layer, ignore cache |
+| `docker build` | `--build-arg` | Pass an `ARG` value |
+| `docker build` | `--platform` | Target CPU, e.g. `linux/amd64` |
+| `docker inspect` | `-f` / `--format` | Pick one field: `-f '{{.State.ExitCode}}'` |
+| `docker network create` | `-d` / `--driver` | Network **driver** (`bridge`, `overlay` ...) |
+| `docker * prune` | `-a` / `--all` | Remove all unused, not only dangling |
+| `docker * prune` | `-f` / `--force` | Don't ask for confirmation ⚠️ |
+| `docker system prune` | `--volumes` | Also delete unused volumes ⚠️ |
+
+### ⚠️ Same letter, different meaning
+
+| Letter | Meaning depends on the command |
+|---|---|
+| `-d` | `run -d` / `compose up -d` = **detach** · `network create -d` = **driver** |
+| `-f` | `logs -f` = **follow** · `rm -f` = **force** · `build -f` / `compose -f` = **file** · `inspect -f` = **format** |
+| `-t` | `run -t` = **tty** (terminal) · `build -t` = **tag** · `logs -t` = **timestamps** |
+| `-v` | `run -v` = **volume** · `compose down -v` = **delete volumes** ⚠️ |
+| `-a` | `ps -a` = **all containers** · `prune -a` = **all unused images** |
+| `-p` | `run -p` = **publish port** · `compose -p` = **project name** · `mongosh -p` = **password** |
+
+### 🧩 Docker Compose words & flags
+
+| Command | Meaning |
+|---|---|
+| `up` | **Create (if needed) + start** all services from `compose.yaml` |
+| `up -d` | Same, in the **background** (detached) |
+| `up --build` | **Rebuild** images first, then start |
+| `up --scale backend=3` | Run 3 copies of a service |
+| `down` | **Stop + remove** containers and the network (volumes kept) |
+| `down -v` | Also remove **volumes** ⚠️ deletes data |
+| `start` | Start existing stopped service containers |
+| `stop` | Stop services (containers kept) |
+| `restart` | Stop + start services |
+| `ps` | Status of the project's containers |
+| `logs` / `logs -f` | Show / **follow** logs (add a service name for one service) |
+| `exec <service> <cmd>` | Run a command in a running service (`exec mongodb mongosh`) |
+| `run <service> <cmd>` | Start a **new one-off** container for a service |
+| `build` | Build images for services that use `build:` |
+| `pull` | Pull the latest images listed in the file |
+| `config` | **Validate** the YAML and show the final config |
+| `-f file.yaml` | Use a specific compose file (goes **before** the command: `docker compose -f x.yaml up -d`) |
+| `-p name` | Set the project name |
+
+### 🧠 Read any command like a sentence
+
+```text
+docker  run  -d  -p 8080:80  -v data:/app/data  -e MODE=prod  --name web  --network app-net  nginx:alpine
+  │      │    │      │              │                 │            │              │              │
+ tool  action bg   port          volume            env var       name         network        image:tag (always LAST)
+```
