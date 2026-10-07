@@ -69,3 +69,18 @@ LAN stand for local area network
 it's like a mini-network  that covers a relatively small area, such as a home office building or campus
 lans are perfect for sharing resources like printers,files and even communicating between devices.
 later you will hear about private networks inside VPCs those are essentially lans in the cloud.
+
+
+man 
+man stands for metropolitan area network it's like a bigger sibling of lans 
+mans cover larger geographical areas typically spanning a city or metropolitan area 
+they connecy multiple lans or network segments within the same region 
+mans are often used by businesses educational institutions or government organizations 
+later you will encounter thr concrpt in thr cloud regions and availability zones when aws says a region hasd multiple data centres aceross a city they are essentially describing a man scale infrastructure 
+
+
+wan 
+wide area netework across countries 
+wans cover wide geographical areas lie multiple cities countries or even continents 
+the internet itself is the largest example of a wan 
+but wans are not just the internet large companies have their own private wans connecting offices in mumbai bangalore new yourlondon into one unified corporate network banks do this airlines do this 
