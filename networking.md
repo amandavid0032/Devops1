@@ -84,3 +84,54 @@ wide area netework across countries
 wans cover wide geographical areas lie multiple cities countries or even continents 
 the internet itself is the largest example of a wan 
 but wans are not just the internet large companies have their own private wans connecting offices in mumbai bangalore new yourlondon into one unified corporate network banks do this airlines do this 
+
+the internet is collecton of all this networks !
+
+
+network topologies
+imagine you're setting up wifi for a small office you have 6 computers, a printer, and one internet connection 
+how do you connect them all ? do you run a cable from every computer to every other computer do u plug eveything into one centerl box ? do you arrange them in the line     
+network toplogy help us to find these solutions.
+ the world toplogy comes from the greak word for place or arrangement.
+
+ in networking topology means the way devices are arranged and connected to each other 
+
+
+
+Bus Topology
+
+in a bus topology all devices are connected to a single cable called the bus.
+it's like a group chat where everyone can see and participate in the conversation 
+
+Ring topology 
+here each device is connected to the next device in a circular loop, forming a ring data travels around the ring in one direction passing through each device 
+
+
+start topology 
+in this setup all devices are connected to a central hub or switch 
+the hub or switch acts as the central point of connection and data flows through it to reach the intended devices 
+
+
+mesh topology 
+
+in a mesh topology each device is connected to every other device in the network 
+in forms a network of interconnected paths providing multiple routes for data to travel 
+
+tree topology 
+
+it's a hierarchical network topology that combines elements of the bus an d start topologies 
+it's like a family tree where everyone has their place in the hierarchy 
+
+
+network models 
+
+why we need models 
+
+you are watching this bootcamp on youtube.
+you opened video your phone that request somehow leaves your device travels through wifi crosses the internet reaches a server in some data center gets processed and a data comes back all in under few seconds.
+
+your phone was made by apple the server runs linux the router in from a completely different manufacturer the isp's equipment is different again 
+how do they all understand each other ? the answer is models 
+
+in the early days of networking every company built their own system thier own cables their own rules,their own rules their own cables their own rules their own way of sending data and none of them could talk to each other.
+
