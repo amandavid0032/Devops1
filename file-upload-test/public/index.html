@@ -3,20 +3,142 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>File Upload Test</title>
+    <title>User Portal</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="card">
-      <h1>File Upload Test</h1>
-      <p>Files are grouped by email. Uploads are saved in MongoDB and locally or in S3.</p>
-      <form id="upload-form">
-        <label>Email address<input name="email" type="email" placeholder="you@example.com" required /></label>
-        <label>Select file<input name="file" type="file" required /></label>
-        <button type="submit">Upload file</button>
-      </form>
-      <p id="status" role="status"></p>
+    <header class="topbar" id="topbar" hidden>
+      <strong class="brand">📁 User Portal</strong>
+      <nav>
+        <a href="#/dashboard" data-nav="dashboard">Dashboard</a>
+        <a href="#/files" data-nav="files">My Files</a>
+        <a href="#/profile" data-nav="profile">Profile</a>
+        <a href="#/admin" data-nav="admin" id="admin-link" hidden>Admin</a>
+      </nav>
+      <div class="user-box">
+        <span id="topbar-name"></span>
+        <button type="button" class="secondary" id="logout-btn">Log out</button>
+      </div>
+    </header>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <main>
+      <!-- Login -->
+      <section class="card narrow" data-view="login" hidden>
+        <h1>Log in</h1>
+        <p>Welcome back. Log in to manage your files.</p>
+        <form id="login-form">
+          <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
+          <button type="submit">Log in</button>
+        </form>
+        <p class="switch">No account? <a href="#/register">Create one</a></p>
+      </section>
+
+      <!-- Register -->
+      <section class="card narrow" data-view="register" hidden>
+        <h1>Create account</h1>
+        <p>The first account created becomes the <b>admin</b>.</p>
+        <form id="register-form">
+          <label>Full name<input name="name" type="text" autocomplete="name" minlength="2" required /></label>
+          <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+          <label>Password<input name="password" type="password" autocomplete="new-password" minlength="8" required />
+            <small>At least 8 characters, with letters and numbers.</small></label>
+          <button type="submit">Create account</button>
+        </form>
+        <p class="switch">Already registered? <a href="#/login">Log in</a></p>
+      </section>
+
+      <!-- Dashboard -->
+      <section data-view="dashboard" hidden>
+        <h1>Hello, <span id="dash-name"></span> 👋</h1>
+        <div class="stats">
+          <div class="stat"><span class="stat-label">Files</span><span class="stat-value" id="stat-count">0</span></div>
+          <div class="stat"><span class="stat-label">Storage used</span><span class="stat-value" id="stat-size">0 B</span></div>
+          <div class="stat"><span class="stat-label">Last upload</span><span class="stat-value small" id="stat-last">—</span></div>
+          <div class="stat"><span class="stat-label">Role</span><span class="stat-value small" id="stat-role">—</span></div>
+        </div>
+        <div class="card">
+          <h2>Account details</h2>
+          <dl class="details" id="account-details"></dl>
+        </div>
+      </section>
+
+      <!-- Files -->
+      <section data-view="files" hidden>
+        <h1>My Files</h1>
+        <div class="card">
+          <h2>Upload a file</h2>
+          <form id="upload-form" class="inline-form">
+            <input name="file" type="file" required />
+            <button type="submit">Upload</button>
+          </form>
+          <small>Maximum size: 10 MB</small>
+        </div>
+        <div class="card">
+          <h2>Uploaded files</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Name</th><th>Type</th><th>Size</th><th>Uploaded</th><th></th></tr></thead>
+              <tbody id="files-body"></tbody>
+            </table>
+          </div>
+          <p class="empty" id="files-empty" hidden>No files yet. Upload your first one above.</p>
+        </div>
+      </section>
+
+      <!-- Profile -->
+      <section data-view="profile" hidden>
+        <h1>Profile</h1>
+        <div class="grid-2">
+          <div class="card">
+            <h2>Edit details</h2>
+            <form id="profile-form">
+              <label>Full name<input name="name" type="text" minlength="2" required /></label>
+              <label>Email<input name="email" type="email" disabled /></label>
+              <label>Phone<input name="phone" type="tel" placeholder="+91 98765 43210" /></label>
+              <label>Bio<textarea name="bio" rows="3" maxlength="300" placeholder="A few words about you"></textarea></label>
+              <button type="submit">Save changes</button>
+            </form>
+          </div>
+          <div class="card">
+            <h2>Change password</h2>
+            <form id="password-form">
+              <label>Current password<input name="currentPassword" type="password" autocomplete="current-password" required /></label>
+              <label>New password<input name="newPassword" type="password" autocomplete="new-password" minlength="8" required /></label>
+              <button type="submit">Change password</button>
+            </form>
+            <hr />
+            <h2>Sessions</h2>
+            <p>Log out from every browser and device.</p>
+            <button type="button" class="secondary" id="logout-all-btn">Log out everywhere</button>
+          </div>
+        </div>
+        <div class="card danger-zone">
+          <h2>Delete account</h2>
+          <p>This permanently deletes your account and all your files.</p>
+          <form id="delete-form" class="inline-form">
+            <input name="password" type="password" placeholder="Enter your password to confirm" required />
+            <button type="submit" class="danger">Delete my account</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Admin -->
+      <section data-view="admin" hidden>
+        <h1>Admin — All users</h1>
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Files</th><th>Storage</th><th>Joined</th><th>Last login</th><th></th></tr></thead>
+              <tbody id="users-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
     </main>
+
     <script src="app.js"></script>
   </body>
 </html>

@@ -1,0 +1,63 @@
+# Runs the whole stack: app + MongoDB + Mongo Express
+#   docker compose up -d --build
+# Ports used on your computer:
+#   3000  → User Portal app
+#   27019 → MongoDB (for MongoDB Compass etc.)
+#   8083  → Mongo Express (login: admin / pass)
+
+services:
+
+  app:
+    build: .
+    image: user-portal:1.0
+    container_name: user-portal-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      # Inside the Compose network → service name "mongodb" + container port 27017
+      MONGO_URI: mongodb://admin:${MONGO_ROOT_PASSWORD:-change-this-password}@mongodb:27017/?authSource=admin
+      MONGO_DB_NAME: user_portal
+      STORAGE_DRIVER: local
+      SESSION_DAYS: 7
+    volumes:
+      - app-uploads:/app/uploads
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+  mongodb:
+    image: mongo:8
+    container_name: user-portal-mongodb
+    restart: unless-stopped
+    ports:
+      - "27019:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-change-this-password}
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ ping: 1 }).ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongo-express:
+    image: mongo-express:1.0.2-20-alpine3.19
+    container_name: user-portal-mongo-express
+    restart: unless-stopped
+    ports:
+      - "8083:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASSWORD:-change-this-password}
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+volumes:
+  mongo-data:
+  app-uploads:

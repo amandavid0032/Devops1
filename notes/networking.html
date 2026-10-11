@@ -1,0 +1,1211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Networking — Complete Notes</title>
+<style>
+  :root {
+    --bg: #f6f7fb; --surface: #ffffff; --surface-2: #f1f4f9; --text: #182030; --muted: #5f6b7d; --faint: #8a94a5;
+    --border: #e3e8ef; --accent: #2563eb; --accent-2: #7c3aed; --accent-soft: #eaf1ff;
+    --code-bg: #0f172a; --code-text: #e2e8f0; --code-bar: #1e293b; --inline-bg: #eef2f8; --inline-text: #b4235a;
+    --diagram-bg: #f4f7fc; --diagram-text: #24324a; --diagram-border: #dbe3ef;
+    --q-bg: #fff8e6; --q-border: #f59e0b; --q-text: #8a4b06;
+    --warn-bg: #fff1f1; --warn-border: #ef4444; --tip-bg: #effaf3; --tip-border: #16a34a; --note-bg: #f0f5ff; --note-border: #3b82f6;
+    --mark: #fde68a; --shadow: 0 1px 2px #1820300d, 0 8px 24px #18203012;
+    --radius: 14px; --top: 64px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b0f17; --surface: #121826; --surface-2: #182033; --text: #e7ecf3; --muted: #a1abbb; --faint: #6f7a8c;
+      --border: #263044; --accent: #7aa7ff; --accent-2: #b48cff; --accent-soft: #1a2741;
+      --code-bg: #080c14; --code-text: #e2e8f0; --code-bar: #121a2a; --inline-bg: #1d2638; --inline-text: #ff8fb6;
+      --diagram-bg: #111a2b; --diagram-text: #cfdaee; --diagram-border: #26334b;
+      --q-bg: #2a2010; --q-border: #f59e0b; --q-text: #fcd34d;
+      --warn-bg: #2a1416; --warn-border: #f87171; --tip-bg: #0f2418; --tip-border: #4ade80; --note-bg: #121f38; --note-border: #60a5fa;
+      --mark: #7c5e10; --shadow: 0 1px 2px #0006, 0 8px 24px #0005;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b0f17; --surface: #121826; --surface-2: #182033; --text: #e7ecf3; --muted: #a1abbb; --faint: #6f7a8c;
+    --border: #263044; --accent: #7aa7ff; --accent-2: #b48cff; --accent-soft: #1a2741;
+    --code-bg: #080c14; --code-text: #e2e8f0; --code-bar: #121a2a; --inline-bg: #1d2638; --inline-text: #ff8fb6;
+    --diagram-bg: #111a2b; --diagram-text: #cfdaee; --diagram-border: #26334b;
+    --q-bg: #2a2010; --q-border: #f59e0b; --q-text: #fcd34d;
+    --warn-bg: #2a1416; --warn-border: #f87171; --tip-bg: #0f2418; --tip-border: #4ade80; --note-bg: #121f38; --note-border: #60a5fa;
+    --mark: #7c5e10; --shadow: 0 1px 2px #0006, 0 8px 24px #0005;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: calc(var(--top) + 16px); -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16.5px/1.7 -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  [hidden] { display: none !important; }
+  ::selection { background: #2563eb33; }
+
+  /* ================= top bar ================= */
+  .topbar { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 1rem; height: var(--top); padding: 0 1.25rem; background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: saturate(160%) blur(12px); border-bottom: 1px solid var(--border); }
+  .brand { display: flex; align-items: center; gap: .6rem; color: var(--text); font-weight: 800; font-size: 1.05rem; white-space: nowrap; }
+  .brand:hover { text-decoration: none; }
+  .brand-logo { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, #2563eb, #7c3aed); color: #fff; font-size: 1.1rem; box-shadow: 0 4px 12px #2563eb40; }
+  .search-box { position: relative; flex: 1; max-width: 560px; margin: 0 auto; }
+  .search-box input { width: 100%; height: 40px; padding: 0 2.6rem 0 2.4rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface-2); color: var(--text); font: inherit; font-size: .95rem; transition: border-color .15s, box-shadow .15s, background .15s; }
+  .search-box input:focus { outline: none; border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .search-box .s-icon { position: absolute; left: .9rem; top: 50%; transform: translateY(-50%); color: var(--faint); pointer-events: none; }
+  .search-box kbd { position: absolute; right: .7rem; top: 50%; transform: translateY(-50%); padding: .05rem .45rem; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--faint); font: .78rem ui-monospace, Menlo, monospace; }
+  .results { position: absolute; top: calc(100% + 8px); left: 0; right: 0; max-height: min(70vh, 560px); overflow-y: auto; padding: .4rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: 0 20px 50px #0003; }
+  .results a { display: block; padding: .6rem .75rem; border-radius: 10px; color: var(--text); text-decoration: none; }
+  .results a:hover, .results a.sel { background: var(--accent-soft); }
+  .results .r-where { display: block; color: var(--faint); font-size: .74rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+  .results .r-title { font-weight: 650; }
+  .results .r-snip { display: block; color: var(--muted); font-size: .85rem; line-height: 1.45; }
+  .results mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 1px; }
+  .results .empty { padding: 1rem; color: var(--muted); text-align: center; }
+  .top-actions { display: flex; gap: .5rem; }
+  .pill { display: inline-flex; align-items: center; gap: .4rem; height: 38px; padding: 0 .9rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text); font: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .pill:hover { border-color: var(--accent); text-decoration: none; }
+  .pill.icon { width: 38px; justify-content: center; padding: 0; font-size: 1.05rem; }
+  #menu-btn { display: none; }
+  .progress { position: fixed; top: var(--top); left: 0; z-index: 41; height: 3px; width: 0; background: linear-gradient(90deg, #2563eb, #7c3aed, #ec4899); transition: width .1s linear; }
+
+  /* ================= layout ================= */
+  .layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); }
+  .sidebar { position: sticky; top: var(--top); height: calc(100vh - var(--top)); overflow-y: auto; padding: 1.1rem .8rem 2rem; border-right: 1px solid var(--border); background: var(--surface); scrollbar-width: thin; }
+  main { min-width: 0; padding: 2rem clamp(1rem, 4vw, 3.5rem) 6rem; }
+  .doc { max-width: 880px; margin: 0 auto; }
+
+  /* ================= sidebar ================= */
+  .side-label { margin: .2rem .6rem .6rem; color: var(--faint); font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .side-top { display: block; margin-bottom: .2rem; padding: .45rem .7rem; border-radius: 10px; color: var(--text); font-weight: 600; font-size: .93rem; }
+  .side-top:hover { background: var(--surface-2); text-decoration: none; }
+  .nav-part { margin: .15rem 0; border-radius: 12px; }
+  .nav-part summary { display: flex; align-items: center; gap: .55rem; padding: .5rem .6rem; border-radius: 10px; cursor: pointer; list-style: none; font-size: .92rem; font-weight: 650; line-height: 1.35; user-select: none; }
+  .nav-part summary::-webkit-details-marker { display: none; }
+  .nav-part summary::after { content: "›"; margin-left: auto; color: var(--faint); font-size: 1.1rem; transition: transform .15s; }
+  .nav-part[open] summary::after { transform: rotate(90deg); }
+  .nav-part summary:hover { background: var(--surface-2); }
+  .nav-part.current > summary { background: color-mix(in srgb, var(--part) 12%, transparent); }
+  .dot { flex: none; width: 9px; height: 9px; border-radius: 50%; background: var(--part); box-shadow: 0 0 0 3px color-mix(in srgb, var(--part) 22%, transparent); }
+  .nav-part-num { flex: none; min-width: 1.3em; color: var(--part); font-variant-numeric: tabular-nums; }
+  .nav-part-title { overflow-wrap: anywhere; }
+  .nav-link { display: flex; gap: .5rem; margin: 1px 0 1px 1.15rem; padding: .32rem .6rem; border-left: 2px solid var(--border); border-radius: 0 8px 8px 0; color: var(--muted); font-size: .87rem; line-height: 1.4; }
+  .nav-link:hover { background: var(--surface-2); color: var(--text); text-decoration: none; }
+  .nav-link.active { border-left-color: var(--part); background: color-mix(in srgb, var(--part) 10%, transparent); color: var(--text); font-weight: 600; }
+  .nav-num { flex: none; min-width: 1.6em; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .nav-part-link { font-style: italic; }
+  .built { margin: 1.5rem .6rem 0; color: var(--faint); font-size: .75rem; }
+
+  /* ================= hero ================= */
+  .hero { position: relative; overflow: hidden; margin-bottom: 2.5rem; padding: clamp(1.5rem, 4vw, 2.75rem); border: 1px solid var(--border); border-radius: 22px; background:
+      radial-gradient(800px 300px at 100% 0%, #7c3aed22, transparent 60%),
+      radial-gradient(700px 300px at 0% 100%, #2563eb22, transparent 60%), var(--surface); box-shadow: var(--shadow); }
+  .hero-badge { display: inline-block; margin-bottom: .9rem; padding: .25rem .75rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: .82rem; font-weight: 700; }
+  .hero-title { margin: 0; font-size: clamp(2rem, 4.5vw, 2.9rem); line-height: 1.12; letter-spacing: -.02em; background: linear-gradient(120deg, var(--text) 30%, var(--accent) 70%, var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero-sub { margin: .6rem 0 0; color: var(--muted); font-size: 1.08rem; }
+  .hero-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; margin: 1.6rem 0; }
+  .hero-stats div { padding: .8rem 1rem; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
+  .hero-stats strong { display: block; font-size: 1.6rem; line-height: 1.1; }
+  .hero-stats span { color: var(--muted); font-size: .85rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .btn { display: inline-flex; align-items: center; gap: .4rem; padding: .62rem 1.05rem; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); font-weight: 650; font-size: .93rem; }
+  .btn:hover { border-color: var(--accent); text-decoration: none; transform: translateY(-1px); }
+  .btn.primary { border-color: transparent; background: linear-gradient(135deg, #2563eb, #7c3aed); color: #fff; box-shadow: 0 6px 18px #2563eb44; }
+  .hero-intro { margin-top: 1.5rem; }
+  .hero-intro .callout { margin: 0; background: var(--surface-2); border-left-color: var(--accent); }
+
+  /* ================= contents cards ================= */
+  .contents-title { margin: 0 0 1rem; font-size: 1.5rem; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: .9rem; margin-bottom: 1rem; }
+  .card { position: relative; display: flex; flex-direction: column; gap: .35rem; padding: 1rem 1.1rem 1.1rem; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--text); box-shadow: var(--shadow); transition: transform .15s, border-color .15s; }
+  .card::before { content: ""; position: absolute; inset: 0 0 auto; height: 4px; background: var(--part); }
+  .card:hover { transform: translateY(-3px); border-color: var(--part); text-decoration: none; }
+  .card-top { display: flex; align-items: center; gap: .45rem; font-size: .8rem; font-weight: 700; color: var(--part); text-transform: uppercase; letter-spacing: .05em; }
+  .card-emoji { font-size: 1.1rem; }
+  .card-range { margin-left: auto; color: var(--faint); font-weight: 600; }
+  .card-title { font-size: 1.07rem; font-weight: 750; line-height: 1.3; }
+  .card-secs { color: var(--muted); font-size: .84rem; line-height: 1.45; }
+
+  /* ================= content ================= */
+  .doc h1, .doc h2, .doc h3, .doc h4 { line-height: 1.3; letter-spacing: -.01em; }
+  .part-heading { display: flex; flex-direction: column; gap: .2rem; margin: 4rem 0 1.5rem; padding: 1.4rem 1.6rem; border-radius: 18px; background: linear-gradient(135deg, var(--part), color-mix(in srgb, var(--part) 55%, #000)); color: #fff; box-shadow: 0 10px 30px color-mix(in srgb, var(--part) 30%, transparent); }
+  .part-kicker { font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .9; }
+  .part-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; }
+  .sec-heading { display: flex; align-items: center; gap: .75rem; margin: 3rem 0 1rem; padding-bottom: .55rem; border-bottom: 1px solid var(--border); font-size: 1.5rem; }
+  .sec-num { flex: none; display: grid; place-items: center; min-width: 2.1rem; height: 2.1rem; padding: 0 .45rem; border-radius: 10px; background: var(--accent-soft); color: var(--accent); font-size: .95rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .sec-num:hover { text-decoration: none; background: var(--accent); color: #fff; }
+  .doc h2:not(.sec-heading) { margin: 2.5rem 0 1rem; font-size: 1.45rem; }
+  .doc h3 { margin: 2rem 0 .7rem; font-size: 1.18rem; }
+  .doc h3::before { content: ""; display: inline-block; width: 4px; height: .95em; margin-right: .55rem; vertical-align: -.1em; border-radius: 2px; background: var(--accent); }
+  .doc h4 { margin: 1.4rem 0 .5rem; font-size: 1.02rem; }
+  .doc p, .doc li { overflow-wrap: break-word; }
+  .doc ul, .doc ol { padding-left: 1.4rem; }
+  .doc li { margin: .25rem 0; }
+  .doc li::marker { color: var(--accent); }
+  .doc hr { margin: 2.5rem 0; border: 0; border-top: 1px dashed var(--border); }
+  .doc strong { font-weight: 700; }
+  .doc img { max-width: 100%; }
+
+  :not(pre) > code { padding: .14em .42em; border-radius: 6px; background: var(--inline-bg); color: var(--inline-text); font: 600 .86em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; overflow-wrap: anywhere; }
+  .code { position: relative; margin: 1.1rem 0 1.3rem; overflow: hidden; border-radius: 12px; background: var(--code-bg); box-shadow: var(--shadow); }
+  .code-bar { display: flex; align-items: center; justify-content: space-between; padding: .4rem .5rem .4rem 1rem; background: var(--code-bar); border-bottom: 1px solid #ffffff10; }
+  .code-bar::before { content: ""; width: 42px; height: 10px; margin-right: .8rem; background: radial-gradient(circle, #ff5f57 4.5px, transparent 5px) 0 0 / 14px 10px repeat-x; opacity: .9; }
+  .lang { margin-right: auto; color: #94a3b8; font: 700 .72rem ui-monospace, Menlo, monospace; letter-spacing: .06em; text-transform: uppercase; }
+  .code pre { margin: 0; padding: 1rem 1.15rem; overflow-x: auto; color: var(--code-text); font: .87rem/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; tab-size: 2; }
+  .copy { padding: .22rem .65rem; border: 1px solid #ffffff22; border-radius: 7px; background: #ffffff10; color: #cbd5e1; font: 600 .75rem/1.4 -apple-system, sans-serif; cursor: pointer; }
+  .copy:hover { background: #ffffff22; }
+  .copy.done { border-color: #22c55e; color: #86efac; }
+  .code.diagram { background: var(--diagram-bg); border: 1px solid var(--diagram-border); box-shadow: none; }
+  .code.diagram pre { color: var(--diagram-text); }
+  .code.diagram .copy { position: absolute; top: .5rem; right: .5rem; border-color: var(--border); background: var(--surface); color: var(--muted); opacity: 0; transition: opacity .15s; }
+  .code.diagram:hover .copy, .code.diagram .copy:focus { opacity: 1; }
+
+  .table-wrap { margin: 1.1rem 0 1.4rem; overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); }
+  .table-wrap table { width: 100%; border-collapse: collapse; font-size: .93rem; line-height: 1.55; }
+  .table-wrap th, .table-wrap td { padding: .65rem .85rem; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+  .table-wrap th { background: var(--surface-2); color: var(--text); font-size: .82rem; font-weight: 750; letter-spacing: .02em; white-space: nowrap; }
+  .table-wrap tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-2) 45%, transparent); }
+  .table-wrap tbody tr:hover td { background: var(--accent-soft); }
+  .table-wrap tr:last-child td { border-bottom: 0; }
+
+  .callout { margin: 1.2rem 0; padding: .85rem 1.1rem; border: 1px solid var(--border); border-left: 4px solid var(--note-border); border-radius: 12px; background: var(--note-bg); }
+  .callout p { margin: .3rem 0; }
+  .callout.warn { border-left-color: var(--warn-border); background: var(--warn-bg); }
+  .callout.tip { border-left-color: var(--tip-border); background: var(--tip-bg); }
+  .callout.question { margin: 2.6rem 0 1rem; padding: 1rem 1.2rem; border: 2px solid var(--q-border); border-left-width: 7px; background: var(--q-bg); font-size: 1.13rem; box-shadow: 0 8px 24px #f59e0b26; }
+  .callout.question strong { color: var(--q-text); }
+
+  #to-top { position: fixed; right: 1.3rem; bottom: 1.3rem; z-index: 30; display: grid; place-items: center; width: 46px; height: 46px; border: 0; border-radius: 50%; background: linear-gradient(135deg, #2563eb, #7c3aed); color: #fff; font-size: 1.15rem; cursor: pointer; box-shadow: 0 8px 22px #2563eb55; }
+  .flash { animation: flash 1.8s ease-out; }
+  @keyframes flash { 0%, 30% { box-shadow: 0 0 0 6px var(--mark); } 100% { box-shadow: 0 0 0 0 transparent; } }
+  .backdrop { display: none; }
+
+  /* ================= responsive ================= */
+  @media (max-width: 1000px) {
+    #menu-btn { display: inline-flex; }
+    .brand-text { display: none; }
+    .layout { grid-template-columns: minmax(0, 1fr); }
+    .sidebar { position: fixed; top: var(--top); left: 0; z-index: 35; width: min(86vw, 320px); transform: translateX(-102%); visibility: hidden; transition: transform .22s ease, visibility .22s; }
+    body.menu-open .sidebar { transform: none; visibility: visible; box-shadow: 0 0 40px #0005; }
+    body.menu-open .backdrop { display: block; position: fixed; inset: var(--top) 0 0; z-index: 34; background: #0006; }
+    .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 15.5px; }
+    .topbar { gap: .5rem; padding: 0 .75rem; }
+    .search-box kbd, .pill .label { display: none; }
+    .part-heading { padding: 1.1rem 1.2rem; }
+    .sec-heading { font-size: 1.28rem; }
+  }
+  @media print {
+    .topbar, .sidebar, #to-top, .copy, .progress, .hero-actions { display: none !important; }
+    .layout { display: block; }
+    .code pre { white-space: pre-wrap; }
+  }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button class="pill icon" id="menu-btn" type="button" aria-label="Open menu">☰</button>
+  <a class="brand" href="#top"><span class="brand-logo">🌐</span><span class="brand-text">Networking — Complete Notes</span></a>
+  <div class="search-box">
+    <span class="s-icon">🔍</span>
+    <input id="search" type="search" placeholder="Search commands, topics, flags…" autocomplete="off" spellcheck="false" />
+    <kbd>/</kbd>
+    <div class="results" id="results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <a class="pill" href="#part-8-interview-questions-cheat-sheet">⭐<span class="label">Interview Qs</span></a>
+    <button class="pill icon" id="theme-btn" type="button" aria-label="Toggle dark mode">🌓</button>
+  </div>
+</header>
+<div class="progress" id="progress"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-label">Start</div>
+    <a class="side-top" href="#top">🏠 Overview</a>
+    <a class="side-top" href="#contents">📑 Contents</a>
+    <div class="side-label" style="margin-top:1rem">Parts</div>
+    <details class="nav-part" data-part="part-1-basic-terminology" style="--part:#2563eb">
+      <summary><span class="dot"></span><span class="nav-part-num">1</span><span class="nav-part-title">Basic Terminology</span></summary>
+      <a class="nav-link nav-part-link" href="#part-1-basic-terminology">Overview</a>
+      <a class="nav-link" href="#1-what-is-a-computer-network"><span class="nav-num">1</span>🖧 What is a Computer Network?</a>
+      <a class="nav-link" href="#2-node-host-networking"><span class="nav-num">2</span>🔤 Node, Host &amp; Networking</a>
+      <a class="nav-link" href="#3-remember"><span class="nav-num">3</span>🧠 Remember</a>
+    </details>
+    <details class="nav-part" data-part="part-2-the-internet" style="--part:#16a34a">
+      <summary><span class="dot"></span><span class="nav-part-num">2</span><span class="nav-part-title">The Internet</span></summary>
+      <a class="nav-link nav-part-link" href="#part-2-the-internet">Overview</a>
+      <a class="nav-link" href="#4-what-is-the-internet"><span class="nav-num">4</span>🌍 What is the Internet?</a>
+      <a class="nav-link" href="#5-who-owns-the-internet"><span class="nav-num">5</span>🏢 Who Owns the Internet?</a>
+      <a class="nav-link" href="#6-how-does-my-isp-in-india-reach-a-server-in-the-usa"><span class="nav-num">6</span>🌊 How Does My ISP in India Reach a Server in the USA?</a>
+    </details>
+    <details class="nav-part" data-part="part-3-www-vs-internet" style="--part:#ca8a04">
+      <summary><span class="dot"></span><span class="nav-part-num">3</span><span class="nav-part-title">WWW vs Internet</span></summary>
+      <a class="nav-link nav-part-link" href="#part-3-www-vs-internet">Overview</a>
+      <a class="nav-link" href="#7-what-is-the-world-wide-web"><span class="nav-num">7</span>🕸️ What is the World Wide Web?</a>
+      <a class="nav-link" href="#8-the-3-inventions-that-made-the-web"><span class="nav-num">8</span>🧩 The 3 Inventions That Made the Web</a>
+      <a class="nav-link" href="#9-internet-vs-web"><span class="nav-num">9</span>🆚 Internet vs Web</a>
+    </details>
+    <details class="nav-part" data-part="part-4-clientserver-architecture" style="--part:#ea580c">
+      <summary><span class="dot"></span><span class="nav-part-num">4</span><span class="nav-part-title">Client–Server Architecture</span></summary>
+      <a class="nav-link nav-part-link" href="#part-4-clientserver-architecture">Overview</a>
+      <a class="nav-link" href="#10-client-server"><span class="nav-num">10</span>👥 Client &amp; Server</a>
+      <a class="nav-link" href="#11-request-process-response"><span class="nav-num">11</span>🔄 Request → Process → Response</a>
+      <a class="nav-link" href="#12-try-it-yourself"><span class="nav-num">12</span>🧪 Try It Yourself</a>
+    </details>
+    <details class="nav-part" data-part="part-5-types-of-networks" style="--part:#dc2626">
+      <summary><span class="dot"></span><span class="nav-part-num">5</span><span class="nav-part-title">Types of Networks</span></summary>
+      <a class="nav-link nav-part-link" href="#part-5-types-of-networks">Overview</a>
+      <a class="nav-link" href="#13-not-all-connections-are-the-same"><span class="nav-num">13</span>📶 Not All Connections Are the Same</a>
+      <a class="nav-link" href="#14-pan-personal-area-network"><span class="nav-num">14</span>⌚ PAN — Personal Area Network</a>
+      <a class="nav-link" href="#15-lan-local-area-network"><span class="nav-num">15</span>🏠 LAN — Local Area Network</a>
+      <a class="nav-link" href="#16-man-metropolitan-area-network"><span class="nav-num">16</span>🏙️ MAN — Metropolitan Area Network</a>
+      <a class="nav-link" href="#17-wan-wide-area-network"><span class="nav-num">17</span>🌍 WAN — Wide Area Network</a>
+      <a class="nav-link" href="#18-pan-vs-lan-vs-man-vs-wan"><span class="nav-num">18</span>📊 PAN vs LAN vs MAN vs WAN</a>
+    </details>
+    <details class="nav-part" data-part="part-6-network-topologies" style="--part:#9333ea">
+      <summary><span class="dot"></span><span class="nav-part-num">6</span><span class="nav-part-title">Network Topologies</span></summary>
+      <a class="nav-link nav-part-link" href="#part-6-network-topologies">Overview</a>
+      <a class="nav-link" href="#19-what-is-a-topology"><span class="nav-num">19</span>🗺️ What is a Topology?</a>
+      <a class="nav-link" href="#20-bus-topology"><span class="nav-num">20</span>➖ Bus Topology</a>
+      <a class="nav-link" href="#21-ring-topology"><span class="nav-num">21</span>⭕ Ring Topology</a>
+      <a class="nav-link" href="#22-star-topology"><span class="nav-num">22</span>⭐ Star Topology</a>
+      <a class="nav-link" href="#23-mesh-topology"><span class="nav-num">23</span>🕸️ Mesh Topology</a>
+      <a class="nav-link" href="#24-tree-topology"><span class="nav-num">24</span>🌳 Tree Topology</a>
+      <a class="nav-link" href="#25-topology-comparison"><span class="nav-num">25</span>📊 Topology Comparison</a>
+    </details>
+    <details class="nav-part" data-part="part-7-network-models" style="--part:#a16207">
+      <summary><span class="dot"></span><span class="nav-part-num">7</span><span class="nav-part-title">Network Models</span></summary>
+      <a class="nav-link nav-part-link" href="#part-7-network-models">Overview</a>
+      <a class="nav-link" href="#26-why-do-we-need-network-models"><span class="nav-num">26</span>❓ Why Do We Need Network Models?</a>
+      <a class="nav-link" href="#27-the-two-models-youll-hear-about"><span class="nav-num">27</span>🧱 The Two Models You&#39;ll Hear About</a>
+      <a class="nav-link" href="#28-remember"><span class="nav-num">28</span>🧠 Remember</a>
+    </details>
+    <details class="nav-part" data-part="part-8-interview-questions-cheat-sheet" style="--part:#0891b2">
+      <summary><span class="dot"></span><span class="nav-part-num">8</span><span class="nav-part-title">Interview Questions &amp; Cheat Sheet</span></summary>
+      <a class="nav-link nav-part-link" href="#part-8-interview-questions-cheat-sheet">Overview</a>
+      <a class="nav-link" href="#29-interview-questions"><span class="nav-num">29</span>🎤 Interview Questions</a>
+      <a class="nav-link" href="#30-cheat-sheet"><span class="nav-num">30</span>📋 Cheat Sheet</a>
+    </details>
+    <p class="built">Built 9 Oct 2026, 4:30 pm</p>
+  </aside>
+  <div class="backdrop" id="backdrop"></div>
+
+  <main id="main">
+    <article class="doc" id="doc">
+<header class="hero" id="top">
+  <div class="hero-badge">🌐 Networking study guide</div>
+  <h1 class="hero-title">Networking — Complete Notes</h1>
+  <p class="hero-sub">Basics · Internet · Topologies · Models</p>
+  <div class="hero-stats">
+    <div><strong>8</strong><span>Parts</span></div>
+    <div><strong>30</strong><span>Sections</span></div>
+    <div><strong>17</strong><span>Code blocks</span></div>
+    <div><strong>8</strong><span>Interview Qs</span></div>
+  </div>
+  <div class="hero-actions">
+    <a class="btn primary" href="#part-1-basic-terminology">▶ Start reading</a>
+    <a class="btn" href="#part-8-interview-questions-cheat-sheet">⭐ Interview questions</a>
+    <a class="btn" href="#part-8-interview-questions-cheat-sheet">📊 Cheat sheets</a>
+    
+  </div>
+  <div class="hero-intro">
+<blockquote class="callout note"><p>Networking fundamentals for DevOps &amp; cloud: what a network is, how the internet really works, the web, client–server, network types, topologies and why network models exist.</p>
+<p>These terms show up everywhere — cloud architecture diagrams, server configs, Docker/Kubernetes networking and security discussions.</p>
+<p>⭐ <strong>Preparing for an interview?</strong> → the <strong>highlighted questions</strong> are in <strong>Part 8</strong> at the end.</p>
+</blockquote>
+</div>
+</header>
+<hr>
+<section class="contents" id="contents">
+  <h2 class="contents-title">📑 Contents</h2>
+  <div class="cards">
+    <a class="card" href="#part-1-basic-terminology" style="--part:#2563eb">
+      <span class="card-top"><span class="card-emoji">🟦</span><span class="card-num">Part 1</span><span class="card-range">§1–3</span></span>
+      <span class="card-title">Basic Terminology</span>
+      <span class="card-secs">What is a Computer Network? · Node, Host &amp; Networking · Remember</span>
+    </a>
+    <a class="card" href="#part-2-the-internet" style="--part:#16a34a">
+      <span class="card-top"><span class="card-emoji">🟩</span><span class="card-num">Part 2</span><span class="card-range">§4–6</span></span>
+      <span class="card-title">The Internet</span>
+      <span class="card-secs">What is the Internet? · Who Owns the Internet? · How Does My ISP in India Reach a Server in the USA?</span>
+    </a>
+    <a class="card" href="#part-3-www-vs-internet" style="--part:#ca8a04">
+      <span class="card-top"><span class="card-emoji">🟨</span><span class="card-num">Part 3</span><span class="card-range">§7–9</span></span>
+      <span class="card-title">WWW vs Internet</span>
+      <span class="card-secs">What is the World Wide Web? · The 3 Inventions That Made the Web · Internet vs Web</span>
+    </a>
+    <a class="card" href="#part-4-clientserver-architecture" style="--part:#ea580c">
+      <span class="card-top"><span class="card-emoji">🟧</span><span class="card-num">Part 4</span><span class="card-range">§10–12</span></span>
+      <span class="card-title">Client–Server Architecture</span>
+      <span class="card-secs">Client &amp; Server · Request → Process → Response · Try It Yourself</span>
+    </a>
+    <a class="card" href="#part-5-types-of-networks" style="--part:#dc2626">
+      <span class="card-top"><span class="card-emoji">🟥</span><span class="card-num">Part 5</span><span class="card-range">§13–18</span></span>
+      <span class="card-title">Types of Networks</span>
+      <span class="card-secs">Not All Connections Are the Same · PAN — Personal Area Network · LAN — Local Area Network …</span>
+    </a>
+    <a class="card" href="#part-6-network-topologies" style="--part:#9333ea">
+      <span class="card-top"><span class="card-emoji">🟪</span><span class="card-num">Part 6</span><span class="card-range">§19–25</span></span>
+      <span class="card-title">Network Topologies</span>
+      <span class="card-secs">What is a Topology? · Bus Topology · Ring Topology …</span>
+    </a>
+    <a class="card" href="#part-7-network-models" style="--part:#a16207">
+      <span class="card-top"><span class="card-emoji">🟫</span><span class="card-num">Part 7</span><span class="card-range">§26–28</span></span>
+      <span class="card-title">Network Models</span>
+      <span class="card-secs">Why Do We Need Network Models? · The Two Models You&#39;ll Hear About · Remember</span>
+    </a>
+    <a class="card" href="#part-8-interview-questions-cheat-sheet" style="--part:#0891b2">
+      <span class="card-top"><span class="card-emoji">⭐</span><span class="card-num">Part 8</span><span class="card-range">§29–30</span></span>
+      <span class="card-title">Interview Questions &amp; Cheat Sheet</span>
+      <span class="card-secs">Interview Questions · Cheat Sheet</span>
+    </a>
+  </div>
+</section>
+<hr>
+<h1 id="part-1-basic-terminology" class="part-heading" style="--part:#2563eb"><span class="part-kicker">🟦 Part 1</span><span class="part-title">Basic Terminology</span></h1>
+<h2 id="1-what-is-a-computer-network" class="sec-heading"><a class="sec-num" href="#1-what-is-a-computer-network">1</a><span>🖧 What is a Computer Network?</span></h2>
+<p><strong>Definition:</strong> a <strong>computer network</strong> is a digital communication medium that allows <strong>nodes</strong> (devices) to <strong>share data and resources</strong> with each other.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>[ Laptop  ] ──┐
+[ Phone   ] ──┼──── [ Router ] ──── ( Internet )
+[ Printer ] ──┘</code></pre></div>
+<p>Resources that can be shared: files, printers, internet connection, applications, storage.</p>
+<hr>
+<h2 id="2-node-host-networking" class="sec-heading"><a class="sec-num" href="#2-node-host-networking">2</a><span>🔤 Node, Host &amp; Networking</span></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Node</strong></td>
+<td><strong>Any</strong> device connected to a network</td>
+<td>PC, phone, router, switch, printer</td>
+</tr>
+<tr>
+<td><strong>Host</strong></td>
+<td>A device that <strong>gets an IP address</strong> and sends/receives data (an end device)</td>
+<td>PC, laptop, server, mobile</td>
+</tr>
+<tr>
+<td><strong>Networking</strong></td>
+<td><strong>Sharing data and resources</strong> between devices in a network</td>
+<td>Sending a file, opening a website</td>
+</tr>
+<tr>
+<td><strong>IP address</strong></td>
+<td>The unique address of a host on a network</td>
+<td><code>192.168.1.10</code>, <code>142.250.183.14</code></td>
+</tr>
+</tbody></table>
+</div>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>Every host is a node,
+but not every node is a host.
+(a switch is a node — it forwards data — but it&#39;s not an end device)</code></pre></div>
+<hr>
+<h2 id="3-remember" class="sec-heading"><a class="sec-num" href="#3-remember">3</a><span>🧠 Remember</span></h2>
+<blockquote class="callout tip"><p>🧠 <strong>Network</strong> = connected devices · <strong>Node</strong> = any device on it · <strong>Host</strong> = device with an IP that sends/receives data · <strong>Networking</strong> = sharing data &amp; resources.</p>
+</blockquote>
+<hr>
+<h1 id="part-2-the-internet" class="part-heading" style="--part:#16a34a"><span class="part-kicker">🟩 Part 2</span><span class="part-title">The Internet</span></h1>
+<h2 id="4-what-is-the-internet" class="sec-heading"><a class="sec-num" href="#4-what-is-the-internet">4</a><span>🌍 What is the Internet?</span></h2>
+<blockquote class="callout note"><p><strong>The internet is, at its core, a network of networks.</strong></p>
+</blockquote>
+<p>Your home Wi-Fi, Jio&#39;s network, a college LAN, Google&#39;s network and AWS data centres are all <strong>separate networks</strong>. The internet is what you get when they are all <strong>connected together</strong>.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>   🏠 Home network        🏫 College network       🏢 Office network
+          │                       │                       │
+     Jio / Airtel            BSNL / ISP              ISP network
+          └──────────────┬────────┴───────────────────────┘
+                         │
+              🌐 THE INTERNET (network of networks)
+                         │
+          ┌──────────────┼──────────────┐
+     ☁️ AWS           🔍 Google      📺 YouTube data centres</code></pre></div>
+<hr>
+<h2 id="5-who-owns-the-internet" class="sec-heading"><a class="sec-num" href="#5-who-owns-the-internet">5</a><span>🏢 Who Owns the Internet?</span></h2>
+<blockquote class="callout note"><p><strong>Nobody owns the internet — and everybody owns a piece of it.</strong></p>
+</blockquote>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Owner</th>
+<th>Owns which piece</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>🏠 <strong>You</strong></td>
+<td>Your devices and home router</td>
+</tr>
+<tr>
+<td>📡 <strong>Your ISP</strong> (Jio, Airtel, BSNL)</td>
+<td>Cables, towers and equipment connecting your home to the wider network</td>
+</tr>
+<tr>
+<td>🌐 <strong>Big backbone carriers</strong> (Tier-1 networks)</td>
+<td>Long-distance fibre across countries and continents</td>
+</tr>
+<tr>
+<td>🌊 <strong>Submarine-cable consortiums</strong></td>
+<td>Undersea fibre cables between continents</td>
+</tr>
+<tr>
+<td>🏭 <strong>Data-centre companies</strong> (AWS, Google, Azure)</td>
+<td>Their servers and infrastructure</td>
+</tr>
+</tbody></table>
+</div>
+<p>Each owner runs <strong>only its part</strong>; agreements between them connect everything together.</p>
+<hr>
+<h2 id="6-how-does-my-isp-in-india-reach-a-server-in-the-usa" class="sec-heading"><a class="sec-num" href="#6-how-does-my-isp-in-india-reach-a-server-in-the-usa">6</a><span>🌊 How Does My ISP in India Reach a Server in the USA?</span></h2>
+<p>The big question: your <strong>phone → Wi-Fi → router → ISP</strong> … but how does Jio in India reach a server sitting in the <strong>United States</strong>?</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>📱 Phone
+  ↓ Wi-Fi
+📡 Home router
+  ↓ fibre / mobile tower
+🏢 Your ISP (Jio / Airtel)          ← Tier-2/3 ISP
+  ↓
+🔀 IXP / bigger carriers             ← Tier-1 backbone networks
+  ↓
+🌊 Submarine fibre-optic cable        ← lands in Mumbai / Chennai
+  ↓ under the ocean
+🇺🇸 Cable landing station in the US
+  ↓
+🌐 US backbone → data-centre network
+  ↓
+🖥️ The server</code></pre></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ISP tiers</strong></td>
+<td><strong>Tier-1</strong> = giant global networks that reach every other network. <strong>Tier-2/3</strong> ISPs (Jio, BSNL) pay or partner with them to reach the world</td>
+</tr>
+<tr>
+<td><strong>Submarine cables</strong></td>
+<td>Fibre-optic cables on the ocean floor — carry <strong>~99 % of international internet traffic</strong> (not satellites)</td>
+</tr>
+<tr>
+<td><strong>Cable landing station</strong></td>
+<td>Where an undersea cable comes ashore (India: Mumbai, Chennai)</td>
+</tr>
+<tr>
+<td><strong>IXP (Internet Exchange Point)</strong></td>
+<td>A building where many networks plug in and <strong>exchange traffic directly</strong></td>
+</tr>
+<tr>
+<td><strong>Peering / Transit</strong></td>
+<td><strong>Peering</strong> = two networks swap traffic (often free). <strong>Transit</strong> = one network <strong>pays</strong> another to carry its traffic</td>
+</tr>
+<tr>
+<td><strong>Router</strong></td>
+<td>Device that reads the destination <strong>IP address</strong> and forwards the data one hop closer</td>
+</tr>
+<tr>
+<td><strong>BGP</strong></td>
+<td>Border Gateway Protocol — how networks tell each other &quot;I can reach these IPs&quot;; the <strong>GPS of the internet</strong></td>
+</tr>
+<tr>
+<td><strong>DNS</strong></td>
+<td>Turns a name (<code>google.com</code>) into an IP address before the trip starts</td>
+</tr>
+</tbody></table>
+</div>
+<blockquote class="callout note"><p>🔍 Try it: <code>traceroute google.com</code> (Mac/Linux) or <code>tracert google.com</code> (Windows) shows <strong>every router hop</strong> between you and the server.</p>
+</blockquote>
+<hr>
+<h1 id="part-3-www-vs-internet" class="part-heading" style="--part:#ca8a04"><span class="part-kicker">🟨 Part 3</span><span class="part-title">WWW vs Internet</span></h1>
+<h2 id="7-what-is-the-world-wide-web" class="sec-heading"><a class="sec-num" href="#7-what-is-the-world-wide-web">7</a><span>🕸️ What is the World Wide Web?</span></h2>
+<blockquote class="callout note"><p><strong>The World Wide Web (WWW) is one specific application that runs on top of the internet.</strong></p>
+</blockquote>
+<p>In <strong>1991</strong>, British scientist <strong>Tim Berners-Lee</strong> built a system on top of the internet that made information easy for everyday people to access.</p>
+<p><strong>His idea:</strong> a system of <strong>interlinked documents</strong> (pages) that anyone could open over the internet using a <strong>web browser</strong>.</p>
+<hr>
+<h2 id="8-the-3-inventions-that-made-the-web" class="sec-heading"><a class="sec-num" href="#8-the-3-inventions-that-made-the-web">8</a><span>🧩 The 3 Inventions That Made the Web</span></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Invention</th>
+<th>Full form</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>HTML</strong></td>
+<td>HyperText Markup Language</td>
+<td>Language to <strong>write and structure</strong> documents (pages)</td>
+<td><code>&lt;h1&gt;Hello&lt;/h1&gt;</code></td>
+</tr>
+<tr>
+<td><strong>HTTP</strong></td>
+<td>HyperText Transfer Protocol</td>
+<td>Rules for <strong>how documents are requested and delivered</strong> over the internet</td>
+<td><code>GET /index.html</code></td>
+</tr>
+<tr>
+<td><strong>URL</strong></td>
+<td>Uniform Resource Locator</td>
+<td>A <strong>unique address</strong> for every document so anyone can find it</td>
+<td><code>https://example.com/about</code></td>
+</tr>
+</tbody></table>
+</div>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>HTML (the page) + HTTP (the delivery) + URL (the address)
+                       =
+     🕸️ the Web: billions of linked pages, opened in a browser</code></pre></div>
+<p>Anatomy of a URL:</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>https://www.example.com:443/docs/page.html?id=7#intro
+└─┬─┘   └──────┬──────┘ └┬┘└──────┬──────┘ └─┬─┘ └─┬─┘
+protocol     domain     port     path      query  fragment</code></pre></div>
+<hr>
+<h2 id="9-internet-vs-web" class="sec-heading"><a class="sec-num" href="#9-internet-vs-web">9</a><span>🆚 Internet vs Web</span></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>🌐 Internet</th>
+<th>🕸️ World Wide Web</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>The <strong>infrastructure</strong> — cables, routers, networks</td>
+<td>A <strong>service</strong> that runs on that infrastructure</td>
+</tr>
+<tr>
+<td>Started 1960s–70s (ARPANET)</td>
+<td>Invented 1991 (Tim Berners-Lee)</td>
+</tr>
+<tr>
+<td>Carries <strong>everything</strong>: web, email, WhatsApp, video calls, games, SSH, file transfer</td>
+<td>Only <strong>web pages</strong> (HTML via HTTP/HTTPS) in a browser</td>
+</tr>
+<tr>
+<td>Uses IP, TCP, UDP …</td>
+<td>Uses HTTP/HTTPS, HTML, URLs</td>
+</tr>
+</tbody></table>
+</div>
+<blockquote class="callout tip"><p>🧠 <strong>The internet is the road. The web is one kind of vehicle on it</strong> (email, WhatsApp, Netflix are other vehicles).</p>
+</blockquote>
+<hr>
+<h1 id="part-4-clientserver-architecture" class="part-heading" style="--part:#ea580c"><span class="part-kicker">🟧 Part 4</span><span class="part-title">Client–Server Architecture</span></h1>
+<h2 id="10-client-server" class="sec-heading"><a class="sec-num" href="#10-client-server">10</a><span>👥 Client &amp; Server</span></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>💻 Client</th>
+<th>🖥️ Server</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Role</td>
+<td><strong>Makes a request</strong></td>
+<td><strong>Listens for requests and responds</strong></td>
+</tr>
+<tr>
+<td>Examples</td>
+<td>Your browser, mobile app, terminal (<code>curl</code>, <code>ssh</code>)</td>
+<td>Web server (Nginx), API (Node.js), database (MongoDB)</td>
+</tr>
+<tr>
+<td>Starts the conversation?</td>
+<td>✅ Yes</td>
+<td>❌ No — waits</td>
+</tr>
+</tbody></table>
+</div>
+<blockquote class="callout note"><p>A <strong>server is not a special magical machine.</strong> It is just a <strong>computer running software that listens on a port</strong>, waiting for requests and sending back responses. <strong>Your laptop can be a server.</strong></p>
+</blockquote>
+<hr>
+<h2 id="11-request-process-response" class="sec-heading"><a class="sec-num" href="#11-request-process-response">11</a><span>🔄 Request → Process → Response</span></h2>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>💻 CLIENT                                   🖥️ SERVER
+   │                                           │  listening on port 443
+   │ ── 1. Request: GET /home ───────────────▶ │
+   │                                           │ 2. Process (read DB, build page)
+   │ ◀────────────── 3. Response: 200 OK + HTML │
+   ▼                                           ▼</code></pre></div>
+<ol>
+<li><strong>Client sends a request</strong></li>
+<li><strong>Server processes it</strong></li>
+<li><strong>Server sends back a response</strong></li>
+</ol>
+<p>A single server can handle <strong>thousands — sometimes millions — of client requests at the same time</strong>.</p>
+<hr>
+<h2 id="12-try-it-yourself" class="sec-heading"><a class="sec-num" href="#12-try-it-yourself">12</a><span>🧪 Try It Yourself</span></h2>
+<div class="code"><div class="code-bar"><span class="lang">bash</span><button class="copy" type="button">Copy</button></div><pre><code># Turn your laptop into a server (serves the current folder on port 8000)
+python3 -m http.server 8000
+
+# In another terminal, be the client
+curl -i http://localhost:8000</code></pre></div>
+<p>Your Docker practice app works the same way: the Node.js container <strong>listens on port 3000</strong> (server) and your <strong>browser</strong> is the client.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Common server</th>
+<th>Default port</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HTTP</td>
+<td>80</td>
+</tr>
+<tr>
+<td>HTTPS</td>
+<td>443</td>
+</tr>
+<tr>
+<td>SSH</td>
+<td>22</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td>3306</td>
+</tr>
+<tr>
+<td>MongoDB</td>
+<td>27017</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>6379</td>
+</tr>
+</tbody></table>
+</div>
+<hr>
+<h1 id="part-5-types-of-networks" class="part-heading" style="--part:#dc2626"><span class="part-kicker">🟥 Part 5</span><span class="part-title">Types of Networks</span></h1>
+<h2 id="13-not-all-connections-are-the-same" class="sec-heading"><a class="sec-num" href="#13-not-all-connections-are-the-same">13</a><span>📶 Not All Connections Are the Same</span></h2>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>⌚ Watch ─ 📱 Phone ─ 📶 Wi-Fi ─ 📡 Router ─ 🗼 ISP / tower ─ 🌍 World
+  (PAN)      └────── (LAN) ──────┘           (MAN / WAN)</code></pre></div>
+<p>Your phone is connected to your home Wi-Fi, the Wi-Fi to your router, the router to Jio/Airtel, and through them to the world. Each step is a <strong>different type of network</strong> — different <strong>name, scale and purpose</strong>.</p>
+<hr>
+<h2 id="14-pan-personal-area-network" class="sec-heading"><a class="sec-num" href="#14-pan-personal-area-network">14</a><span>⌚ PAN — Personal Area Network</span></h2>
+<ul>
+<li><strong>Smallest scale</strong> — the devices <strong>around a single person</strong>.</li>
+<li>Range: a few metres.</li>
+<li>Usually Bluetooth / USB; <strong>no internet required</strong>.</li>
+</ul>
+<p>Examples: 📱 phone ↔ 🎧 earbuds (Bluetooth) · ⌚ smartwatch syncing with phone · 💻 laptop ↔ wireless mouse.</p>
+<hr>
+<h2 id="15-lan-local-area-network" class="sec-heading"><a class="sec-num" href="#15-lan-local-area-network">15</a><span>🏠 LAN — Local Area Network</span></h2>
+<ul>
+<li>A <strong>mini-network</strong> covering a <strong>small area</strong>: home, office, building or campus.</li>
+<li>Fast and privately owned.</li>
+<li>Perfect for <strong>sharing printers, files</strong> and communicating between devices.</li>
+<li>Built with <strong>switches</strong>, <strong>Wi-Fi access points</strong> and Ethernet cables.</li>
+</ul>
+<blockquote class="callout note"><p>☁️ <strong>Cloud link:</strong> a <strong>private network inside an AWS VPC</strong> (Virtual Private Cloud) is essentially a <strong>LAN in the cloud</strong>.</p>
+</blockquote>
+<hr>
+<h2 id="16-man-metropolitan-area-network" class="sec-heading"><a class="sec-num" href="#16-man-metropolitan-area-network">16</a><span>🏙️ MAN — Metropolitan Area Network</span></h2>
+<ul>
+<li>The <strong>bigger sibling of a LAN</strong> — covers a <strong>city / metropolitan area</strong>.</li>
+<li><strong>Connects multiple LANs</strong> or network segments in the same region.</li>
+<li>Used by businesses, universities, government organisations, city Wi-Fi, cable TV networks.</li>
+</ul>
+<blockquote class="callout note"><p>☁️ <strong>Cloud link:</strong> an <strong>AWS Region</strong> is several data centres (<strong>Availability Zones</strong>) in one geographic area connected by fast private links — <strong>MAN-scale infrastructure</strong>.</p>
+</blockquote>
+<hr>
+<h2 id="17-wan-wide-area-network" class="sec-heading"><a class="sec-num" href="#17-wan-wide-area-network">17</a><span>🌍 WAN — Wide Area Network</span></h2>
+<ul>
+<li>Covers <strong>wide areas</strong>: multiple cities, countries or continents.</li>
+<li><strong>The internet is the largest WAN.</strong></li>
+<li>Companies also build <strong>private WANs</strong> — e.g. one corporate network joining offices in <strong>Mumbai, Bangalore, New York and London</strong>. Banks and airlines do this.</li>
+</ul>
+<blockquote class="callout tip"><p>🧠 <strong>The internet is a collection of all these networks</strong> — PANs and LANs connected through MANs and WANs.</p>
+</blockquote>
+<hr>
+<h2 id="18-pan-vs-lan-vs-man-vs-wan" class="sec-heading"><a class="sec-num" href="#18-pan-vs-lan-vs-man-vs-wan">18</a><span>📊 PAN vs LAN vs MAN vs WAN</span></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>⌚ PAN</th>
+<th>🏠 LAN</th>
+<th>🏙️ MAN</th>
+<th>🌍 WAN</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Full form</td>
+<td>Personal Area Network</td>
+<td>Local Area Network</td>
+<td>Metropolitan Area Network</td>
+<td>Wide Area Network</td>
+</tr>
+<tr>
+<td>Range</td>
+<td>~10 m</td>
+<td>Home / building / campus</td>
+<td>A city</td>
+<td>Countries / continents</td>
+</tr>
+<tr>
+<td>Example</td>
+<td>Phone + earbuds</td>
+<td>Home Wi-Fi, office network</td>
+<td>City network, campus group</td>
+<td>The internet, bank&#39;s private network</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Low–medium</td>
+<td>Very high</td>
+<td>High</td>
+<td>Varies (slower over distance)</td>
+</tr>
+<tr>
+<td>Owned by</td>
+<td>One person</td>
+<td>One person / organisation</td>
+<td>Organisation / city / ISP</td>
+<td>Many organisations / ISPs</td>
+</tr>
+<tr>
+<td>Cloud equivalent</td>
+<td>—</td>
+<td>VPC / subnet</td>
+<td>Region + Availability Zones</td>
+<td>Global network between regions</td>
+</tr>
+</tbody></table>
+</div>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>PAN  ⊂  LAN  ⊂  MAN  ⊂  WAN
+(smallest)            (largest)</code></pre></div>
+<hr>
+<h1 id="part-6-network-topologies" class="part-heading" style="--part:#9333ea"><span class="part-kicker">🟪 Part 6</span><span class="part-title">Network Topologies</span></h1>
+<h2 id="19-what-is-a-topology" class="sec-heading"><a class="sec-num" href="#19-what-is-a-topology">19</a><span>🗺️ What is a Topology?</span></h2>
+<p>Imagine setting up an office network: <strong>6 computers, 1 printer, 1 internet connection</strong>. How do you connect them?</p>
+<ul>
+<li>Run a cable from <strong>every computer to every other</strong> computer?</li>
+<li>Plug everything into <strong>one central box</strong>?</li>
+<li>Arrange them <strong>in a line</strong>?</li>
+</ul>
+<p><strong>Network topology</strong> answers this. The word comes from the Greek <em>topos</em> = <strong>place / arrangement</strong>.</p>
+<blockquote class="callout note"><p><strong>Definition:</strong> <strong>topology</strong> is the way devices are <strong>arranged and connected</strong> to each other in a network.</p>
+</blockquote>
+<hr>
+<h2 id="20-bus-topology" class="sec-heading"><a class="sec-num" href="#20-bus-topology">20</a><span>➖ Bus Topology</span></h2>
+<p>All devices are connected to <strong>one single cable</strong> called the <strong>bus</strong> (backbone).</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code> [PC1]   [PC2]   [PC3]  [Printer]
+   │       │       │       │
+═══╧═══════╧═══════╧═══════╧═══  ← the bus (one shared cable)</code></pre></div>
+<ul>
+<li>Like a <strong>group chat</strong>: every message is seen by everyone; only the intended device keeps it.</li>
+<li>✅ Cheap, simple, little cable.</li>
+<li>❌ <strong>Cable breaks → whole network down</strong>; slows down as devices are added; collisions.</li>
+</ul>
+<hr>
+<h2 id="21-ring-topology" class="sec-heading"><a class="sec-num" href="#21-ring-topology">21</a><span>⭕ Ring Topology</span></h2>
+<p>Each device connects to the <strong>next one in a circular loop</strong>. Data travels <strong>in one direction</strong>, passing through each device.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>   [PC1] ──────▶ [PC2]
+     ▲             │
+     │             ▼
+   [PC4] ◀────── [PC3]</code></pre></div>
+<ul>
+<li>✅ Orderly — no collisions; equal access.</li>
+<li>❌ <strong>One device or link fails → the ring breaks</strong> (unless it&#39;s a dual ring); adding devices disrupts it.</li>
+</ul>
+<hr>
+<h2 id="22-star-topology" class="sec-heading"><a class="sec-num" href="#22-star-topology">22</a><span>⭐ Star Topology</span></h2>
+<p>All devices connect to a <strong>central hub or switch</strong>. Data flows <strong>through the centre</strong> to reach the intended device.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>        [PC1]       [PC2]
+            \       /
+ [Printer] ── [SWITCH] ── [PC3]
+            /       \
+        [PC4]     [Router] → Internet</code></pre></div>
+<ul>
+<li>✅ <strong>Most common today</strong> (home &amp; office networks). One cable fails → only that device is affected. Easy to add devices and troubleshoot.</li>
+<li>❌ <strong>Central switch fails → everything is down</strong>; more cable than bus.</li>
+</ul>
+<hr>
+<h2 id="23-mesh-topology" class="sec-heading"><a class="sec-num" href="#23-mesh-topology">23</a><span>🕸️ Mesh Topology</span></h2>
+<p>Each device connects to <strong>every other device</strong> (full mesh), giving <strong>many paths</strong> for data.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>   [A] ─────────── [B]
+    │ ╲           ╱ │
+    │   ╲       ╱   │
+    │     ╲   ╱     │
+    │       ╳       │
+    │     ╱   ╲     │
+    │   ╱       ╲   │
+    │ ╱           ╲ │
+   [C] ─────────── [D]
+
+ 4 devices → 4×3/2 = 6 links (every device ↔ every device)</code></pre></div>
+<ul>
+<li>✅ <strong>Most reliable</strong> — if one link fails, data takes another route. Used in the <strong>internet backbone</strong>, data-centre and cloud networks.</li>
+<li>❌ Expensive, lots of cabling: <strong>n devices need n×(n−1)/2 links</strong> (6 devices = 15 cables).</li>
+<li><strong>Partial mesh</strong> = only important devices have multiple links (common in practice).</li>
+</ul>
+<hr>
+<h2 id="24-tree-topology" class="sec-heading"><a class="sec-num" href="#24-tree-topology">24</a><span>🌳 Tree Topology</span></h2>
+<p>A <strong>hierarchy</strong> that combines <strong>bus and star</strong>: star networks connected to a backbone, like a <strong>family tree</strong>.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>                [ Core switch ]
+               /               \
+    [ Floor-1 switch ]    [ Floor-2 switch ]
+      /     |     \          /        \
+   [PC1]  [PC2] [Printer]  [PC3]     [PC4]</code></pre></div>
+<ul>
+<li>✅ Scales well; easy to expand floor by floor or department by department. Common in <strong>big companies and campuses</strong>.</li>
+<li>❌ Top-level (root) switch fails → its branches are cut off; more complex.</li>
+</ul>
+<hr>
+<h2 id="25-topology-comparison" class="sec-heading"><a class="sec-num" href="#25-topology-comparison">25</a><span>📊 Topology Comparison</span></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Topology</th>
+<th>Layout</th>
+<th>✅ Advantage</th>
+<th>❌ Disadvantage</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>➖ <strong>Bus</strong></td>
+<td>One shared cable</td>
+<td>Cheap, simple</td>
+<td>Cable break = all down</td>
+<td>Old Ethernet, small labs</td>
+</tr>
+<tr>
+<td>⭕ <strong>Ring</strong></td>
+<td>Circular loop</td>
+<td>No collisions</td>
+<td>One failure breaks the ring</td>
+<td>Old token-ring, some fibre rings</td>
+</tr>
+<tr>
+<td>⭐ <strong>Star</strong></td>
+<td>All → central switch</td>
+<td>Easy to manage; one cable fail affects one device</td>
+<td>Switch fails = all down</td>
+<td><strong>Homes, offices</strong> (most common)</td>
+</tr>
+<tr>
+<td>🕸️ <strong>Mesh</strong></td>
+<td>Everyone ↔ everyone</td>
+<td>Most reliable, many paths</td>
+<td>Expensive, many cables</td>
+<td><strong>Internet backbone, data centres</strong></td>
+</tr>
+<tr>
+<td>🌳 <strong>Tree</strong></td>
+<td>Hierarchy of stars</td>
+<td>Scalable</td>
+<td>Root failure cuts branches</td>
+<td><strong>Large companies, campuses</strong></td>
+</tr>
+</tbody></table>
+</div>
+<blockquote class="callout tip"><p>🧠 Memory trick: <strong>Bus</strong> = one road · <strong>Ring</strong> = roundabout · <strong>Star</strong> = everything goes through the centre · <strong>Mesh</strong> = every house has a road to every other · <strong>Tree</strong> = family tree.</p>
+</blockquote>
+<hr>
+<h1 id="part-7-network-models" class="part-heading" style="--part:#a16207"><span class="part-kicker">🟫 Part 7</span><span class="part-title">Network Models</span></h1>
+<h2 id="26-why-do-we-need-network-models" class="sec-heading"><a class="sec-num" href="#26-why-do-we-need-network-models">26</a><span>❓ Why Do We Need Network Models?</span></h2>
+<p>You&#39;re watching a bootcamp on YouTube. Your request <strong>leaves your phone → travels over Wi-Fi → crosses the internet → reaches a server in a data centre → is processed → the video comes back</strong> — all in a few seconds.</p>
+<p>But:</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>📱 Phone   → made by Apple
+📡 Router  → a different manufacturer
+🏢 ISP gear → different again
+🖥️ Server  → runs Linux</code></pre></div>
+<p><strong>How do they all understand each other?</strong> → <strong>Network models.</strong></p>
+<p>In the early days, <strong>every company built its own system</strong> — its own cables, its own rules, its own way of sending data — and <strong>none of them could talk to each other</strong>.</p>
+<p>A <strong>network model</strong> is a <strong>standard set of rules split into layers</strong>, so any device from any company can communicate as long as it follows the same rules.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Without a model</th>
+<th>With a model</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Every vendor has its own rules</td>
+<td>Everyone follows one standard</td>
+</tr>
+<tr>
+<td>Devices can&#39;t talk to each other</td>
+<td>Apple phone ↔ Linux server ↔ any router works</td>
+</tr>
+<tr>
+<td>One giant, complex problem</td>
+<td>Split into <strong>layers</strong> — each layer has one job</td>
+</tr>
+<tr>
+<td>Hard to troubleshoot</td>
+<td>Find which layer is failing</td>
+</tr>
+</tbody></table>
+</div>
+<hr>
+<h2 id="27-the-two-models-youll-hear-about" class="sec-heading"><a class="sec-num" href="#27-the-two-models-youll-hear-about">27</a><span>🧱 The Two Models You&#39;ll Hear About</span></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>🧱 OSI Model (7 layers)</th>
+<th>🌐 TCP/IP Model (4 layers)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Reference / teaching</strong> model (ISO, 1984)</td>
+<td>The model the <strong>real internet</strong> uses</td>
+</tr>
+<tr>
+<td>7. Application</td>
+<td>4. Application (HTTP, DNS, SSH)</td>
+</tr>
+<tr>
+<td>6. Presentation</td>
+<td>↑ (included in Application)</td>
+</tr>
+<tr>
+<td>5. Session</td>
+<td>↑ (included in Application)</td>
+</tr>
+<tr>
+<td>4. Transport</td>
+<td>3. Transport (TCP, UDP)</td>
+</tr>
+<tr>
+<td>3. Network</td>
+<td>2. Internet (IP)</td>
+</tr>
+<tr>
+<td>2. Data Link</td>
+<td>1. Network Access (Ethernet, Wi-Fi)</td>
+</tr>
+<tr>
+<td>1. Physical</td>
+<td>↑ (included in Network Access)</td>
+</tr>
+</tbody></table>
+</div>
+<blockquote class="callout note"><p>📌 Next topic in these notes: each layer in detail — what it does, its protocols and devices. Memory trick for OSI (top → bottom): <strong>&quot;All People Seem To Need Data Processing.&quot;</strong></p>
+</blockquote>
+<hr>
+<h2 id="28-remember" class="sec-heading"><a class="sec-num" href="#28-remember">28</a><span>🧠 Remember</span></h2>
+<blockquote class="callout tip"><p>🧠 <strong>Models exist so different devices from different companies can talk.</strong> Each layer does one job and hands the data to the next layer.</p>
+</blockquote>
+<hr>
+<h1 id="part-8-interview-questions-cheat-sheet" class="part-heading" style="--part:#0891b2"><span class="part-kicker">⭐ Part 8</span><span class="part-title">Interview Questions &amp; Cheat Sheet</span></h1>
+<h2 id="29-interview-questions" class="sec-heading"><a class="sec-num" href="#29-interview-questions">29</a><span>🎤 Interview Questions</span></h2>
+<blockquote class="callout question"><p>❓ <strong>Q1. What is a computer network? What is the difference between a node and a host?</strong></p>
+</blockquote>
+<p>A network is a set of connected devices that share data and resources. A <strong>node</strong> is any device on the network (including switches and routers); a <strong>host</strong> is an end device with an IP address that sends/receives data (PC, server, phone).</p>
+<hr>
+<blockquote class="callout question"><p>❓ <strong>Q2. What is the internet?</strong></p>
+</blockquote>
+<p>A <strong>network of networks</strong> — millions of separate networks (homes, ISPs, companies, data centres) connected together. Nobody owns all of it; each organisation owns its piece.</p>
+<hr>
+<blockquote class="callout question"><p>❓ <strong>Q3. How does data travel from India to a server in the USA?</strong></p>
+</blockquote>
+<p>Phone → router → ISP → bigger backbone carriers / IXPs → <strong>submarine fibre cable</strong> → US landing station → US backbone → data centre → server. <strong>DNS</strong> finds the IP, routers forward hop by hop, <strong>BGP</strong> decides paths between networks. Check with <code>traceroute</code>.</p>
+<hr>
+<blockquote class="callout question"><p>❓ <strong>Q4. What is the difference between the internet and the World Wide Web?</strong></p>
+</blockquote>
+<p>The <strong>internet</strong> is the infrastructure (cables, routers, networks). The <strong>web</strong> is one service on top of it — linked HTML pages delivered over HTTP and found by URLs, invented by Tim Berners-Lee in 1991. Email and WhatsApp use the internet but are not the web.</p>
+<hr>
+<blockquote class="callout question"><p>❓ <strong>Q5. Explain client–server architecture.</strong></p>
+</blockquote>
+<p>A <strong>client</strong> sends a request; a <strong>server</strong> listens on a port, processes the request and sends a response. A server is just a computer running server software — even a laptop. One server can serve thousands of clients at once.</p>
+<hr>
+<blockquote class="callout question"><p>❓ <strong>Q6. Explain PAN, LAN, MAN and WAN with examples.</strong></p>
+</blockquote>
+<p>PAN = devices around one person (phone + earbuds). LAN = home/office/campus network. MAN = city-wide network joining LANs. WAN = across countries — the internet is the biggest WAN. Cloud: VPC ≈ LAN, Region/AZs ≈ MAN scale.</p>
+<hr>
+<blockquote class="callout question"><p>❓ <strong>Q7. Which network topology is most common, and which is most reliable?</strong></p>
+</blockquote>
+<p><strong>Star</strong> is most common (homes, offices) — easy to manage, but the central switch is a single point of failure. <strong>Mesh</strong> is most reliable (multiple paths), used in internet backbones and data centres, but it&#39;s expensive.</p>
+<hr>
+<blockquote class="callout question"><p>❓ <strong>Q8. Why do we need network models like OSI and TCP/IP?</strong></p>
+</blockquote>
+<p>So devices from different vendors can communicate using common rules, and so the huge problem of networking is split into <strong>layers</strong> that are easier to build and troubleshoot. OSI has 7 layers (reference model); TCP/IP has 4 (what the internet actually uses).</p>
+<hr>
+<h2 id="30-cheat-sheet" class="sec-heading"><a class="sec-num" href="#30-cheat-sheet">30</a><span>📋 Cheat Sheet</span></h2>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>NETWORK      → connected devices sharing data &amp; resources
+NODE         → any device on a network
+HOST         → end device with an IP address
+INTERNET     → network of networks (infrastructure)
+WWW          → web pages (HTML) via HTTP, found by URL — runs ON the internet
+CLIENT       → makes requests          SERVER → listens on a port &amp; responds
+
+PAN  → around one person (Bluetooth)
+LAN  → home / office / campus          (cloud: VPC)
+MAN  → a city                          (cloud: Region + AZs)
+WAN  → countries / continents          (the internet)
+
+BUS  → one shared cable                RING → circular loop
+STAR → central switch (most common)    MESH → everyone ↔ everyone (most reliable)
+TREE → hierarchy of stars
+
+OSI    → 7 layers (reference)          TCP/IP → 4 layers (real internet)
+India → USA: ISP → backbone/IXP → submarine cable → US backbone → server</code></pre></div>
+
+    </article>
+  </main>
+</div>
+
+<button id="to-top" type="button" aria-label="Back to top" hidden>↑</button>
+
+<script>
+(() => {
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const doc = $('#doc');
+
+  // ---------- theme ----------
+  const root = document.documentElement;
+  try { const t = localStorage.getItem('notes-theme'); if (t) root.dataset.theme = t; } catch {}
+  $('#theme-btn').addEventListener('click', () => {
+    const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('notes-theme', root.dataset.theme); } catch {}
+  });
+
+  // ---------- mobile menu ----------
+  const closeMenu = () => document.body.classList.remove('menu-open');
+  $('#menu-btn').addEventListener('click', () => document.body.classList.toggle('menu-open'));
+  $('#backdrop').addEventListener('click', closeMenu);
+  $('#sidebar').addEventListener('click', (e) => { if (e.target.closest('a')) closeMenu(); });
+
+  // ---------- scroll: progress bar, active section, back-to-top ----------
+  const sections = $$('.part-heading, .sec-heading', doc);
+  const navParts = $$('.nav-part');
+  const navLinks = new Map($$('.nav-link').map((a) => [a.getAttribute('href').slice(1), a]));
+  let lastActive = null;
+  let ticking = false;
+
+  function onScroll() {
+    ticking = false;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    $('#progress').style.width = `${max > 0 ? (scrollY / max) * 100 : 0}%`;
+    $('#to-top').hidden = scrollY < 700;
+
+    let current = null;
+    for (const h of sections) { if (h.getBoundingClientRect().top < 140) current = h; else break; }
+    const id = current ? current.id : null;
+    if (id === lastActive) return;
+    lastActive = id;
+
+    $$('.nav-link.active').forEach((a) => a.classList.remove('active'));
+    navParts.forEach((p) => p.classList.remove('current'));
+    if (!id) return;
+    const link = navLinks.get(id) || navLinks.get(id);
+    const part = link ? link.closest('.nav-part') : navParts.find((p) => p.dataset.part === id);
+    if (link) link.classList.add('active');
+    if (part) {
+      part.classList.add('current');
+      if (!part.open) { navParts.forEach((p) => { if (p !== part) p.open = false; }); part.open = true; }
+      const target = link || $('summary', part);
+      const r = target.getBoundingClientRect();
+      const box = $('#sidebar').getBoundingClientRect();
+      if (r.top < box.top + 40 || r.bottom > box.bottom - 40) target.scrollIntoView({ block: 'center' });
+    }
+  }
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  addEventListener('resize', onScroll);
+  $('#to-top').addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // ---------- jump to a heading with a flash ----------
+  function flash(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+  }
+  addEventListener('hashchange', () => flash(decodeURIComponent(location.hash.slice(1))));
+
+  // ---------- copy buttons ----------
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.copy');
+    if (!btn) return;
+    const text = $('code', btn.closest('.code')).innerText;
+    try { await navigator.clipboard.writeText(text); }
+    catch { const ta = document.createElement('textarea'); ta.value = text; document.body.append(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+    btn.textContent = 'Copied ✓'; btn.classList.add('done');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1500);
+  });
+
+  // ---------- search index: every heading + the text under it ----------
+  const index = [];
+  let partName = '';
+  let entry = null;
+  for (const el of doc.children) {
+    if (el.matches('.hero, .contents')) continue;
+    if (/^H[1-4]$/.test(el.tagName) && el.id) {
+      const title = el.classList.contains('part-heading') ? $('.part-title', el).textContent : el.textContent.trim().replace(/^\d+\s*/, '');
+      if (el.classList.contains('part-heading')) partName = $('.part-kicker', el).textContent.trim() + ' · ' + title;
+      const num = el.classList.contains('sec-heading') ? $('.sec-num', el).textContent + '. ' : '';
+      entry = { id: el.id, title: num + title, where: partName, text: '' };
+      index.push(entry);
+    } else if (entry && entry.text.length < 8000) {
+      entry.text += ' ' + el.textContent;
+    }
+  }
+
+  const esc = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const re = (q) => new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+  const hl = (s, q) => esc(s).replace(re(esc(q)), (m) => `<mark>${m}</mark>`);
+
+  const input = $('#search');
+  const results = $('#results');
+  let sel = -1;
+
+  function search() {
+    const q = input.value.trim();
+    sel = -1;
+    if (!q) { results.hidden = true; return; }
+    const lower = q.toLowerCase();
+    const found = [];
+    for (const it of index) {
+      const inTitle = it.title.toLowerCase().includes(lower);
+      const pos = it.text.toLowerCase().indexOf(lower);
+      if (!inTitle && pos < 0) continue;
+      let snip = '';
+      if (pos >= 0) {
+        const s = Math.max(0, pos - 50);
+        snip = (s ? '…' : '') + it.text.slice(s, pos + q.length + 70).replace(/\s+/g, ' ').trim() + '…';
+      }
+      found.push({ it, snip, score: inTitle ? 0 : 1 });
+    }
+    found.sort((a, b) => a.score - b.score);
+    results.innerHTML = found.slice(0, 40).map(({ it, snip }) =>
+      `<a href="#${it.id}"><span class="r-where">${esc(it.where)}</span><span class="r-title">${hl(it.title, q)}</span>${snip ? `<span class="r-snip">${hl(snip, q)}</span>` : ''}</a>`
+    ).join('') || `<div class="empty">No results for “${esc(q)}”</div>`;
+    results.hidden = false;
+  }
+  function move(d) {
+    const items = $$('a', results);
+    if (!items.length) return;
+    sel = (sel + d + items.length) % items.length;
+    items.forEach((a, i) => a.classList.toggle('sel', i === sel));
+    items[sel].scrollIntoView({ block: 'nearest' });
+  }
+  input.addEventListener('input', search);
+  input.addEventListener('focus', () => { if (input.value.trim()) results.hidden = false; });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+    if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+    if (e.key === 'Enter') { const a = $$('a', results)[Math.max(sel, 0)]; if (a) { a.click(); input.blur(); } }
+    if (e.key === 'Escape') { input.value = ''; results.hidden = true; input.blur(); }
+  });
+  results.addEventListener('click', (e) => { if (e.target.closest('a')) results.hidden = true; });
+  document.addEventListener('click', (e) => { if (!e.target.closest('.search-box')) results.hidden = true; });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) { e.preventDefault(); input.focus(); input.select(); }
+  });
+
+  // ---------- start ----------
+  if (location.hash) setTimeout(() => flash(decodeURIComponent(location.hash.slice(1))), 50);
+  onScroll();
+})();
+</script>
+</body>
+</html>
