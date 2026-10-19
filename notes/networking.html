@@ -210,12 +210,12 @@
   <a class="brand" href="#top"><span class="brand-logo">🌐</span><span class="brand-text">Networking — Complete Notes</span></a>
   <div class="search-box">
     <span class="s-icon">🔍</span>
-    <input id="search" type="search" placeholder="Search commands, topics, flags…" autocomplete="off" spellcheck="false" />
+    <input id="search" type="search" placeholder="Search topics, layers, protocols…" autocomplete="off" spellcheck="false" />
     <kbd>/</kbd>
     <div class="results" id="results" hidden></div>
   </div>
   <div class="top-actions">
-    <a class="pill" href="#part-8-interview-questions-cheat-sheet">⭐<span class="label">Interview Qs</span></a>
+    <a class="pill" href="#part-9-interview-quick-answers">⭐<span class="label">Interview Qs</span></a>
     <button class="pill icon" id="theme-btn" type="button" aria-label="Toggle dark mode">🌓</button>
   </div>
 </header>
@@ -227,69 +227,103 @@
     <a class="side-top" href="#top">🏠 Overview</a>
     <a class="side-top" href="#contents">📑 Contents</a>
     <div class="side-label" style="margin-top:1rem">Parts</div>
-    <details class="nav-part" data-part="part-1-basic-terminology" style="--part:#2563eb">
-      <summary><span class="dot"></span><span class="nav-part-num">1</span><span class="nav-part-title">Basic Terminology</span></summary>
-      <a class="nav-link nav-part-link" href="#part-1-basic-terminology">Overview</a>
-      <a class="nav-link" href="#1-what-is-a-computer-network"><span class="nav-num">1</span>🖧 What is a Computer Network?</a>
-      <a class="nav-link" href="#2-node-host-networking"><span class="nav-num">2</span>🔤 Node, Host &amp; Networking</a>
-      <a class="nav-link" href="#3-remember"><span class="nav-num">3</span>🧠 Remember</a>
+    <details class="nav-part" data-part="part-1-networking-basics" style="--part:#2563eb">
+      <summary><span class="dot"></span><span class="nav-part-num">1</span><span class="nav-part-title">Networking Basics</span></summary>
+      <a class="nav-link nav-part-link" href="#part-1-networking-basics">Overview</a>
+      <a class="nav-link" href="#1-basic-terminologies"><span class="nav-num">1</span>📖 Basic Terminologies</a>
+      <a class="nav-link" href="#2-what-is-the-internet"><span class="nav-num">2</span>🌍 What is the Internet?</a>
+      <a class="nav-link" href="#3-internet-vs-world-wide-web-www"><span class="nav-num">3</span>🆚 Internet vs World Wide Web (WWW)</a>
+      <a class="nav-link" href="#4-client-server-architecture"><span class="nav-num">4</span>🖥️ Client-Server Architecture</a>
     </details>
-    <details class="nav-part" data-part="part-2-the-internet" style="--part:#16a34a">
-      <summary><span class="dot"></span><span class="nav-part-num">2</span><span class="nav-part-title">The Internet</span></summary>
-      <a class="nav-link nav-part-link" href="#part-2-the-internet">Overview</a>
-      <a class="nav-link" href="#4-what-is-the-internet"><span class="nav-num">4</span>🌍 What is the Internet?</a>
-      <a class="nav-link" href="#5-who-owns-the-internet"><span class="nav-num">5</span>🏢 Who Owns the Internet?</a>
-      <a class="nav-link" href="#6-how-does-my-isp-in-india-reach-a-server-in-the-usa"><span class="nav-num">6</span>🌊 How Does My ISP in India Reach a Server in the USA?</a>
+    <details class="nav-part" data-part="part-2-types-of-networks" style="--part:#16a34a">
+      <summary><span class="dot"></span><span class="nav-part-num">2</span><span class="nav-part-title">Types of Networks</span></summary>
+      <a class="nav-link nav-part-link" href="#part-2-types-of-networks">Overview</a>
+      <a class="nav-link" href="#5-pan-personal-area-network"><span class="nav-num">5</span>📱 PAN — Personal Area Network</a>
+      <a class="nav-link" href="#6-lan-local-area-network"><span class="nav-num">6</span>🏠 LAN — Local Area Network</a>
+      <a class="nav-link" href="#7-man-metropolitan-area-network"><span class="nav-num">7</span>🏙️ MAN — Metropolitan Area Network</a>
+      <a class="nav-link" href="#8-wan-wide-area-network"><span class="nav-num">8</span>🌍 WAN — Wide Area Network</a>
+      <a class="nav-link" href="#9-network-types-summary"><span class="nav-num">9</span>📊 Network Types Summary</a>
     </details>
-    <details class="nav-part" data-part="part-3-www-vs-internet" style="--part:#ca8a04">
-      <summary><span class="dot"></span><span class="nav-part-num">3</span><span class="nav-part-title">WWW vs Internet</span></summary>
-      <a class="nav-link nav-part-link" href="#part-3-www-vs-internet">Overview</a>
-      <a class="nav-link" href="#7-what-is-the-world-wide-web"><span class="nav-num">7</span>🕸️ What is the World Wide Web?</a>
-      <a class="nav-link" href="#8-the-3-inventions-that-made-the-web"><span class="nav-num">8</span>🧩 The 3 Inventions That Made the Web</a>
-      <a class="nav-link" href="#9-internet-vs-web"><span class="nav-num">9</span>🆚 Internet vs Web</a>
+    <details class="nav-part" data-part="part-3-network-topologies" style="--part:#ca8a04">
+      <summary><span class="dot"></span><span class="nav-part-num">3</span><span class="nav-part-title">Network Topologies</span></summary>
+      <a class="nav-link nav-part-link" href="#part-3-network-topologies">Overview</a>
+      <a class="nav-link" href="#10-what-is-a-topology"><span class="nav-num">10</span>📖 What is a Topology?</a>
+      <a class="nav-link" href="#11-bus-topology"><span class="nav-num">11</span>🚌 Bus Topology</a>
+      <a class="nav-link" href="#12-ring-topology"><span class="nav-num">12</span>💍 Ring Topology</a>
+      <a class="nav-link" href="#13-star-topology-most-common"><span class="nav-num">13</span>⭐ Star Topology (most common)</a>
+      <a class="nav-link" href="#14-mesh-topology"><span class="nav-num">14</span>🕸️ Mesh Topology</a>
+      <a class="nav-link" href="#15-tree-topology"><span class="nav-num">15</span>🌳 Tree Topology</a>
+      <a class="nav-link" href="#16-topology-comparison"><span class="nav-num">16</span>📊 Topology Comparison</a>
     </details>
-    <details class="nav-part" data-part="part-4-clientserver-architecture" style="--part:#ea580c">
-      <summary><span class="dot"></span><span class="nav-part-num">4</span><span class="nav-part-title">Client–Server Architecture</span></summary>
-      <a class="nav-link nav-part-link" href="#part-4-clientserver-architecture">Overview</a>
-      <a class="nav-link" href="#10-client-server"><span class="nav-num">10</span>👥 Client &amp; Server</a>
-      <a class="nav-link" href="#11-request-process-response"><span class="nav-num">11</span>🔄 Request → Process → Response</a>
-      <a class="nav-link" href="#12-try-it-yourself"><span class="nav-num">12</span>🧪 Try It Yourself</a>
+    <details class="nav-part" data-part="part-4-network-models" style="--part:#ea580c">
+      <summary><span class="dot"></span><span class="nav-part-num">4</span><span class="nav-part-title">Network Models</span></summary>
+      <a class="nav-link nav-part-link" href="#part-4-network-models">Overview</a>
+      <a class="nav-link" href="#17-why-do-we-need-models"><span class="nav-num">17</span>❓ Why Do We Need Models?</a>
+      <a class="nav-link" href="#18-the-layered-models-side-by-side"><span class="nav-num">18</span>🧱 The Layered Models Side by Side</a>
+      <a class="nav-link" href="#19-why-layers-innovation-flexibility"><span class="nav-num">19</span>🚀 Why Layers? — Innovation &amp; Flexibility</a>
     </details>
-    <details class="nav-part" data-part="part-5-types-of-networks" style="--part:#dc2626">
-      <summary><span class="dot"></span><span class="nav-part-num">5</span><span class="nav-part-title">Types of Networks</span></summary>
-      <a class="nav-link nav-part-link" href="#part-5-types-of-networks">Overview</a>
-      <a class="nav-link" href="#13-not-all-connections-are-the-same"><span class="nav-num">13</span>📶 Not All Connections Are the Same</a>
-      <a class="nav-link" href="#14-pan-personal-area-network"><span class="nav-num">14</span>⌚ PAN — Personal Area Network</a>
-      <a class="nav-link" href="#15-lan-local-area-network"><span class="nav-num">15</span>🏠 LAN — Local Area Network</a>
-      <a class="nav-link" href="#16-man-metropolitan-area-network"><span class="nav-num">16</span>🏙️ MAN — Metropolitan Area Network</a>
-      <a class="nav-link" href="#17-wan-wide-area-network"><span class="nav-num">17</span>🌍 WAN — Wide Area Network</a>
-      <a class="nav-link" href="#18-pan-vs-lan-vs-man-vs-wan"><span class="nav-num">18</span>📊 PAN vs LAN vs MAN vs WAN</a>
+    <details class="nav-part" data-part="part-5-osi-model-7-layers-encapsulation-pdu" style="--part:#dc2626">
+      <summary><span class="dot"></span><span class="nav-part-num">5</span><span class="nav-part-title">OSI Model (7 Layers), Encapsulation &amp; PDU</span></summary>
+      <a class="nav-link nav-part-link" href="#part-5-osi-model-7-layers-encapsulation-pdu">Overview</a>
+      <a class="nav-link" href="#20-what-is-the-osi-model"><span class="nav-num">20</span>📖 What is the OSI Model?</a>
+      <a class="nav-link" href="#21-osi-layers-overview"><span class="nav-num">21</span>📊 OSI Layers Overview</a>
+      <a class="nav-link" href="#22-layer-7-application-layer"><span class="nav-num">22</span>🧑‍💻 Layer 7 — Application Layer</a>
+      <a class="nav-link" href="#23-layer-6-presentation-layer"><span class="nav-num">23</span>🎨 Layer 6 — Presentation Layer</a>
+      <a class="nav-link" href="#24-layer-5-session-layer"><span class="nav-num">24</span>🤝 Layer 5 — Session Layer</a>
+      <a class="nav-link" href="#25-layer-4-transport-layer"><span class="nav-num">25</span>🚚 Layer 4 — Transport Layer</a>
+      <a class="nav-link" href="#26-layer-3-network-layer"><span class="nav-num">26</span>🗺️ Layer 3 — Network Layer</a>
+      <a class="nav-link" href="#27-layer-2-data-link-layer"><span class="nav-num">27</span>🔗 Layer 2 — Data Link Layer</a>
+      <a class="nav-link" href="#28-layer-1-physical-layer"><span class="nav-num">28</span>⚡ Layer 1 — Physical Layer</a>
+      <a class="nav-link" href="#29-how-data-moves-through-the-osi-model"><span class="nav-num">29</span>🔄 How Data Moves Through the OSI Model</a>
+      <a class="nav-link" href="#30-encapsulation-decapsulation"><span class="nav-num">30</span>📦 Encapsulation &amp; Decapsulation</a>
+      <a class="nav-link" href="#31-protocol-data-unit-pdu-payload"><span class="nav-num">31</span>🏷️ Protocol Data Unit (PDU) &amp; Payload</a>
     </details>
-    <details class="nav-part" data-part="part-6-network-topologies" style="--part:#9333ea">
-      <summary><span class="dot"></span><span class="nav-part-num">6</span><span class="nav-part-title">Network Topologies</span></summary>
-      <a class="nav-link nav-part-link" href="#part-6-network-topologies">Overview</a>
-      <a class="nav-link" href="#19-what-is-a-topology"><span class="nav-num">19</span>🗺️ What is a Topology?</a>
-      <a class="nav-link" href="#20-bus-topology"><span class="nav-num">20</span>➖ Bus Topology</a>
-      <a class="nav-link" href="#21-ring-topology"><span class="nav-num">21</span>⭕ Ring Topology</a>
-      <a class="nav-link" href="#22-star-topology"><span class="nav-num">22</span>⭐ Star Topology</a>
-      <a class="nav-link" href="#23-mesh-topology"><span class="nav-num">23</span>🕸️ Mesh Topology</a>
-      <a class="nav-link" href="#24-tree-topology"><span class="nav-num">24</span>🌳 Tree Topology</a>
-      <a class="nav-link" href="#25-topology-comparison"><span class="nav-num">25</span>📊 Topology Comparison</a>
+    <details class="nav-part" data-part="part-6-tcpip-model" style="--part:#9333ea">
+      <summary><span class="dot"></span><span class="nav-part-num">6</span><span class="nav-part-title">TCP/IP Model</span></summary>
+      <a class="nav-link nav-part-link" href="#part-6-tcpip-model">Overview</a>
+      <a class="nav-link" href="#32-what-is-the-tcpip-model"><span class="nav-num">32</span>📖 What is the TCP/IP Model?</a>
+      <a class="nav-link" href="#33-tcpip-layers"><span class="nav-num">33</span>🧱 TCP/IP Layers</a>
+      <a class="nav-link" href="#34-how-tcpip-works-real-example"><span class="nav-num">34</span>⚙️ How TCP/IP Works — Real Example</a>
+      <a class="nav-link" href="#35-osi-vs-tcpip"><span class="nav-num">35</span>🆚 OSI vs TCP/IP</a>
     </details>
-    <details class="nav-part" data-part="part-7-network-models" style="--part:#a16207">
-      <summary><span class="dot"></span><span class="nav-part-num">7</span><span class="nav-part-title">Network Models</span></summary>
-      <a class="nav-link nav-part-link" href="#part-7-network-models">Overview</a>
-      <a class="nav-link" href="#26-why-do-we-need-network-models"><span class="nav-num">26</span>❓ Why Do We Need Network Models?</a>
-      <a class="nav-link" href="#27-the-two-models-youll-hear-about"><span class="nav-num">27</span>🧱 The Two Models You&#39;ll Hear About</a>
-      <a class="nav-link" href="#28-remember"><span class="nav-num">28</span>🧠 Remember</a>
+    <details class="nav-part" data-part="part-7-message-delivery" style="--part:#a16207">
+      <summary><span class="dot"></span><span class="nav-part-num">7</span><span class="nav-part-title">Message Delivery</span></summary>
+      <a class="nav-link nav-part-link" href="#part-7-message-delivery">Overview</a>
+      <a class="nav-link" href="#36-who-are-we-sending-to"><span class="nav-num">36</span>❓ Who Are We Sending To?</a>
+      <a class="nav-link" href="#37-unicast-one-to-one"><span class="nav-num">37</span>👤 Unicast — One to One</a>
+      <a class="nav-link" href="#38-broadcast-one-to-all"><span class="nav-num">38</span>📢 Broadcast — One to All</a>
+      <a class="nav-link" href="#39-multicast-one-to-a-group"><span class="nav-num">39</span>👥 Multicast — One to a Group</a>
+      <a class="nav-link" href="#40-anycast-one-to-the-nearest"><span class="nav-num">40</span>📍 Anycast — One to the Nearest</a>
+      <a class="nav-link" href="#41-message-delivery-comparison"><span class="nav-num">41</span>📊 Message Delivery Comparison</a>
     </details>
-    <details class="nav-part" data-part="part-8-interview-questions-cheat-sheet" style="--part:#0891b2">
-      <summary><span class="dot"></span><span class="nav-part-num">8</span><span class="nav-part-title">Interview Questions &amp; Cheat Sheet</span></summary>
-      <a class="nav-link nav-part-link" href="#part-8-interview-questions-cheat-sheet">Overview</a>
-      <a class="nav-link" href="#29-interview-questions"><span class="nav-num">29</span>🎤 Interview Questions</a>
-      <a class="nav-link" href="#30-cheat-sheet"><span class="nav-num">30</span>📋 Cheat Sheet</a>
+    <details class="nav-part" data-part="part-8-network-devices-isps-firewall-host-to-host" style="--part:#db2777">
+      <summary><span class="dot"></span><span class="nav-part-num">8</span><span class="nav-part-title">Network Devices, ISPs, Firewall &amp; Host-to-Host</span></summary>
+      <a class="nav-link nav-part-link" href="#part-8-network-devices-isps-firewall-host-to-host">Overview</a>
+      <a class="nav-link" href="#42-nic-network-interface-card"><span class="nav-num">42</span>🖧 NIC — Network Interface Card</a>
+      <a class="nav-link" href="#43-hub"><span class="nav-num">43</span>🔌 Hub</a>
+      <a class="nav-link" href="#44-bridge"><span class="nav-num">44</span>🌉 Bridge</a>
+      <a class="nav-link" href="#45-switch"><span class="nav-num">45</span>🔀 Switch</a>
+      <a class="nav-link" href="#46-router"><span class="nav-num">46</span>🗺️ Router</a>
+      <a class="nav-link" href="#47-modem"><span class="nav-num">47</span>📡 Modem</a>
+      <a class="nav-link" href="#48-gateway"><span class="nav-num">48</span>🚪 Gateway</a>
+      <a class="nav-link" href="#49-isp-internet-service-provider"><span class="nav-num">49</span>🏢 ISP — Internet Service Provider</a>
+      <a class="nav-link" href="#50-firewall"><span class="nav-num">50</span>🧱 Firewall</a>
+      <a class="nav-link" href="#51-host-to-host-communication"><span class="nav-num">51</span>🔄 Host-to-Host Communication</a>
+      <a class="nav-link" href="#52-putting-it-all-together-your-home-network"><span class="nav-num">52</span>🏠 Putting It All Together — Your Home Network</a>
     </details>
-    <p class="built">Built 9 Oct 2026, 4:30 pm</p>
+    <details class="nav-part" data-part="part-9-interview-quick-answers" style="--part:#0891b2">
+      <summary><span class="dot"></span><span class="nav-part-num">9</span><span class="nav-part-title">Interview Quick Answers</span></summary>
+      <a class="nav-link nav-part-link" href="#part-9-interview-quick-answers">Overview</a>
+      <a class="nav-link" href="#53-common-questions"><span class="nav-num">53</span>💬 Common Questions</a>
+    </details>
+    <details class="nav-part" data-part="part-10-cheat-sheets-mental-model" style="--part:#0d9488">
+      <summary><span class="dot"></span><span class="nav-part-num">10</span><span class="nav-part-title">Cheat Sheets &amp; Mental Model</span></summary>
+      <a class="nav-link nav-part-link" href="#part-10-cheat-sheets-mental-model">Overview</a>
+      <a class="nav-link" href="#54-osi-layer-cheat-sheet"><span class="nav-num">54</span>📊 OSI Layer Cheat Sheet</a>
+      <a class="nav-link" href="#55-common-ports-to-remember"><span class="nav-num">55</span>🔢 Common Ports to Remember</a>
+      <a class="nav-link" href="#56-concept-cheat-sheet"><span class="nav-num">56</span>🧾 Concept Cheat Sheet</a>
+    </details>
+    <p class="built">Built 13 Oct 2026, 10:33 am</p>
   </aside>
   <div class="backdrop" id="backdrop"></div>
 
@@ -298,23 +332,21 @@
 <header class="hero" id="top">
   <div class="hero-badge">🌐 Networking study guide</div>
   <h1 class="hero-title">Networking — Complete Notes</h1>
-  <p class="hero-sub">Basics · Internet · Topologies · Models</p>
+  <p class="hero-sub">Basics · Topologies · OSI · TCP/IP · Devices · Interview</p>
   <div class="hero-stats">
-    <div><strong>8</strong><span>Parts</span></div>
-    <div><strong>30</strong><span>Sections</span></div>
-    <div><strong>17</strong><span>Code blocks</span></div>
-    <div><strong>8</strong><span>Interview Qs</span></div>
+    <div><strong>10</strong><span>Parts</span></div>
+    <div><strong>56</strong><span>Sections</span></div>
+    <div><strong>55</strong><span>Diagrams &amp; code</span></div>
+    <div><strong>38</strong><span>Interview Qs</span></div>
   </div>
   <div class="hero-actions">
-    <a class="btn primary" href="#part-1-basic-terminology">▶ Start reading</a>
-    <a class="btn" href="#part-8-interview-questions-cheat-sheet">⭐ Interview questions</a>
-    <a class="btn" href="#part-8-interview-questions-cheat-sheet">📊 Cheat sheets</a>
-    
+    <a class="btn primary" href="#part-1-networking-basics">▶ Start reading</a>
+    <a class="btn" href="#part-9-interview-quick-answers">⭐ Interview questions</a>
+    <a class="btn" href="#part-10-cheat-sheets-mental-model">📊 Cheat sheets</a>
   </div>
   <div class="hero-intro">
-<blockquote class="callout note"><p>Networking fundamentals for DevOps &amp; cloud: what a network is, how the internet really works, the web, client–server, network types, topologies and why network models exist.</p>
-<p>These terms show up everywhere — cloud architecture diagrams, server configs, Docker/Kubernetes networking and security discussions.</p>
-<p>⭐ <strong>Preparing for an interview?</strong> → the <strong>highlighted questions</strong> are in <strong>Part 8</strong> at the end.</p>
+<blockquote class="callout note"><p>One file for networking fundamentals every DevOps / Cloud engineer needs: terminology, the Internet vs the Web, client-server, network types, topologies, the OSI model (all 7 layers), the TCP/IP model, how data travels, interview answers and cheat sheets.</p>
+<p><strong>How to read this file:</strong> go top to bottom — each part builds on the previous one. 💡 boxes connect the concept to <strong>cloud / DevOps</strong> (AWS, Docker, servers).</p>
 </blockquote>
 </div>
 </header>
@@ -322,732 +354,2174 @@
 <section class="contents" id="contents">
   <h2 class="contents-title">📑 Contents</h2>
   <div class="cards">
-    <a class="card" href="#part-1-basic-terminology" style="--part:#2563eb">
-      <span class="card-top"><span class="card-emoji">🟦</span><span class="card-num">Part 1</span><span class="card-range">§1–3</span></span>
-      <span class="card-title">Basic Terminology</span>
-      <span class="card-secs">What is a Computer Network? · Node, Host &amp; Networking · Remember</span>
+    <a class="card" href="#part-1-networking-basics" style="--part:#2563eb">
+      <span class="card-top"><span class="card-emoji">🟦</span><span class="card-num">Part 1</span><span class="card-range">§1–4</span></span>
+      <span class="card-title">Networking Basics</span>
+      <span class="card-secs">Basic Terminologies · What is the Internet? · Internet vs World Wide Web (WWW) …</span>
     </a>
-    <a class="card" href="#part-2-the-internet" style="--part:#16a34a">
-      <span class="card-top"><span class="card-emoji">🟩</span><span class="card-num">Part 2</span><span class="card-range">§4–6</span></span>
-      <span class="card-title">The Internet</span>
-      <span class="card-secs">What is the Internet? · Who Owns the Internet? · How Does My ISP in India Reach a Server in the USA?</span>
-    </a>
-    <a class="card" href="#part-3-www-vs-internet" style="--part:#ca8a04">
-      <span class="card-top"><span class="card-emoji">🟨</span><span class="card-num">Part 3</span><span class="card-range">§7–9</span></span>
-      <span class="card-title">WWW vs Internet</span>
-      <span class="card-secs">What is the World Wide Web? · The 3 Inventions That Made the Web · Internet vs Web</span>
-    </a>
-    <a class="card" href="#part-4-clientserver-architecture" style="--part:#ea580c">
-      <span class="card-top"><span class="card-emoji">🟧</span><span class="card-num">Part 4</span><span class="card-range">§10–12</span></span>
-      <span class="card-title">Client–Server Architecture</span>
-      <span class="card-secs">Client &amp; Server · Request → Process → Response · Try It Yourself</span>
-    </a>
-    <a class="card" href="#part-5-types-of-networks" style="--part:#dc2626">
-      <span class="card-top"><span class="card-emoji">🟥</span><span class="card-num">Part 5</span><span class="card-range">§13–18</span></span>
+    <a class="card" href="#part-2-types-of-networks" style="--part:#16a34a">
+      <span class="card-top"><span class="card-emoji">🟩</span><span class="card-num">Part 2</span><span class="card-range">§5–9</span></span>
       <span class="card-title">Types of Networks</span>
-      <span class="card-secs">Not All Connections Are the Same · PAN — Personal Area Network · LAN — Local Area Network …</span>
+      <span class="card-secs">PAN — Personal Area Network · LAN — Local Area Network · MAN — Metropolitan Area Network …</span>
     </a>
-    <a class="card" href="#part-6-network-topologies" style="--part:#9333ea">
-      <span class="card-top"><span class="card-emoji">🟪</span><span class="card-num">Part 6</span><span class="card-range">§19–25</span></span>
+    <a class="card" href="#part-3-network-topologies" style="--part:#ca8a04">
+      <span class="card-top"><span class="card-emoji">🟨</span><span class="card-num">Part 3</span><span class="card-range">§10–16</span></span>
       <span class="card-title">Network Topologies</span>
       <span class="card-secs">What is a Topology? · Bus Topology · Ring Topology …</span>
     </a>
-    <a class="card" href="#part-7-network-models" style="--part:#a16207">
-      <span class="card-top"><span class="card-emoji">🟫</span><span class="card-num">Part 7</span><span class="card-range">§26–28</span></span>
+    <a class="card" href="#part-4-network-models" style="--part:#ea580c">
+      <span class="card-top"><span class="card-emoji">🟧</span><span class="card-num">Part 4</span><span class="card-range">§17–19</span></span>
       <span class="card-title">Network Models</span>
-      <span class="card-secs">Why Do We Need Network Models? · The Two Models You&#39;ll Hear About · Remember</span>
+      <span class="card-secs">Why Do We Need Models? · The Layered Models Side by Side · Why Layers? — Innovation &amp; Flexibility</span>
     </a>
-    <a class="card" href="#part-8-interview-questions-cheat-sheet" style="--part:#0891b2">
-      <span class="card-top"><span class="card-emoji">⭐</span><span class="card-num">Part 8</span><span class="card-range">§29–30</span></span>
-      <span class="card-title">Interview Questions &amp; Cheat Sheet</span>
-      <span class="card-secs">Interview Questions · Cheat Sheet</span>
+    <a class="card" href="#part-5-osi-model-7-layers-encapsulation-pdu" style="--part:#dc2626">
+      <span class="card-top"><span class="card-emoji">🟥</span><span class="card-num">Part 5</span><span class="card-range">§20–31</span></span>
+      <span class="card-title">OSI Model (7 Layers), Encapsulation &amp; PDU</span>
+      <span class="card-secs">What is the OSI Model? · OSI Layers Overview · Layer 7 — Application Layer …</span>
+    </a>
+    <a class="card" href="#part-6-tcpip-model" style="--part:#9333ea">
+      <span class="card-top"><span class="card-emoji">🟪</span><span class="card-num">Part 6</span><span class="card-range">§32–35</span></span>
+      <span class="card-title">TCP/IP Model</span>
+      <span class="card-secs">What is the TCP/IP Model? · TCP/IP Layers · How TCP/IP Works — Real Example …</span>
+    </a>
+    <a class="card" href="#part-7-message-delivery" style="--part:#a16207">
+      <span class="card-top"><span class="card-emoji">📨</span><span class="card-num">Part 7</span><span class="card-range">§36–41</span></span>
+      <span class="card-title">Message Delivery</span>
+      <span class="card-secs">Who Are We Sending To? · Unicast — One to One · Broadcast — One to All …</span>
+    </a>
+    <a class="card" href="#part-8-network-devices-isps-firewall-host-to-host" style="--part:#db2777">
+      <span class="card-top"><span class="card-emoji">🔌</span><span class="card-num">Part 8</span><span class="card-range">§42–52</span></span>
+      <span class="card-title">Network Devices, ISPs, Firewall &amp; Host-to-Host</span>
+      <span class="card-secs">NIC — Network Interface Card · Hub · Bridge …</span>
+    </a>
+    <a class="card" href="#part-9-interview-quick-answers" style="--part:#0891b2">
+      <span class="card-top"><span class="card-emoji">🎯</span><span class="card-num">Part 9</span><span class="card-range">§53</span></span>
+      <span class="card-title">Interview Quick Answers</span>
+      <span class="card-secs">Common Questions</span>
+    </a>
+    <a class="card" href="#part-10-cheat-sheets-mental-model" style="--part:#0d9488">
+      <span class="card-top"><span class="card-emoji">✅</span><span class="card-num">Part 10</span><span class="card-range">§54–56</span></span>
+      <span class="card-title">Cheat Sheets &amp; Mental Model</span>
+      <span class="card-secs">OSI Layer Cheat Sheet · Common Ports to Remember · Concept Cheat Sheet</span>
     </a>
   </div>
 </section>
 <hr>
-<h1 id="part-1-basic-terminology" class="part-heading" style="--part:#2563eb"><span class="part-kicker">🟦 Part 1</span><span class="part-title">Basic Terminology</span></h1>
-<h2 id="1-what-is-a-computer-network" class="sec-heading"><a class="sec-num" href="#1-what-is-a-computer-network">1</a><span>🖧 What is a Computer Network?</span></h2>
-<p><strong>Definition:</strong> a <strong>computer network</strong> is a digital communication medium that allows <strong>nodes</strong> (devices) to <strong>share data and resources</strong> with each other.</p>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>[ Laptop  ] ──┐
-[ Phone   ] ──┼──── [ Router ] ──── ( Internet )
-[ Printer ] ──┘</code></pre></div>
-<p>Resources that can be shared: files, printers, internet connection, applications, storage.</p>
-<hr>
-<h2 id="2-node-host-networking" class="sec-heading"><a class="sec-num" href="#2-node-host-networking">2</a><span>🔤 Node, Host &amp; Networking</span></h2>
+<h1 id="part-1-networking-basics" class="part-heading" style="--part:#2563eb"><span class="part-kicker">🟦 Part 1</span><span class="part-title">Networking Basics</span></h1>
+
+<h2 id="1-basic-terminologies" class="sec-heading"><a class="sec-num" href="#1-basic-terminologies">1</a><span>📖 Basic Terminologies</span></h2>
+
+<p><strong>A computer network</strong> is a digital communication medium that allows <strong>nodes</strong> (devices) to <strong>share data and resources</strong>.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>Networking = sharing data and resources over a network</code></pre></div>
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th>Term</th>
 <th>Meaning</th>
-<th>Examples</th>
+<th>Example</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
+<td><strong>Network</strong></td>
+<td>Devices connected together to share data/resources</td>
+<td>Your home Wi-Fi</td>
+</tr>
+<tr>
 <td><strong>Node</strong></td>
-<td><strong>Any</strong> device connected to a network</td>
-<td>PC, phone, router, switch, printer</td>
+<td>Any device connected to a network</td>
+<td>Laptop, printer, router</td>
 </tr>
 <tr>
 <td><strong>Host</strong></td>
-<td>A device that <strong>gets an IP address</strong> and sends/receives data (an end device)</td>
+<td>Any device that gets an <strong>IP address</strong></td>
 <td>PC, laptop, server, mobile</td>
 </tr>
 <tr>
 <td><strong>Networking</strong></td>
-<td><strong>Sharing data and resources</strong> between devices in a network</td>
+<td>Sharing data and resources in a network</td>
 <td>Sending a file, opening a website</td>
 </tr>
-<tr>
-<td><strong>IP address</strong></td>
-<td>The unique address of a host on a network</td>
-<td><code>192.168.1.10</code>, <code>142.250.183.14</code></td>
-</tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>Every host is a node,
-but not every node is a host.
-(a switch is a node — it forwards data — but it&#39;s not an end device)</code></pre></div>
-<hr>
-<h2 id="3-remember" class="sec-heading"><a class="sec-num" href="#3-remember">3</a><span>🧠 Remember</span></h2>
-<blockquote class="callout tip"><p>🧠 <strong>Network</strong> = connected devices · <strong>Node</strong> = any device on it · <strong>Host</strong> = device with an IP that sends/receives data · <strong>Networking</strong> = sharing data &amp; resources.</p>
+<hr />
+<h2 id="2-what-is-the-internet" class="sec-heading"><a class="sec-num" href="#2-what-is-the-internet">2</a><span>🌍 What is the Internet?</span></h2>
+
+<blockquote class="callout note"><p>🌐 <strong>The Internet is, at its core, a network of networks.</strong></p>
 </blockquote>
-<hr>
-<h1 id="part-2-the-internet" class="part-heading" style="--part:#16a34a"><span class="part-kicker">🟩 Part 2</span><span class="part-title">The Internet</span></h1>
-<h2 id="4-what-is-the-internet" class="sec-heading"><a class="sec-num" href="#4-what-is-the-internet">4</a><span>🌍 What is the Internet?</span></h2>
-<blockquote class="callout note"><p><strong>The internet is, at its core, a network of networks.</strong></p>
-</blockquote>
-<p>Your home Wi-Fi, Jio&#39;s network, a college LAN, Google&#39;s network and AWS data centres are all <strong>separate networks</strong>. The internet is what you get when they are all <strong>connected together</strong>.</p>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>   🏠 Home network        🏫 College network       🏢 Office network
-          │                       │                       │
-     Jio / Airtel            BSNL / ISP              ISP network
-          └──────────────┬────────┴───────────────────────┘
-                         │
-              🌐 THE INTERNET (network of networks)
-                         │
-          ┌──────────────┼──────────────┐
-     ☁️ AWS           🔍 Google      📺 YouTube data centres</code></pre></div>
-<hr>
-<h2 id="5-who-owns-the-internet" class="sec-heading"><a class="sec-num" href="#5-who-owns-the-internet">5</a><span>🏢 Who Owns the Internet?</span></h2>
-<blockquote class="callout note"><p><strong>Nobody owns the internet — and everybody owns a piece of it.</strong></p>
+<p>Millions of small networks (homes, offices, data centers, ISPs) are connected together to form one giant global network.</p>
+<h3>Who owns the Internet?</h3>
+<blockquote class="callout note"><p><strong>Nobody owns the Internet — and everybody owns a piece of it.</strong></p>
 </blockquote>
 <div class="table-wrap"><table>
 <thead>
 <tr>
-<th>Owner</th>
-<th>Owns which piece</th>
+<th>Who</th>
+<th>What they own</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>🏠 <strong>You</strong></td>
-<td>Your devices and home router</td>
-</tr>
+<tbody>
 <tr>
 <td>📡 <strong>Your ISP</strong> (Jio, Airtel, BSNL)</td>
-<td>Cables, towers and equipment connecting your home to the wider network</td>
+<td>Cables &amp; equipment connecting your home to the wider network</td>
 </tr>
 <tr>
-<td>🌐 <strong>Big backbone carriers</strong> (Tier-1 networks)</td>
-<td>Long-distance fibre across countries and continents</td>
-</tr>
-<tr>
-<td>🌊 <strong>Submarine-cable consortiums</strong></td>
-<td>Undersea fibre cables between continents</td>
-</tr>
-<tr>
-<td>🏭 <strong>Data-centre companies</strong> (AWS, Google, Azure)</td>
+<td>🏢 <strong>Data center companies</strong> (AWS, Google, Azure)</td>
 <td>Their servers and infrastructure</td>
 </tr>
-</tbody></table>
+<tr>
+<td>🌊 <strong>Undersea cable companies</strong></td>
+<td>Fiber cables on the ocean floor connecting continents</td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>Each owner runs <strong>only its part</strong>; agreements between them connect everything together.</p>
-<hr>
-<h2 id="6-how-does-my-isp-in-india-reach-a-server-in-the-usa" class="sec-heading"><a class="sec-num" href="#6-how-does-my-isp-in-india-reach-a-server-in-the-usa">6</a><span>🌊 How Does My ISP in India Reach a Server in the USA?</span></h2>
-<p>The big question: your <strong>phone → Wi-Fi → router → ISP</strong> … but how does Jio in India reach a server sitting in the <strong>United States</strong>?</p>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>📱 Phone
-  ↓ Wi-Fi
-📡 Home router
-  ↓ fibre / mobile tower
-🏢 Your ISP (Jio / Airtel)          ← Tier-2/3 ISP
-  ↓
-🔀 IXP / bigger carriers             ← Tier-1 backbone networks
-  ↓
-🌊 Submarine fibre-optic cable        ← lands in Mumbai / Chennai
-  ↓ under the ocean
-🇺🇸 Cable landing station in the US
-  ↓
-🌐 US backbone → data-centre network
-  ↓
-🖥️ The server</code></pre></div>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Piece</th>
-<th>What it is</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>ISP tiers</strong></td>
-<td><strong>Tier-1</strong> = giant global networks that reach every other network. <strong>Tier-2/3</strong> ISPs (Jio, BSNL) pay or partner with them to reach the world</td>
-</tr>
-<tr>
-<td><strong>Submarine cables</strong></td>
-<td>Fibre-optic cables on the ocean floor — carry <strong>~99 % of international internet traffic</strong> (not satellites)</td>
-</tr>
-<tr>
-<td><strong>Cable landing station</strong></td>
-<td>Where an undersea cable comes ashore (India: Mumbai, Chennai)</td>
-</tr>
-<tr>
-<td><strong>IXP (Internet Exchange Point)</strong></td>
-<td>A building where many networks plug in and <strong>exchange traffic directly</strong></td>
-</tr>
-<tr>
-<td><strong>Peering / Transit</strong></td>
-<td><strong>Peering</strong> = two networks swap traffic (often free). <strong>Transit</strong> = one network <strong>pays</strong> another to carry its traffic</td>
-</tr>
-<tr>
-<td><strong>Router</strong></td>
-<td>Device that reads the destination <strong>IP address</strong> and forwards the data one hop closer</td>
-</tr>
-<tr>
-<td><strong>BGP</strong></td>
-<td>Border Gateway Protocol — how networks tell each other &quot;I can reach these IPs&quot;; the <strong>GPS of the internet</strong></td>
-</tr>
-<tr>
-<td><strong>DNS</strong></td>
-<td>Turns a name (<code>google.com</code>) into an IP address before the trip starts</td>
-</tr>
-</tbody></table>
-</div>
-<blockquote class="callout note"><p>🔍 Try it: <code>traceroute google.com</code> (Mac/Linux) or <code>tracert google.com</code> (Windows) shows <strong>every router hop</strong> between you and the server.</p>
+<h3>❓ The big question</h3>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>📱 Phone → 📶 Wi-Fi → 🔀 Router → 📡 ISP (India) → ??? → 🖥️ Server (USA)</code></pre></div>
+<p>How does your ISP in India reach a server in the United States?</p>
+<p>✅ ISPs connect to <strong>bigger ISPs</strong>, which connect to each other through <strong>undersea fiber-optic cables</strong> and <strong>Internet Exchange Points (IXPs)</strong>. Data hops from network to network until it reaches the destination.</p>
+<hr />
+<h2 id="3-internet-vs-world-wide-web-www" class="sec-heading"><a class="sec-num" href="#3-internet-vs-world-wide-web-www">3</a><span>🆚 Internet vs World Wide Web (WWW)</span></h2>
+
+<blockquote class="callout warn"><p>⚠️ They are <strong>NOT</strong> the same thing.</p>
 </blockquote>
-<hr>
-<h1 id="part-3-www-vs-internet" class="part-heading" style="--part:#ca8a04"><span class="part-kicker">🟨 Part 3</span><span class="part-title">WWW vs Internet</span></h1>
-<h2 id="7-what-is-the-world-wide-web" class="sec-heading"><a class="sec-num" href="#7-what-is-the-world-wide-web">7</a><span>🕸️ What is the World Wide Web?</span></h2>
-<blockquote class="callout note"><p><strong>The World Wide Web (WWW) is one specific application that runs on top of the internet.</strong></p>
-</blockquote>
-<p>In <strong>1991</strong>, British scientist <strong>Tim Berners-Lee</strong> built a system on top of the internet that made information easy for everyday people to access.</p>
-<p><strong>His idea:</strong> a system of <strong>interlinked documents</strong> (pages) that anyone could open over the internet using a <strong>web browser</strong>.</p>
-<hr>
-<h2 id="8-the-3-inventions-that-made-the-web" class="sec-heading"><a class="sec-num" href="#8-the-3-inventions-that-made-the-web">8</a><span>🧩 The 3 Inventions That Made the Web</span></h2>
+<p>The <strong>World Wide Web</strong> is <strong>one specific application</strong> that runs <strong>on top of</strong> the Internet.</p>
+<p>In <strong>1991</strong>, British scientist <strong>Tim Berners-Lee</strong> built a system on top of the Internet that made information accessible to regular people.</p>
+<p><strong>His idea:</strong> a system of <strong>interlinked documents</strong> that anyone could access over the Internet using a <strong>browser</strong>.</p>
+<h3>🧩 He invented 3 things to make it work</h3>
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th>Invention</th>
 <th>Full form</th>
-<th>What it does</th>
-<th>Example</th>
+<th>Job</th>
 </tr>
 </thead>
-<tbody><tr>
-<td><strong>HTML</strong></td>
+<tbody>
+<tr>
+<td>📝 <strong>HTML</strong></td>
 <td>HyperText Markup Language</td>
-<td>Language to <strong>write and structure</strong> documents (pages)</td>
-<td><code>&lt;h1&gt;Hello&lt;/h1&gt;</code></td>
+<td>Language to write and structure documents</td>
 </tr>
 <tr>
-<td><strong>HTTP</strong></td>
+<td>🔄 <strong>HTTP</strong></td>
 <td>HyperText Transfer Protocol</td>
-<td>Rules for <strong>how documents are requested and delivered</strong> over the internet</td>
-<td><code>GET /index.html</code></td>
+<td>Rules for how documents are requested and delivered</td>
 </tr>
 <tr>
-<td><strong>URL</strong></td>
+<td>🔗 <strong>URL</strong></td>
 <td>Uniform Resource Locator</td>
-<td>A <strong>unique address</strong> for every document so anyone can find it</td>
-<td><code>https://example.com/about</code></td>
+<td>A unique address for every document so anyone can find it</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>HTML (the page) + HTTP (the delivery) + URL (the address)
-                       =
-     🕸️ the Web: billions of linked pages, opened in a browser</code></pre></div>
-<p>Anatomy of a URL:</p>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>https://www.example.com:443/docs/page.html?id=7#intro
-└─┬─┘   └──────┬──────┘ └┬┘└──────┬──────┘ └─┬─┘ └─┬─┘
-protocol     domain     port     path      query  fragment</code></pre></div>
-<hr>
-<h2 id="9-internet-vs-web" class="sec-heading"><a class="sec-num" href="#9-internet-vs-web">9</a><span>🆚 Internet vs Web</span></h2>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>HTML + HTTP + URL = The Web 🌐
+→ a massive collection of linked pages, opened in a browser,
+  delivered over the Internet using HTTP</code></pre></div>
+<h3>Summary</h3>
 <div class="table-wrap"><table>
 <thead>
 <tr>
-<th>🌐 Internet</th>
+<th>🌍 Internet</th>
 <th>🕸️ World Wide Web</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>The <strong>infrastructure</strong> — cables, routers, networks</td>
+<tbody>
+<tr>
+<td>The <strong>infrastructure</strong> (cables, routers, networks)</td>
 <td>A <strong>service</strong> that runs on that infrastructure</td>
 </tr>
 <tr>
-<td>Started 1960s–70s (ARPANET)</td>
-<td>Invented 1991 (Tim Berners-Lee)</td>
+<td>Carries web, email, video calls, SSH, gaming...</td>
+<td>Only web pages opened in a browser</td>
 </tr>
 <tr>
-<td>Carries <strong>everything</strong>: web, email, WhatsApp, video calls, games, SSH, file transfer</td>
-<td>Only <strong>web pages</strong> (HTML via HTTP/HTTPS) in a browser</td>
+<td>= the <strong>roads</strong> 🛣️</td>
+<td>= <strong>cars</strong> driving on the roads 🚗</td>
 </tr>
-<tr>
-<td>Uses IP, TCP, UDP …</td>
-<td>Uses HTTP/HTTPS, HTML, URLs</td>
-</tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
-<blockquote class="callout tip"><p>🧠 <strong>The internet is the road. The web is one kind of vehicle on it</strong> (email, WhatsApp, Netflix are other vehicles).</p>
-</blockquote>
-<hr>
-<h1 id="part-4-clientserver-architecture" class="part-heading" style="--part:#ea580c"><span class="part-kicker">🟧 Part 4</span><span class="part-title">Client–Server Architecture</span></h1>
-<h2 id="10-client-server" class="sec-heading"><a class="sec-num" href="#10-client-server">10</a><span>👥 Client &amp; Server</span></h2>
+<hr />
+<h2 id="4-client-server-architecture" class="sec-heading"><a class="sec-num" href="#4-client-server-architecture">4</a><span>🖥️ Client-Server Architecture</span></h2>
+
 <div class="table-wrap"><table>
 <thead>
 <tr>
-<th></th>
-<th>💻 Client</th>
+<th>👤 Client</th>
 <th>🖥️ Server</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>Role</td>
-<td><strong>Makes a request</strong></td>
-<td><strong>Listens for requests and responds</strong></td>
+<tbody>
+<tr>
+<td>Anything that <strong>makes a request</strong></td>
+<td>Anything that <strong>listens</strong> for requests and <strong>responds</strong></td>
 </tr>
 <tr>
-<td>Examples</td>
-<td>Your browser, mobile app, terminal (<code>curl</code>, <code>ssh</code>)</td>
-<td>Web server (Nginx), API (Node.js), database (MongoDB)</td>
+<td>Browser, mobile app, terminal (<code>curl</code>)</td>
+<td>Web server (Nginx, Apache), DB server, API</td>
 </tr>
-<tr>
-<td>Starts the conversation?</td>
-<td>✅ Yes</td>
-<td>❌ No — waits</td>
-</tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
-<blockquote class="callout note"><p>A <strong>server is not a special magical machine.</strong> It is just a <strong>computer running software that listens on a port</strong>, waiting for requests and sending back responses. <strong>Your laptop can be a server.</strong></p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>CLIENT ──── 1. request ────▶ SERVER
+                             2. processes it
+CLIENT ◀─── 3. response ──── SERVER</code></pre></div>
+<h3>Key points</h3>
+<ul>
+<li>✅ A server is <strong>not a special magical machine</strong> — it's just a computer running software that <strong>listens on a port</strong>, waiting for requests and sending back responses.</li>
+<li>✅ <strong>Your laptop can be a server</strong> too.</li>
+<li>✅ A single server can handle <strong>thousands, sometimes millions</strong> of client requests at the same time.</li>
+</ul>
+<blockquote class="callout tip"><p>💡 <strong>DevOps link:</strong> <code>docker run -p 8080:80 nginx</code> turns your laptop into a web server listening on port 8080.</p>
 </blockquote>
-<hr>
-<h2 id="11-request-process-response" class="sec-heading"><a class="sec-num" href="#11-request-process-response">11</a><span>🔄 Request → Process → Response</span></h2>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>💻 CLIENT                                   🖥️ SERVER
-   │                                           │  listening on port 443
-   │ ── 1. Request: GET /home ───────────────▶ │
-   │                                           │ 2. Process (read DB, build page)
-   │ ◀────────────── 3. Response: 200 OK + HTML │
-   ▼                                           ▼</code></pre></div>
-<ol>
-<li><strong>Client sends a request</strong></li>
-<li><strong>Server processes it</strong></li>
-<li><strong>Server sends back a response</strong></li>
-</ol>
-<p>A single server can handle <strong>thousands — sometimes millions — of client requests at the same time</strong>.</p>
-<hr>
-<h2 id="12-try-it-yourself" class="sec-heading"><a class="sec-num" href="#12-try-it-yourself">12</a><span>🧪 Try It Yourself</span></h2>
-<div class="code"><div class="code-bar"><span class="lang">bash</span><button class="copy" type="button">Copy</button></div><pre><code># Turn your laptop into a server (serves the current folder on port 8000)
-python3 -m http.server 8000
+<hr />
+<h1 id="part-2-types-of-networks" class="part-heading" style="--part:#16a34a"><span class="part-kicker">🟩 Part 2</span><span class="part-title">Types of Networks</span></h1>
 
-# In another terminal, be the client
-curl -i http://localhost:8000</code></pre></div>
-<p>Your Docker practice app works the same way: the Node.js container <strong>listens on port 3000</strong> (server) and your <strong>browser</strong> is the client.</p>
+<p>Your phone right now:</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>📱 Phone → 📶 Wi-Fi → 🔀 Router → 📡 Tower (Jio/Airtel) → 🌍 World</code></pre></div>
+<p>Not all of these connections are the <strong>same type</strong> of network — they have different names, scales and purposes. You'll hear these terms constantly in <strong>cloud architecture diagrams, server configs and security discussions</strong>.</p>
+<h2 id="5-pan-personal-area-network" class="sec-heading"><a class="sec-num" href="#5-pan-personal-area-network">5</a><span>📱 PAN — Personal Area Network</span></h2>
+
+<ul>
+<li><strong>Smallest</strong> scale — the network of devices around <strong>a single person</strong>.</li>
+<li>Tiny range, personal devices, <strong>no Internet required</strong>.</li>
+</ul>
+<p><strong>Examples:</strong>
+- 🎧 Phone ↔ Bluetooth earbuds
+- ⌚ Smartwatch syncing with your phone</p>
+<hr />
+<h2 id="6-lan-local-area-network" class="sec-heading"><a class="sec-num" href="#6-lan-local-area-network">6</a><span>🏠 LAN — Local Area Network</span></h2>
+
+<ul>
+<li>A <strong>mini-network</strong> covering a <strong>small area</strong>: home, office building, campus.</li>
+<li>Perfect for <strong>sharing resources</strong> — printers, files — and communication between devices.</li>
+</ul>
+<blockquote class="callout tip"><p>💡 <strong>Cloud link:</strong> private networks inside a <strong>VPC</strong> (Virtual Private Cloud) are essentially <strong>LANs in the cloud</strong>.</p>
+</blockquote>
+<hr />
+<h2 id="7-man-metropolitan-area-network" class="sec-heading"><a class="sec-num" href="#7-man-metropolitan-area-network">7</a><span>🏙️ MAN — Metropolitan Area Network</span></h2>
+
+<ul>
+<li>The <strong>bigger sibling of LAN</strong> — covers a <strong>city / metropolitan area</strong>.</li>
+<li>Connects <strong>multiple LANs</strong> or network segments within the same region.</li>
+<li>Used by businesses, educational institutions and government organizations.</li>
+</ul>
+<blockquote class="callout tip"><p>💡 <strong>Cloud link:</strong> when AWS says a <strong>Region</strong> has multiple data centers (<strong>Availability Zones</strong>) across a city, that's <strong>MAN-scale</strong> infrastructure.</p>
+</blockquote>
+<hr />
+<h2 id="8-wan-wide-area-network" class="sec-heading"><a class="sec-num" href="#8-wan-wide-area-network">8</a><span>🌍 WAN — Wide Area Network</span></h2>
+
+<ul>
+<li>Covers <strong>multiple cities, countries or even continents</strong>.</li>
+<li>🌐 <strong>The Internet is the largest WAN.</strong></li>
+<li>WANs are not just the Internet — big companies build <strong>private WANs</strong>. Example: a bank connecting offices in <strong>Mumbai, Bangalore, New York and London</strong> into one corporate network. Banks and airlines do this.</li>
+</ul>
+<hr />
+<h2 id="9-network-types-summary" class="sec-heading"><a class="sec-num" href="#9-network-types-summary">9</a><span>📊 Network Types Summary</span></h2>
+
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>PAN   &lt;   LAN   &lt;   MAN   &lt;   WAN
+👤        🏠        🏙️        🌍
+person   building   city     world</code></pre></div>
 <div class="table-wrap"><table>
 <thead>
 <tr>
-<th>Common server</th>
-<th>Default port</th>
+<th>Type</th>
+<th>Full form</th>
+<th>Area</th>
+<th>Example</th>
+<th>☁️ Cloud equivalent</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>HTTP</td>
-<td>80</td>
-</tr>
+<tbody>
 <tr>
-<td>HTTPS</td>
-<td>443</td>
-</tr>
-<tr>
-<td>SSH</td>
-<td>22</td>
-</tr>
-<tr>
-<td>MySQL</td>
-<td>3306</td>
-</tr>
-<tr>
-<td>MongoDB</td>
-<td>27017</td>
-</tr>
-<tr>
-<td>Redis</td>
-<td>6379</td>
-</tr>
-</tbody></table>
-</div>
-<hr>
-<h1 id="part-5-types-of-networks" class="part-heading" style="--part:#dc2626"><span class="part-kicker">🟥 Part 5</span><span class="part-title">Types of Networks</span></h1>
-<h2 id="13-not-all-connections-are-the-same" class="sec-heading"><a class="sec-num" href="#13-not-all-connections-are-the-same">13</a><span>📶 Not All Connections Are the Same</span></h2>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>⌚ Watch ─ 📱 Phone ─ 📶 Wi-Fi ─ 📡 Router ─ 🗼 ISP / tower ─ 🌍 World
-  (PAN)      └────── (LAN) ──────┘           (MAN / WAN)</code></pre></div>
-<p>Your phone is connected to your home Wi-Fi, the Wi-Fi to your router, the router to Jio/Airtel, and through them to the world. Each step is a <strong>different type of network</strong> — different <strong>name, scale and purpose</strong>.</p>
-<hr>
-<h2 id="14-pan-personal-area-network" class="sec-heading"><a class="sec-num" href="#14-pan-personal-area-network">14</a><span>⌚ PAN — Personal Area Network</span></h2>
-<ul>
-<li><strong>Smallest scale</strong> — the devices <strong>around a single person</strong>.</li>
-<li>Range: a few metres.</li>
-<li>Usually Bluetooth / USB; <strong>no internet required</strong>.</li>
-</ul>
-<p>Examples: 📱 phone ↔ 🎧 earbuds (Bluetooth) · ⌚ smartwatch syncing with phone · 💻 laptop ↔ wireless mouse.</p>
-<hr>
-<h2 id="15-lan-local-area-network" class="sec-heading"><a class="sec-num" href="#15-lan-local-area-network">15</a><span>🏠 LAN — Local Area Network</span></h2>
-<ul>
-<li>A <strong>mini-network</strong> covering a <strong>small area</strong>: home, office, building or campus.</li>
-<li>Fast and privately owned.</li>
-<li>Perfect for <strong>sharing printers, files</strong> and communicating between devices.</li>
-<li>Built with <strong>switches</strong>, <strong>Wi-Fi access points</strong> and Ethernet cables.</li>
-</ul>
-<blockquote class="callout note"><p>☁️ <strong>Cloud link:</strong> a <strong>private network inside an AWS VPC</strong> (Virtual Private Cloud) is essentially a <strong>LAN in the cloud</strong>.</p>
-</blockquote>
-<hr>
-<h2 id="16-man-metropolitan-area-network" class="sec-heading"><a class="sec-num" href="#16-man-metropolitan-area-network">16</a><span>🏙️ MAN — Metropolitan Area Network</span></h2>
-<ul>
-<li>The <strong>bigger sibling of a LAN</strong> — covers a <strong>city / metropolitan area</strong>.</li>
-<li><strong>Connects multiple LANs</strong> or network segments in the same region.</li>
-<li>Used by businesses, universities, government organisations, city Wi-Fi, cable TV networks.</li>
-</ul>
-<blockquote class="callout note"><p>☁️ <strong>Cloud link:</strong> an <strong>AWS Region</strong> is several data centres (<strong>Availability Zones</strong>) in one geographic area connected by fast private links — <strong>MAN-scale infrastructure</strong>.</p>
-</blockquote>
-<hr>
-<h2 id="17-wan-wide-area-network" class="sec-heading"><a class="sec-num" href="#17-wan-wide-area-network">17</a><span>🌍 WAN — Wide Area Network</span></h2>
-<ul>
-<li>Covers <strong>wide areas</strong>: multiple cities, countries or continents.</li>
-<li><strong>The internet is the largest WAN.</strong></li>
-<li>Companies also build <strong>private WANs</strong> — e.g. one corporate network joining offices in <strong>Mumbai, Bangalore, New York and London</strong>. Banks and airlines do this.</li>
-</ul>
-<blockquote class="callout tip"><p>🧠 <strong>The internet is a collection of all these networks</strong> — PANs and LANs connected through MANs and WANs.</p>
-</blockquote>
-<hr>
-<h2 id="18-pan-vs-lan-vs-man-vs-wan" class="sec-heading"><a class="sec-num" href="#18-pan-vs-lan-vs-man-vs-wan">18</a><span>📊 PAN vs LAN vs MAN vs WAN</span></h2>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th></th>
-<th>⌚ PAN</th>
-<th>🏠 LAN</th>
-<th>🏙️ MAN</th>
-<th>🌍 WAN</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Full form</td>
+<td>PAN</td>
 <td>Personal Area Network</td>
-<td>Local Area Network</td>
-<td>Metropolitan Area Network</td>
-<td>Wide Area Network</td>
-</tr>
-<tr>
-<td>Range</td>
-<td>~10 m</td>
-<td>Home / building / campus</td>
-<td>A city</td>
-<td>Countries / continents</td>
-</tr>
-<tr>
-<td>Example</td>
+<td>Few meters</td>
 <td>Phone + earbuds</td>
-<td>Home Wi-Fi, office network</td>
-<td>City network, campus group</td>
-<td>The internet, bank&#39;s private network</td>
-</tr>
-<tr>
-<td>Speed</td>
-<td>Low–medium</td>
-<td>Very high</td>
-<td>High</td>
-<td>Varies (slower over distance)</td>
-</tr>
-<tr>
-<td>Owned by</td>
-<td>One person</td>
-<td>One person / organisation</td>
-<td>Organisation / city / ISP</td>
-<td>Many organisations / ISPs</td>
-</tr>
-<tr>
-<td>Cloud equivalent</td>
 <td>—</td>
-<td>VPC / subnet</td>
-<td>Region + Availability Zones</td>
-<td>Global network between regions</td>
 </tr>
-</tbody></table>
+<tr>
+<td>LAN</td>
+<td>Local Area Network</td>
+<td>Home / office / campus</td>
+<td>Office Wi-Fi</td>
+<td>VPC / subnet</td>
+</tr>
+<tr>
+<td>MAN</td>
+<td>Metropolitan Area Network</td>
+<td>City</td>
+<td>City-wide bank branches</td>
+<td>Region + AZs</td>
+</tr>
+<tr>
+<td>WAN</td>
+<td>Wide Area Network</td>
+<td>Countries / continents</td>
+<td>The Internet</td>
+<td>Multi-region setup</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>PAN  ⊂  LAN  ⊂  MAN  ⊂  WAN
-(smallest)            (largest)</code></pre></div>
-<hr>
-<h1 id="part-6-network-topologies" class="part-heading" style="--part:#9333ea"><span class="part-kicker">🟪 Part 6</span><span class="part-title">Network Topologies</span></h1>
-<h2 id="19-what-is-a-topology" class="sec-heading"><a class="sec-num" href="#19-what-is-a-topology">19</a><span>🗺️ What is a Topology?</span></h2>
-<p>Imagine setting up an office network: <strong>6 computers, 1 printer, 1 internet connection</strong>. How do you connect them?</p>
-<ul>
-<li>Run a cable from <strong>every computer to every other</strong> computer?</li>
-<li>Plug everything into <strong>one central box</strong>?</li>
-<li>Arrange them <strong>in a line</strong>?</li>
-</ul>
-<p><strong>Network topology</strong> answers this. The word comes from the Greek <em>topos</em> = <strong>place / arrangement</strong>.</p>
-<blockquote class="callout note"><p><strong>Definition:</strong> <strong>topology</strong> is the way devices are <strong>arranged and connected</strong> to each other in a network.</p>
+<blockquote class="callout note"><p>🌐 <strong>The Internet is a collection of all these networks!</strong></p>
 </blockquote>
-<hr>
-<h2 id="20-bus-topology" class="sec-heading"><a class="sec-num" href="#20-bus-topology">20</a><span>➖ Bus Topology</span></h2>
-<p>All devices are connected to <strong>one single cable</strong> called the <strong>bus</strong> (backbone).</p>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code> [PC1]   [PC2]   [PC3]  [Printer]
-   │       │       │       │
-═══╧═══════╧═══════╧═══════╧═══  ← the bus (one shared cable)</code></pre></div>
-<ul>
-<li>Like a <strong>group chat</strong>: every message is seen by everyone; only the intended device keeps it.</li>
-<li>✅ Cheap, simple, little cable.</li>
-<li>❌ <strong>Cable breaks → whole network down</strong>; slows down as devices are added; collisions.</li>
-</ul>
-<hr>
-<h2 id="21-ring-topology" class="sec-heading"><a class="sec-num" href="#21-ring-topology">21</a><span>⭕ Ring Topology</span></h2>
-<p>Each device connects to the <strong>next one in a circular loop</strong>. Data travels <strong>in one direction</strong>, passing through each device.</p>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>   [PC1] ──────▶ [PC2]
-     ▲             │
-     │             ▼
-   [PC4] ◀────── [PC3]</code></pre></div>
-<ul>
-<li>✅ Orderly — no collisions; equal access.</li>
-<li>❌ <strong>One device or link fails → the ring breaks</strong> (unless it&#39;s a dual ring); adding devices disrupts it.</li>
-</ul>
-<hr>
-<h2 id="22-star-topology" class="sec-heading"><a class="sec-num" href="#22-star-topology">22</a><span>⭐ Star Topology</span></h2>
-<p>All devices connect to a <strong>central hub or switch</strong>. Data flows <strong>through the centre</strong> to reach the intended device.</p>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>        [PC1]       [PC2]
-            \       /
- [Printer] ── [SWITCH] ── [PC3]
-            /       \
-        [PC4]     [Router] → Internet</code></pre></div>
-<ul>
-<li>✅ <strong>Most common today</strong> (home &amp; office networks). One cable fails → only that device is affected. Easy to add devices and troubleshoot.</li>
-<li>❌ <strong>Central switch fails → everything is down</strong>; more cable than bus.</li>
-</ul>
-<hr>
-<h2 id="23-mesh-topology" class="sec-heading"><a class="sec-num" href="#23-mesh-topology">23</a><span>🕸️ Mesh Topology</span></h2>
-<p>Each device connects to <strong>every other device</strong> (full mesh), giving <strong>many paths</strong> for data.</p>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>   [A] ─────────── [B]
-    │ ╲           ╱ │
-    │   ╲       ╱   │
-    │     ╲   ╱     │
-    │       ╳       │
-    │     ╱   ╲     │
-    │   ╱       ╲   │
-    │ ╱           ╲ │
-   [C] ─────────── [D]
+<hr />
+<h1 id="part-3-network-topologies" class="part-heading" style="--part:#ca8a04"><span class="part-kicker">🟨 Part 3</span><span class="part-title">Network Topologies</span></h1>
 
- 4 devices → 4×3/2 = 6 links (every device ↔ every device)</code></pre></div>
+<h2 id="10-what-is-a-topology" class="sec-heading"><a class="sec-num" href="#10-what-is-a-topology">10</a><span>📖 What is a Topology?</span></h2>
+
+<p><strong>Scenario:</strong> you're setting up Wi-Fi for a small office — <strong>6 computers, 1 printer, 1 Internet connection</strong>. How do you connect them?</p>
 <ul>
-<li>✅ <strong>Most reliable</strong> — if one link fails, data takes another route. Used in the <strong>internet backbone</strong>, data-centre and cloud networks.</li>
-<li>❌ Expensive, lots of cabling: <strong>n devices need n×(n−1)/2 links</strong> (6 devices = 15 cables).</li>
-<li><strong>Partial mesh</strong> = only important devices have multiple links (common in practice).</li>
+<li>❓ Run a cable from every computer to every other computer?</li>
+<li>❓ Plug everything into one central box?</li>
+<li>❓ Arrange them in a line?</li>
 </ul>
-<hr>
-<h2 id="24-tree-topology" class="sec-heading"><a class="sec-num" href="#24-tree-topology">24</a><span>🌳 Tree Topology</span></h2>
-<p>A <strong>hierarchy</strong> that combines <strong>bus and star</strong>: star networks connected to a backbone, like a <strong>family tree</strong>.</p>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>                [ Core switch ]
-               /               \
-    [ Floor-1 switch ]    [ Floor-2 switch ]
-      /     |     \          /        \
-   [PC1]  [PC2] [Printer]  [PC3]     [PC4]</code></pre></div>
+<p><strong>Network topology</strong> helps us answer this.</p>
+<blockquote class="callout note"><p>📖 The word <em>topology</em> comes from the Greek word for <strong>place / arrangement</strong>.
+In networking, <strong>topology = the way devices are arranged and connected to each other.</strong></p>
+</blockquote>
+<hr />
+<h2 id="11-bus-topology" class="sec-heading"><a class="sec-num" href="#11-bus-topology">11</a><span>🚌 Bus Topology</span></h2>
+
+<p>All devices are connected to <strong>a single cable</strong> called the <strong>bus</strong>.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code> PC1    PC2    PC3    PC4
+  │      │      │      │
+══╧══════╧══════╧══════╧══   ← single cable (bus)</code></pre></div>
 <ul>
-<li>✅ Scales well; easy to expand floor by floor or department by department. Common in <strong>big companies and campuses</strong>.</li>
-<li>❌ Top-level (root) switch fails → its branches are cut off; more complex.</li>
+<li>💬 Like a <strong>group chat</strong> — everyone can see and participate in the conversation.</li>
+<li>✅ Cheap and simple</li>
+<li>❌ If the main cable breaks → the <strong>whole network goes down</strong></li>
 </ul>
-<hr>
-<h2 id="25-topology-comparison" class="sec-heading"><a class="sec-num" href="#25-topology-comparison">25</a><span>📊 Topology Comparison</span></h2>
+<hr />
+<h2 id="12-ring-topology" class="sec-heading"><a class="sec-num" href="#12-ring-topology">12</a><span>💍 Ring Topology</span></h2>
+
+<p>Each device is connected to the <strong>next device</strong> in a <strong>circular loop</strong>. Data travels around the ring in <strong>one direction</strong>, passing through each device.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>   PC1 ───▶ PC2
+    ▲        │
+    │        ▼
+   PC4 ◀─── PC3</code></pre></div>
+<ul>
+<li>✅ Orderly data flow</li>
+<li>❌ One broken device/link can <strong>break the ring</strong></li>
+</ul>
+<hr />
+<h2 id="13-star-topology-most-common" class="sec-heading"><a class="sec-num" href="#13-star-topology-most-common">13</a><span>⭐ Star Topology (most common)</span></h2>
+
+<p>All devices are connected to a <strong>central hub or switch</strong>. Data flows <strong>through</strong> it to reach the intended device.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>          PC1
+           │
+  PC4 ── SWITCH ── PC2
+           │
+          PC3</code></pre></div>
+<ul>
+<li>✅ Easy to add/remove devices; one PC failing doesn't affect others</li>
+<li>❌ If the <strong>central switch fails</strong> → everything goes down</li>
+<li>🏠 Your home router setup is a star topology</li>
+</ul>
+<hr />
+<h2 id="14-mesh-topology" class="sec-heading"><a class="sec-num" href="#14-mesh-topology">14</a><span>🕸️ Mesh Topology</span></h2>
+
+<p><strong>Every device is connected to every other device</strong>, forming many interconnected paths → <strong>multiple routes</strong> for data.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>PC1 ─────── PC2
+ │ ╲       ╱ │
+ │   ╲   ╱   │
+ │     ╳     │
+ │   ╱   ╲   │
+ │ ╱       ╲ │
+PC4 ─────── PC3</code></pre></div>
+<ul>
+<li>✅ Very reliable — no single point of failure</li>
+<li>❌ Expensive — lots of cables/connections</li>
+</ul>
+<hr />
+<h2 id="15-tree-topology" class="sec-heading"><a class="sec-num" href="#15-tree-topology">15</a><span>🌳 Tree Topology</span></h2>
+
+<p>A <strong>hierarchical</strong> topology that combines <strong>bus + star</strong>.
+👨‍👩‍👧‍👦 Like a <strong>family tree</strong> — everyone has their place in the hierarchy.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>                ROOT
+              ╱      ╲
+        SWITCH 1    SWITCH 2
+         ╱   ╲        ╱   ╲
+       PC1   PC2    PC3   PC4</code></pre></div>
+<ul>
+<li>✅ Scalable, good for large organizations</li>
+<li>❌ If the root fails → branches get cut off</li>
+</ul>
+<hr />
+<h2 id="16-topology-comparison" class="sec-heading"><a class="sec-num" href="#16-topology-comparison">16</a><span>📊 Topology Comparison</span></h2>
+
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th>Topology</th>
-<th>Layout</th>
-<th>✅ Advantage</th>
-<th>❌ Disadvantage</th>
-<th>Used in</th>
+<th>Structure</th>
+<th>Cost</th>
+<th>Reliability</th>
+<th>Used where</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>➖ <strong>Bus</strong></td>
+<tbody>
+<tr>
+<td>🚌 Bus</td>
 <td>One shared cable</td>
-<td>Cheap, simple</td>
-<td>Cable break = all down</td>
-<td>Old Ethernet, small labs</td>
+<td>Low</td>
+<td>Low</td>
+<td>Old / tiny networks</td>
 </tr>
 <tr>
-<td>⭕ <strong>Ring</strong></td>
+<td>💍 Ring</td>
 <td>Circular loop</td>
-<td>No collisions</td>
-<td>One failure breaks the ring</td>
-<td>Old token-ring, some fibre rings</td>
+<td>Medium</td>
+<td>Low–Medium</td>
+<td>Old token-ring networks</td>
 </tr>
 <tr>
-<td>⭐ <strong>Star</strong></td>
-<td>All → central switch</td>
-<td>Easy to manage; one cable fail affects one device</td>
-<td>Switch fails = all down</td>
-<td><strong>Homes, offices</strong> (most common)</td>
+<td>⭐ Star</td>
+<td>Central switch</td>
+<td>Medium</td>
+<td>Medium–High</td>
+<td>Homes, offices (most common)</td>
 </tr>
 <tr>
-<td>🕸️ <strong>Mesh</strong></td>
+<td>🕸️ Mesh</td>
 <td>Everyone ↔ everyone</td>
-<td>Most reliable, many paths</td>
-<td>Expensive, many cables</td>
-<td><strong>Internet backbone, data centres</strong></td>
+<td>High</td>
+<td>Very high</td>
+<td>Internet backbone, critical systems</td>
 </tr>
 <tr>
-<td>🌳 <strong>Tree</strong></td>
-<td>Hierarchy of stars</td>
-<td>Scalable</td>
-<td>Root failure cuts branches</td>
-<td><strong>Large companies, campuses</strong></td>
+<td>🌳 Tree</td>
+<td>Hierarchy (bus + star)</td>
+<td>Medium–High</td>
+<td>Medium</td>
+<td>Campuses, large companies</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
-<blockquote class="callout tip"><p>🧠 Memory trick: <strong>Bus</strong> = one road · <strong>Ring</strong> = roundabout · <strong>Star</strong> = everything goes through the centre · <strong>Mesh</strong> = every house has a road to every other · <strong>Tree</strong> = family tree.</p>
-</blockquote>
-<hr>
-<h1 id="part-7-network-models" class="part-heading" style="--part:#a16207"><span class="part-kicker">🟫 Part 7</span><span class="part-title">Network Models</span></h1>
-<h2 id="26-why-do-we-need-network-models" class="sec-heading"><a class="sec-num" href="#26-why-do-we-need-network-models">26</a><span>❓ Why Do We Need Network Models?</span></h2>
-<p>You&#39;re watching a bootcamp on YouTube. Your request <strong>leaves your phone → travels over Wi-Fi → crosses the internet → reaches a server in a data centre → is processed → the video comes back</strong> — all in a few seconds.</p>
+<hr />
+<h1 id="part-4-network-models" class="part-heading" style="--part:#ea580c"><span class="part-kicker">🟧 Part 4</span><span class="part-title">Network Models</span></h1>
+
+<h2 id="17-why-do-we-need-models" class="sec-heading"><a class="sec-num" href="#17-why-do-we-need-models">17</a><span>❓ Why Do We Need Models?</span></h2>
+
+<p>You're watching a video on YouTube:</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>📱 Request leaves your phone
+    ↓
+📶 Travels through Wi-Fi
+    ↓
+🌍 Crosses the Internet
+    ↓
+🏢 Reaches a server in a data center
+    ↓
+⚙️ Gets processed
+    ↓
+📺 Video data comes back — in a few seconds!</code></pre></div>
 <p>But:</p>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>📱 Phone   → made by Apple
-📡 Router  → a different manufacturer
-🏢 ISP gear → different again
-🖥️ Server  → runs Linux</code></pre></div>
-<p><strong>How do they all understand each other?</strong> → <strong>Network models.</strong></p>
-<p>In the early days, <strong>every company built its own system</strong> — its own cables, its own rules, its own way of sending data — and <strong>none of them could talk to each other</strong>.</p>
-<p>A <strong>network model</strong> is a <strong>standard set of rules split into layers</strong>, so any device from any company can communicate as long as it follows the same rules.</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
-<th>Without a model</th>
-<th>With a model</th>
+<th>Device</th>
+<th>Made by</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>Every vendor has its own rules</td>
-<td>Everyone follows one standard</td>
+<tbody>
+<tr>
+<td>📱 Your phone</td>
+<td>Apple</td>
 </tr>
 <tr>
-<td>Devices can&#39;t talk to each other</td>
-<td>Apple phone ↔ Linux server ↔ any router works</td>
+<td>🖥️ The server</td>
+<td>Runs Linux</td>
 </tr>
 <tr>
-<td>One giant, complex problem</td>
-<td>Split into <strong>layers</strong> — each layer has one job</td>
+<td>🔀 The router</td>
+<td>A completely different manufacturer</td>
 </tr>
 <tr>
-<td>Hard to troubleshoot</td>
-<td>Find which layer is failing</td>
+<td>📡 ISP equipment</td>
+<td>Different again</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
-<hr>
-<h2 id="27-the-two-models-youll-hear-about" class="sec-heading"><a class="sec-num" href="#27-the-two-models-youll-hear-about">27</a><span>🧱 The Two Models You&#39;ll Hear About</span></h2>
+<p><strong>How do they all understand each other?</strong> 👉 <strong>Network models.</strong></p>
+<h3>❌ The early days</h3>
+<p>Every company built its <strong>own system</strong> — own cables, own rules, own way of sending data — and <strong>none of them could talk to each other</strong>.</p>
+<p>The industry needed a <strong>common language</strong> — not just for cables and signals, but for <strong>every aspect</strong> of how data moves from one place to another.</p>
+<p>✅ That's why we have <strong>layered models</strong> — each layer has its own job and its own set of <strong>protocols</strong>.</p>
+<hr />
+<h2 id="18-the-layered-models-side-by-side" class="sec-heading"><a class="sec-num" href="#18-the-layered-models-side-by-side">18</a><span>🧱 The Layered Models Side by Side</span></h2>
+
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>   OSI Model           TCP/IP (original)      TCP/IP (updated)
+┌──────────────┐
+│ Application  │
+├──────────────┤      ┌──────────────┐       ┌──────────────┐
+│ Presentation │      │ Application  │       │ Application  │
+├──────────────┤      │              │       │              │
+│   Session    │      │              │       │              │
+├──────────────┤      ├──────────────┤       ├──────────────┤
+│  Transport   │      │  Transport   │       │  Transport   │
+├──────────────┤      ├──────────────┤       ├──────────────┤
+│   Network    │      │   Internet   │       │   Network    │
+├──────────────┤      ├──────────────┤       ├──────────────┤
+│  Data Link   │      │     Link     │       │  Data Link   │
+├──────────────┤      │              │       ├──────────────┤
+│   Physical   │      │              │       │   Physical   │
+└──────────────┘      └──────────────┘       └──────────────┘
+   7 layers              4 layers               5 layers</code></pre></div>
+<h3>🏛️ Who defines the standards?</h3>
 <div class="table-wrap"><table>
 <thead>
 <tr>
-<th>🧱 OSI Model (7 layers)</th>
-<th>🌐 TCP/IP Model (4 layers)</th>
+<th>Organization</th>
+<th>Standardizes</th>
 </tr>
 </thead>
-<tbody><tr>
-<td><strong>Reference / teaching</strong> model (ISO, 1984)</td>
-<td>The model the <strong>real internet</strong> uses</td>
+<tbody>
+<tr>
+<td><strong>ISO</strong> — International Organization for Standardization</td>
+<td>The <strong>OSI model</strong></td>
 </tr>
 <tr>
-<td>7. Application</td>
-<td>4. Application (HTTP, DNS, SSH)</td>
+<td><strong>IETF</strong> — Internet Engineering Task Force</td>
+<td>Internet protocols: TCP, IP, HTTP, DNS (published as <strong>RFCs</strong>)</td>
 </tr>
 <tr>
-<td>6. Presentation</td>
-<td>↑ (included in Application)</td>
+<td><strong>IEEE</strong> — Institute of Electrical and Electronics Engineers</td>
+<td>Ethernet (802.3), Wi-Fi (802.11)</td>
 </tr>
 <tr>
-<td>5. Session</td>
-<td>↑ (included in Application)</td>
+<td><strong>W3C</strong> — World Wide Web Consortium</td>
+<td>Web standards: HTML, CSS</td>
 </tr>
-<tr>
-<td>4. Transport</td>
-<td>3. Transport (TCP, UDP)</td>
-</tr>
-<tr>
-<td>3. Network</td>
-<td>2. Internet (IP)</td>
-</tr>
-<tr>
-<td>2. Data Link</td>
-<td>1. Network Access (Ethernet, Wi-Fi)</td>
-</tr>
-<tr>
-<td>1. Physical</td>
-<td>↑ (included in Network Access)</td>
-</tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
-<blockquote class="callout note"><p>📌 Next topic in these notes: each layer in detail — what it does, its protocols and devices. Memory trick for OSI (top → bottom): <strong>&quot;All People Seem To Need Data Processing.&quot;</strong></p>
-</blockquote>
-<hr>
-<h2 id="28-remember" class="sec-heading"><a class="sec-num" href="#28-remember">28</a><span>🧠 Remember</span></h2>
-<blockquote class="callout tip"><p>🧠 <strong>Models exist so different devices from different companies can talk.</strong> Each layer does one job and hands the data to the next layer.</p>
-</blockquote>
-<hr>
-<h1 id="part-8-interview-questions-cheat-sheet" class="part-heading" style="--part:#0891b2"><span class="part-kicker">⭐ Part 8</span><span class="part-title">Interview Questions &amp; Cheat Sheet</span></h1>
-<h2 id="29-interview-questions" class="sec-heading"><a class="sec-num" href="#29-interview-questions">29</a><span>🎤 Interview Questions</span></h2>
-<blockquote class="callout question"><p>❓ <strong>Q1. What is a computer network? What is the difference between a node and a host?</strong></p>
-</blockquote>
-<p>A network is a set of connected devices that share data and resources. A <strong>node</strong> is any device on the network (including switches and routers); a <strong>host</strong> is an end device with an IP address that sends/receives data (PC, server, phone).</p>
-<hr>
-<blockquote class="callout question"><p>❓ <strong>Q2. What is the internet?</strong></p>
-</blockquote>
-<p>A <strong>network of networks</strong> — millions of separate networks (homes, ISPs, companies, data centres) connected together. Nobody owns all of it; each organisation owns its piece.</p>
-<hr>
-<blockquote class="callout question"><p>❓ <strong>Q3. How does data travel from India to a server in the USA?</strong></p>
-</blockquote>
-<p>Phone → router → ISP → bigger backbone carriers / IXPs → <strong>submarine fibre cable</strong> → US landing station → US backbone → data centre → server. <strong>DNS</strong> finds the IP, routers forward hop by hop, <strong>BGP</strong> decides paths between networks. Check with <code>traceroute</code>.</p>
-<hr>
-<blockquote class="callout question"><p>❓ <strong>Q4. What is the difference between the internet and the World Wide Web?</strong></p>
-</blockquote>
-<p>The <strong>internet</strong> is the infrastructure (cables, routers, networks). The <strong>web</strong> is one service on top of it — linked HTML pages delivered over HTTP and found by URLs, invented by Tim Berners-Lee in 1991. Email and WhatsApp use the internet but are not the web.</p>
-<hr>
-<blockquote class="callout question"><p>❓ <strong>Q5. Explain client–server architecture.</strong></p>
-</blockquote>
-<p>A <strong>client</strong> sends a request; a <strong>server</strong> listens on a port, processes the request and sends a response. A server is just a computer running server software — even a laptop. One server can serve thousands of clients at once.</p>
-<hr>
-<blockquote class="callout question"><p>❓ <strong>Q6. Explain PAN, LAN, MAN and WAN with examples.</strong></p>
-</blockquote>
-<p>PAN = devices around one person (phone + earbuds). LAN = home/office/campus network. MAN = city-wide network joining LANs. WAN = across countries — the internet is the biggest WAN. Cloud: VPC ≈ LAN, Region/AZs ≈ MAN scale.</p>
-<hr>
-<blockquote class="callout question"><p>❓ <strong>Q7. Which network topology is most common, and which is most reliable?</strong></p>
-</blockquote>
-<p><strong>Star</strong> is most common (homes, offices) — easy to manage, but the central switch is a single point of failure. <strong>Mesh</strong> is most reliable (multiple paths), used in internet backbones and data centres, but it&#39;s expensive.</p>
-<hr>
-<blockquote class="callout question"><p>❓ <strong>Q8. Why do we need network models like OSI and TCP/IP?</strong></p>
-</blockquote>
-<p>So devices from different vendors can communicate using common rules, and so the huge problem of networking is split into <strong>layers</strong> that are easier to build and troubleshoot. OSI has 7 layers (reference model); TCP/IP has 4 (what the internet actually uses).</p>
-<hr>
-<h2 id="30-cheat-sheet" class="sec-heading"><a class="sec-num" href="#30-cheat-sheet">30</a><span>📋 Cheat Sheet</span></h2>
-<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>NETWORK      → connected devices sharing data &amp; resources
-NODE         → any device on a network
-HOST         → end device with an IP address
-INTERNET     → network of networks (infrastructure)
-WWW          → web pages (HTML) via HTTP, found by URL — runs ON the internet
-CLIENT       → makes requests          SERVER → listens on a port &amp; responds
+<hr />
+<h2 id="19-why-layers-innovation-flexibility" class="sec-heading"><a class="sec-num" href="#19-why-layers-innovation-flexibility">19</a><span>🚀 Why Layers? — Innovation &amp; Flexibility</span></h2>
 
-PAN  → around one person (Bluetooth)
-LAN  → home / office / campus          (cloud: VPC)
-MAN  → a city                          (cloud: Region + AZs)
-WAN  → countries / continents          (the internet)
+<ul>
+<li>✅ Each layer can be <strong>improved separately</strong></li>
+<li>✅ Innovations in physical media (like <strong>faster cables</strong>) <strong>don't affect</strong> other layers — your browser doesn't care if you're on fiber or Wi-Fi</li>
+<li>✅ Allows <strong>easy upgrades</strong> while keeping <strong>compatibility</strong></li>
+<li>✅ Makes <strong>troubleshooting</strong> easier — find which layer is broken</li>
+</ul>
+<hr />
+<h1 id="part-5-osi-model-7-layers-encapsulation-pdu" class="part-heading" style="--part:#dc2626"><span class="part-kicker">🟥 Part 5</span><span class="part-title">OSI Model (7 Layers), Encapsulation &amp; PDU</span></h1>
 
-BUS  → one shared cable                RING → circular loop
-STAR → central switch (most common)    MESH → everyone ↔ everyone (most reliable)
-TREE → hierarchy of stars
+<h2 id="20-what-is-the-osi-model" class="sec-heading"><a class="sec-num" href="#20-what-is-the-osi-model">20</a><span>📖 What is the OSI Model?</span></h2>
 
-OSI    → 7 layers (reference)          TCP/IP → 4 layers (real internet)
-India → USA: ISP → backbone/IXP → submarine cable → US backbone → server</code></pre></div>
+<p><strong>OSI = Open Systems Interconnection.</strong></p>
+<p>It is a <strong>conceptual framework</strong> that helps <strong>standardize and describe</strong> how communication systems and networks work. It has <strong>7 layers</strong>, and each layer has its own specific tasks and responsibilities.</p>
+<h3>🧠 Memory trick</h3>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>Top → Bottom (7 → 1):  All People Seem To Need Data Processing
+Bottom → Top (1 → 7):  Please Do Not Throw Sausage Pizza Away</code></pre></div>
+<hr />
+<h2 id="21-osi-layers-overview" class="sec-heading"><a class="sec-num" href="#21-osi-layers-overview">21</a><span>📊 OSI Layers Overview</span></h2>
+
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Layer</th>
+<th>One-line job</th>
+<th>Data unit</th>
+<th>Examples / Devices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>🧑‍💻 <strong>Application</strong></td>
+<td>Human-computer interaction layer</td>
+<td>Data</td>
+<td>HTTP, HTTPS, FTP, SMTP, DNS, SSH</td>
+</tr>
+<tr>
+<td>6</td>
+<td>🎨 <strong>Presentation</strong></td>
+<td>Makes sure data is in a usable format</td>
+<td>Data</td>
+<td>SSL/TLS, JPEG, ASCII</td>
+</tr>
+<tr>
+<td>5</td>
+<td>🤝 <strong>Session</strong></td>
+<td>Creates &amp; maintains sessions</td>
+<td>Data</td>
+<td>Login sessions, RPC</td>
+</tr>
+<tr>
+<td>4</td>
+<td>🚚 <strong>Transport</strong></td>
+<td>Transmits data end-to-end using TCP/UDP</td>
+<td><strong>Segment</strong></td>
+<td>TCP, UDP, <strong>ports</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>🗺️ <strong>Network</strong></td>
+<td>Decides which path the data will take</td>
+<td><strong>Packet</strong></td>
+<td>IP, ICMP, <strong>Router</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>🔗 <strong>Data Link</strong></td>
+<td>Defines the format of data on the network</td>
+<td><strong>Frame</strong></td>
+<td>Ethernet, MAC, <strong>Switch</strong></td>
+</tr>
+<tr>
+<td>1</td>
+<td>⚡ <strong>Physical</strong></td>
+<td>Transmits raw bit stream over physical media</td>
+<td><strong>Bits</strong></td>
+<td>Cables, Wi-Fi signals, NIC</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="22-layer-7-application-layer" class="sec-heading"><a class="sec-num" href="#22-layer-7-application-layer">22</a><span>🧑‍💻 Layer 7 — Application Layer</span></h2>
+
+<p><strong>"Human-computer interaction layer"</strong></p>
+<ul>
+<li>The software that lets <strong>humans interact</strong> with the network works at this layer.</li>
+<li><strong>Example:</strong> browsers (Chrome, Firefox) use application-layer protocols.</li>
+<li>⚠️ Technically the <strong>protocols</strong> (HTTP, HTTPS) are the layer — the browser <em>uses</em> them.</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Used for</th>
+<th>Port</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTP / HTTPS</td>
+<td>Web pages</td>
+<td>80 / 443</td>
+</tr>
+<tr>
+<td>DNS</td>
+<td>Domain name → IP address</td>
+<td>53</td>
+</tr>
+<tr>
+<td>SSH</td>
+<td>Remote login to servers</td>
+<td>22</td>
+</tr>
+<tr>
+<td>FTP</td>
+<td>File transfer</td>
+<td>21</td>
+</tr>
+<tr>
+<td>SMTP</td>
+<td>Sending email</td>
+<td>25</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="23-layer-6-presentation-layer" class="sec-heading"><a class="sec-num" href="#23-layer-6-presentation-layer">23</a><span>🎨 Layer 6 — Presentation Layer</span></h2>
+
+<p><strong>"Shows data in the correct format"</strong></p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>Translation ──▶ Encryption ──▶ Compression</code></pre></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Job</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🔤 <strong>Translation</strong></td>
+<td>Converts data into a machine-representable binary format (e.g. <strong>ASCII → EBCDIC</strong>)</td>
+<td>Text → binary</td>
+</tr>
+<tr>
+<td>🔒 <strong>Encryption / Decryption</strong></td>
+<td>Secures data so nobody else can read it</td>
+<td>SSL/TLS (the "S" in HTTPS)</td>
+</tr>
+<tr>
+<td>🗜️ <strong>Compression / Decompression</strong></td>
+<td>Reduces data size so it travels faster</td>
+<td>JPEG, MP4, GZIP</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="24-layer-5-session-layer" class="sec-heading"><a class="sec-num" href="#24-layer-5-session-layer">24</a><span>🤝 Layer 5 — Session Layer</span></h2>
+
+<p><strong>"Session of communication"</strong></p>
+<ul>
+<li>✅ <strong>Creates, maintains and ends</strong> sessions between two devices</li>
+<li>✅ <strong>Authentication &amp; Authorization</strong> are involved here (who are you? what are you allowed to do?)</li>
+<li>✅ Uses <strong>timeframes / checkpoints</strong> — sessions expire after inactivity; a failed transfer can resume from the last checkpoint</li>
+</ul>
+<p><strong>Example:</strong> staying logged into a website until your session times out.</p>
+<hr />
+<h2 id="25-layer-4-transport-layer" class="sec-heading"><a class="sec-num" href="#25-layer-4-transport-layer">25</a><span>🚚 Layer 4 — Transport Layer</span></h2>
+
+<p><strong>"Makes sure data is transferred effectively, end to end"</strong></p>
+<ul>
+<li><strong>Protocols:</strong> <strong>TCP</strong> and <strong>UDP</strong></li>
+<li>Uses <strong>port numbers</strong> to deliver data to the right application</li>
+<li>Data unit: <strong>Segment</strong></li>
+</ul>
+<p>Transport is done in <strong>3 steps</strong>:</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>a. Segmentation  →  b. Flow Control  →  c. Error Control</code></pre></div>
+<h3>a. ✂️ Segmentation</h3>
+<p>Data from the session layer is divided into small pieces called <strong>segments</strong>. Each segment has:</p>
+<ul>
+<li>📍 <strong>Source &amp; Destination Port Number</strong> → which app sent it, which app should receive it</li>
+<li>🔢 <strong>Sequence Number</strong> → helps <strong>reassemble segments in the correct order</strong></li>
+</ul>
+<h3>b. 🚦 Flow Control</h3>
+<p>Controls <strong>the amount of data</strong> being transferred, so a fast sender doesn't overwhelm a slow receiver.</p>
+<h3>c. ✅ Error Control</h3>
+<p>Quality-of-data check — a <strong>checksum</strong> is added to every segment. Corrupted/lost data is re-sent (TCP).</p>
+<h3>⚔️ TCP vs UDP</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>📬 TCP</th>
+<th>📢 UDP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Transmission Control Protocol</td>
+<td>User Datagram Protocol</td>
+</tr>
+<tr>
+<td><strong>Connection-oriented</strong> (3-way handshake: SYN → SYN-ACK → ACK)</td>
+<td><strong>Connectionless</strong></td>
+</tr>
+<tr>
+<td><strong>Reliable</strong> — guaranteed delivery &amp; order</td>
+<td><strong>No guarantee</strong></td>
+</tr>
+<tr>
+<td>Slower</td>
+<td>Faster</td>
+</tr>
+<tr>
+<td>Web, email, file download, SSH</td>
+<td>Video streaming, gaming, voice calls, DNS</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote class="callout tip"><p>💡 <strong>TCP = registered post</strong> (confirmed delivery). <strong>UDP = shouting in a crowd</strong> (fast, no guarantee).</p>
+</blockquote>
+<hr />
+<h2 id="26-layer-3-network-layer" class="sec-heading"><a class="sec-num" href="#26-layer-3-network-layer">26</a><span>🗺️ Layer 3 — Network Layer</span></h2>
+
+<p><strong>"Decides which path the data will take"</strong></p>
+<ul>
+<li>🏷️ <strong>Logical addressing</strong> — IP addressing done in the network layer is called <strong>logical addressing</strong> (e.g. <code>192.168.1.10</code>)</li>
+<li>🛣️ <strong>Routing</strong> — moving a <strong>packet</strong> from source to destination</li>
+<li>⚖️ <strong>Load balancing / path selection</strong> — traffic can be spread across multiple paths</li>
+<li><strong>Device:</strong> 🔀 <strong>Router</strong></li>
+<li><strong>Protocols:</strong> IP (IPv4, IPv6), ICMP (<code>ping</code>)</li>
+<li>Data unit: <strong>Packet</strong></li>
+</ul>
+<hr />
+<h2 id="27-layer-2-data-link-layer" class="sec-heading"><a class="sec-num" href="#27-layer-2-data-link-layer">27</a><span>🔗 Layer 2 — Data Link Layer</span></h2>
+
+<p><strong>"Defines the format of data on the network"</strong></p>
+<p>Primary functions:</p>
+<ul>
+<li>📦 <strong>Framing</strong> — packets are wrapped into <strong>frames</strong></li>
+<li>🏷️ <strong>Physical addressing</strong> — the frame includes <strong>source MAC</strong> and <strong>destination MAC</strong> address</li>
+<li>✅ <strong>Error detection &amp; correction</strong></li>
+<li>🚦 <strong>Flow control</strong></li>
+</ul>
+<p><strong>MAC address</strong> → a <strong>12-digit alphanumeric</strong> (hexadecimal) number of your computer's <strong>network interface (NIC)</strong>.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>Example MAC: 00:1A:2B:3C:4D:5E</code></pre></div>
+<ul>
+<li><strong>Device:</strong> 🔀 <strong>Switch</strong></li>
+<li><strong>Protocols:</strong> Ethernet, Wi-Fi (802.11), ARP (finds MAC from IP)</li>
+<li>Data unit: <strong>Frame</strong></li>
+</ul>
+<h3>🆚 IP Address vs MAC Address</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>🏷️ IP Address</th>
+<th>🔖 MAC Address</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Logical address (Layer 3)</td>
+<td>Physical address (Layer 2)</td>
+</tr>
+<tr>
+<td>Can change (depends on network)</td>
+<td>Fixed to the network card</td>
+</tr>
+<tr>
+<td><code>192.168.1.10</code></td>
+<td><code>00:1A:2B:3C:4D:5E</code></td>
+</tr>
+<tr>
+<td>Like your <strong>home address</strong> 🏠</td>
+<td>Like your <strong>Aadhaar number</strong> 🪪</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="28-layer-1-physical-layer" class="sec-heading"><a class="sec-num" href="#28-layer-1-physical-layer">28</a><span>⚡ Layer 1 — Physical Layer</span></h2>
+
+<p><strong>"Transmits the raw bit stream over the physical media"</strong></p>
+<ul>
+<li>Represents the <strong>actual physical</strong> medium — <strong>Ethernet cables</strong> or <strong>wireless signals</strong></li>
+<li>The <strong>NIC card</strong> converts <strong>frames into bits</strong> (<strong>encoding</strong>)</li>
+<li>Transmits data as <strong>bits</strong> in the form of <strong>signals</strong>:</li>
+<li>⚡ electrical (copper cable)</li>
+<li>💡 light (fiber optic)</li>
+<li>📶 radio (Wi-Fi)</li>
+<li><strong>Devices:</strong> cables, hubs, repeaters, NIC</li>
+<li>Data unit: <strong>Bits</strong></li>
+</ul>
+<hr />
+<h2 id="29-how-data-moves-through-the-osi-model" class="sec-heading"><a class="sec-num" href="#29-how-data-moves-through-the-osi-model">29</a><span>🔄 How Data Moves Through the OSI Model</span></h2>
+
+<p>The <strong>client</strong> goes <strong>down</strong> the layers, the <strong>server</strong> goes <strong>up</strong>.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>💻 CLIENT SIDE (sending)
+RAW ──▶ ENCRYPTED ──▶ SEGMENT ──▶ PACKET ──▶ FRAME ──▶ BITS
+ L7        L6           L4          L3         L2        L1
+
+                         ⚡ travels over cable / Wi-Fi ⚡
+
+🖥️ SERVER SIDE (receiving)
+BITS ──▶ FRAME ──▶ PACKET ──▶ SEGMENT ──▶ DECRYPTED ──▶ RAW
+ L1        L2        L3          L4           L6         L7</code></pre></div>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>SENDER                                           RECEIVER
+ 7 Application   ▼                             ▲  7 Application
+ 6 Presentation  ▼  encrypt / compress         ▲  6 Presentation
+ 5 Session       ▼                             ▲  5 Session
+ 4 Transport     ▼  + port numbers   (segment) ▲  4 Transport
+ 3 Network       ▼  + IP addresses   (packet)  ▲  3 Network
+ 2 Data Link     ▼  + MAC addresses  (frame)   ▲  2 Data Link
+ 1 Physical      ▼ ──── 010101010 (bits) ────▶ ▲  1 Physical</code></pre></div>
+<blockquote class="callout tip"><p>📦 Adding headers on the way down = <strong>Encapsulation</strong>. Removing them on the way up = <strong>Decapsulation</strong>.</p>
+</blockquote>
+<hr />
+<h2 id="30-encapsulation-decapsulation" class="sec-heading"><a class="sec-num" href="#30-encapsulation-decapsulation">30</a><span>📦 Encapsulation &amp; Decapsulation</span></h2>
+
+<p><strong>Encapsulation</strong> = adding <strong>headers</strong> (and sometimes <strong>trailers</strong>) to data as it moves <strong>down</strong> the layers, before it is sent over the network.</p>
+<p>Think of it like <strong>packing a parcel</strong> 📦 — the letter goes in an envelope, the envelope goes in a box, the box gets a shipping label.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>Application layer        Data
+                           │  encapsulate ▼
+Transport layer    (L4)  L4 Header | Data
+                           │  encapsulate ▼
+Network layer      (L3)  L3 Header | L4 Header | Data
+                           │  encapsulate ▼
+Data Link layer    (L2)  L2 Header | L3 Header | L4 Header | Data | L2 Trailer
+                           │
+Physical layer     (L1)  0111101011000100111110011110110110101010111...</code></pre></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>What it adds</th>
+<th>Contains</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L4 Transport</td>
+<td><strong>L4 header</strong></td>
+<td>Source &amp; destination <strong>port</strong>, sequence number, checksum</td>
+</tr>
+<tr>
+<td>L3 Network</td>
+<td><strong>L3 header</strong></td>
+<td>Source &amp; destination <strong>IP address</strong></td>
+</tr>
+<tr>
+<td>L2 Data Link</td>
+<td><strong>L2 header + trailer</strong></td>
+<td>Source &amp; destination <strong>MAC address</strong> (header), error check (trailer)</td>
+</tr>
+<tr>
+<td>L1 Physical</td>
+<td>nothing — converts to <strong>bits</strong></td>
+<td>Electrical / light / radio signals</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote class="callout warn"><p>⚠️ Only the <strong>Data Link layer adds a trailer</strong> — the others add a header only.</p>
+</blockquote>
+<h3>📭 Decapsulation</h3>
+<p><strong>Decapsulation</strong> is the <strong>opposite</strong> — the receiver goes <strong>up</strong> the layers and each layer <strong>removes its own header</strong> (unpacking the parcel).</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>ENCAPSULATION (sender)     ▼  7 → 1   add headers
+DECAPSULATION (receiver)   ▲  1 → 7   remove headers</code></pre></div>
+<hr />
+<h2 id="31-protocol-data-unit-pdu-payload" class="sec-heading"><a class="sec-num" href="#31-protocol-data-unit-pdu-payload">31</a><span>🏷️ Protocol Data Unit (PDU) &amp; Payload</span></h2>
+
+<p>The message has a <strong>different name at each layer</strong>. These names are called <strong>Protocol Data Units (PDUs)</strong>.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>PDU name</th>
+<th>Looks like</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L4 Transport</td>
+<td><strong>Segment</strong> (TCP) / <strong>Datagram</strong> (UDP)</td>
+<td><code>[L4 Header][Data]</code></td>
+</tr>
+<tr>
+<td>L3 Network</td>
+<td><strong>Packet</strong></td>
+<td><code>[L3 Header][L4 Header][Data]</code></td>
+</tr>
+<tr>
+<td>L2 Data Link</td>
+<td><strong>Frame</strong></td>
+<td><code>[L2 Header][L3 Header][L4 Header][Data][L2 Trailer]</code></td>
+</tr>
+<tr>
+<td>L1 Physical</td>
+<td><strong>Bits</strong></td>
+<td><code>0101101...</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>📦 Payload</h3>
+<p>The <strong>contents</strong> carried inside a PDU (everything except its own header/trailer) is called the <strong>payload</strong>.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>          L2 Header | L3 Header | L4 Header | Data | L2 Trailer
+                    │                              │
+                    └────────── Payload ───────────┘
+                         (the payload of a frame)</code></pre></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>PDU</th>
+<th>Its payload is...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Segment / Datagram</td>
+<td>Application <strong>data</strong></td>
+</tr>
+<tr>
+<td>Packet</td>
+<td>A <strong>segment / datagram</strong></td>
+</tr>
+<tr>
+<td>Frame</td>
+<td>A <strong>packet</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote class="callout tip"><p>🧠 Each layer's whole PDU becomes the <strong>payload</strong> of the layer below it — like a box inside a box inside a box.</p>
+</blockquote>
+<hr />
+<h1 id="part-6-tcpip-model" class="part-heading" style="--part:#9333ea"><span class="part-kicker">🟪 Part 6</span><span class="part-title">TCP/IP Model</span></h1>
+
+<h2 id="32-what-is-the-tcpip-model" class="sec-heading"><a class="sec-num" href="#32-what-is-the-tcpip-model">32</a><span>📖 What is the TCP/IP Model?</span></h2>
+
+<p><strong>TCP/IP = Transmission Control Protocol / Internet Protocol</strong>, developed by <strong>ARPA</strong> (US Department of Defense).</p>
+<ul>
+<li>✅ It is the <strong>set of communication protocols</strong> used on the <strong>Internet</strong> and similar networks</li>
+<li>✅ Provides <strong>end-to-end data communication</strong></li>
+<li>✅ The <strong>OSI model is theoretical</strong>; <strong>TCP/IP is what the real Internet actually uses</strong></li>
+<li>Organized into <strong>5 layers</strong> (updated version): <strong>Application, Transport, Network (Internet), Data Link, Physical</strong></li>
+</ul>
+<hr />
+<h2 id="33-tcpip-layers" class="sec-heading"><a class="sec-num" href="#33-tcpip-layers">33</a><span>🧱 TCP/IP Layers</span></h2>
+
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Job</th>
+<th>Uses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🧑‍💻 <strong>Application</strong></td>
+<td>Protocols for communication between <strong>application processes</strong></td>
+<td>HTTP, HTTPS, DNS, SMTP, SSH</td>
+</tr>
+<tr>
+<td>🚚 <strong>Transport</strong></td>
+<td>End-to-end communication between <strong>application processes</strong> using <strong>port numbers</strong></td>
+<td>TCP, UDP</td>
+</tr>
+<tr>
+<td>🗺️ <strong>Network</strong></td>
+<td>End-to-end communication between <strong>hosts across networks</strong> using <strong>IP addresses</strong></td>
+<td>IP, ICMP, Routers</td>
+</tr>
+<tr>
+<td>🔗 <strong>Data Link</strong></td>
+<td><strong>Hop-to-hop</strong> delivery within the local network using <strong>MAC addresses</strong> and <strong>switches</strong></td>
+<td>Ethernet, Wi-Fi</td>
+</tr>
+<tr>
+<td>⚡ <strong>Physical</strong></td>
+<td>Sends <strong>bits</strong> as electrical, optical or radio signals over the physical medium</td>
+<td>Cables, fiber, radio</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>🔁 OSI → TCP/IP mapping</h3>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>OSI 7 Application  ┐
+OSI 6 Presentation ├──▶  Application
+OSI 5 Session      ┘
+OSI 4 Transport    ────▶  Transport
+OSI 3 Network      ────▶  Network (Internet)
+OSI 2 Data Link    ────▶  Data Link
+OSI 1 Physical     ────▶  Physical</code></pre></div>
+<hr />
+<h2 id="34-how-tcpip-works-real-example" class="sec-heading"><a class="sec-num" href="#34-how-tcpip-works-real-example">34</a><span>⚙️ How TCP/IP Works — Real Example</span></h2>
+
+<p>You open <strong>YouTube</strong> and <strong>Gmail</strong> at the same time:</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>                    ┌──────────── APPLICATION LAYER ────────────┐
+👤 User (Browser)                                       🖥️ Google Server
+   │                                                     ├─ YouTube → PORT 443 (HTTPS)
+   │                ┌──────────── TRANSPORT LAYER ──────┐ └─ Gmail   → PORT 25  (SMTP)
+   │                   ports decide WHICH app gets the data
+   │
+   │                ┌──────────── NETWORK LAYER ────────┐
+   │                   IP decides WHICH host: 192.0.0.1 → 142.250.0.0
+   │
+   │                ┌──────────── DATA LINK + PHYSICAL ─┐
+   ▼
+192.0.0.1 ── Switch 1 ── Router 1 ════ physical ════ Router 2 ── Switch 2 ── 142.250.0.0
+ (you)       (MAC)       (IP)        (cables/fiber)    (IP)       (MAC)      (Google)</code></pre></div>
+<p><strong>Step by step:</strong></p>
+<ol>
+<li>🧑‍💻 <strong>Application</strong> — browser creates an HTTPS request for YouTube</li>
+<li>🚚 <strong>Transport</strong> — adds port <strong>443</strong> so the server knows it's for the web app (Gmail mail uses <strong>25</strong>)</li>
+<li>🗺️ <strong>Network</strong> — adds source IP <code>192.0.0.1</code> and destination IP <code>142.250.0.0</code>; <strong>routers</strong> pick the path</li>
+<li>🔗 <strong>Data Link</strong> — <strong>switches</strong> deliver hop-to-hop inside each local network using <strong>MAC addresses</strong></li>
+<li>⚡ <strong>Physical</strong> — bits travel as signals over cables / fiber / Wi-Fi</li>
+<li>🖥️ Google's server unpacks it <strong>bottom → top</strong> and sends the response back the same way</li>
+</ol>
+<hr />
+<h2 id="35-osi-vs-tcpip" class="sec-heading"><a class="sec-num" href="#35-osi-vs-tcpip">35</a><span>🆚 OSI vs TCP/IP</span></h2>
+
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>📘 OSI</th>
+<th>🌐 TCP/IP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7 layers</td>
+<td>4 layers (original) / 5 layers (updated)</td>
+</tr>
+<tr>
+<td><strong>Conceptual / reference</strong> model</td>
+<td><strong>Practical</strong> — used on the real Internet</td>
+</tr>
+<tr>
+<td>Developed by <strong>ISO</strong></td>
+<td>Developed by <strong>ARPA</strong> (US DoD)</td>
+</tr>
+<tr>
+<td>Model first, protocols later</td>
+<td>Protocols first, model described them</td>
+</tr>
+<tr>
+<td>Used for learning &amp; troubleshooting</td>
+<td>Used for actual communication</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h1 id="part-7-message-delivery" class="part-heading" style="--part:#a16207"><span class="part-kicker">📨 Part 7</span><span class="part-title">Message Delivery</span></h1>
+
+<h2 id="36-who-are-we-sending-to" class="sec-heading"><a class="sec-num" href="#36-who-are-we-sending-to">36</a><span>❓ Who Are We Sending To?</span></h2>
+
+<p>We've covered how the OSI layers work, how TCP/IP maps to it, and how a packet travels end to end.</p>
+<p>But one question is still open — <strong>when a device sends data, who is it sending to?</strong></p>
+<ul>
+<li>👤 <strong>One</strong> device?</li>
+<li>👥 A <strong>specific group</strong>?</li>
+<li>🌍 <strong>Everyone</strong>?</li>
+<li>📍 The <strong>nearest</strong> one?</li>
+</ul>
+<p>These are <strong>not the same thing</strong> — and the network handles each case differently. That's what <strong>message delivery types</strong> are about.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>1. Unicast    → one to one
+2. Broadcast  → one to all
+3. Multicast  → one to a group
+4. Anycast    → one to the nearest</code></pre></div>
+<hr />
+<h2 id="37-unicast-one-to-one" class="sec-heading"><a class="sec-num" href="#37-unicast-one-to-one">37</a><span>👤 Unicast — One to One</span></h2>
+
+<p>One sender → <strong>exactly one</strong> receiver.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>  📱 ───────────▶ 🖥️
+sender         receiver</code></pre></div>
+<ul>
+<li>✅ The <strong>most common</strong> type of traffic on the Internet</li>
+<li><strong>Examples:</strong> your Netflix stream 🎬, your API call, your SSH session</li>
+</ul>
+<hr />
+<h2 id="38-broadcast-one-to-all" class="sec-heading"><a class="sec-num" href="#38-broadcast-one-to-all">38</a><span>📢 Broadcast — One to All</span></h2>
+
+<p>One sender → <strong>every device</strong> on the local network.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>            ┌──▶ 💻
+            ├──▶ 💻
+  📱 ───────┼──▶ 💻
+            ├──▶ 🖨️
+            └──▶ 📺</code></pre></div>
+<ul>
+<li><strong>Real-life analogy:</strong> a message in a WhatsApp group — everyone in the group gets it</li>
+<li><strong>Network example:</strong> ARP asking <em>"who has IP 192.168.1.5?"</em> — sent to everyone on the LAN</li>
+<li>⚠️ Broadcasts stay <strong>inside the local network</strong> — routers do <strong>not</strong> forward them to the Internet</li>
+</ul>
+<hr />
+<h2 id="39-multicast-one-to-a-group" class="sec-heading"><a class="sec-num" href="#39-multicast-one-to-a-group">39</a><span>👥 Multicast — One to a Group</span></h2>
+
+<p>One sender → <strong>only the devices that joined (subscribed to) a group</strong>.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>            ┌──▶ 💻 ✅ subscribed
+  📱 ───────┼──▶ 💻 ✅ subscribed
+            │    🖨️ ❌ not subscribed (gets nothing)
+            └──▶ 📺 ✅ subscribed</code></pre></div>
+<ul>
+<li><strong>Example:</strong> a live video stream going only to <strong>subscribed viewers</strong>, IPTV</li>
+<li>✅ More efficient than sending a separate unicast copy to each viewer</li>
+</ul>
+<hr />
+<h2 id="40-anycast-one-to-the-nearest" class="sec-heading"><a class="sec-num" href="#40-anycast-one-to-the-nearest">40</a><span>📍 Anycast — One to the Nearest</span></h2>
+
+<p>The <strong>most interesting</strong> and the <strong>least understood</strong> one.</p>
+<p>With anycast, <strong>multiple servers around the world share the same IP address</strong>. Your request goes to the <strong>nearest</strong> one.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>                    1.1.1.1  (same IP everywhere)
+                  ╱             │              ╲
+   🖥️ Mumbai server     🖥️ London server     🖥️ New York server
+          ▲                     ▲                     ▲
+   👤 user in Mumbai     👤 user in London     👤 user in New York</code></pre></div>
+<h3>🌐 Example — DNS</h3>
+<ul>
+<li>When you type a domain name, your device asks a <strong>DNS resolver</strong> — that query often goes to an <strong>anycast</strong> address.</li>
+<li><strong>Cloudflare's DNS resolver <code>1.1.1.1</code></strong> is hosted on <strong>hundreds of servers</strong> worldwide at the same time.</li>
+<li>Query from <strong>Mumbai</strong> → you hit a server in <strong>Mumbai</strong>. Query from <strong>London</strong> → you hit a server in <strong>London</strong>.</li>
+</ul>
+<blockquote class="callout tip"><p>💡 <strong>Same IP, different physical machines — the nearest one wins.</strong> CDNs (Cloudflare, AWS CloudFront) use anycast to make websites fast everywhere.</p>
+</blockquote>
+<hr />
+<h2 id="41-message-delivery-comparison" class="sec-heading"><a class="sec-num" href="#41-message-delivery-comparison">41</a><span>📊 Message Delivery Comparison</span></h2>
+
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Sends to</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>👤 <strong>Unicast</strong></td>
+<td>One specific device</td>
+<td>Netflix stream, API call, SSH session</td>
+</tr>
+<tr>
+<td>📢 <strong>Broadcast</strong></td>
+<td>All devices on the local network</td>
+<td>WhatsApp-group style; ARP requests</td>
+</tr>
+<tr>
+<td>👥 <strong>Multicast</strong></td>
+<td>Only subscribed devices</td>
+<td>Live video stream to subscribers</td>
+</tr>
+<tr>
+<td>📍 <strong>Anycast</strong></td>
+<td>The nearest of many servers (same IP)</td>
+<td>DNS queries to <code>1.1.1.1</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h1 id="part-8-network-devices-isps-firewall-host-to-host" class="part-heading" style="--part:#db2777"><span class="part-kicker">🔌 Part 8</span><span class="part-title">Network Devices, ISPs, Firewall &amp; Host-to-Host</span></h1>
+
+<h2 id="42-nic-network-interface-card" class="sec-heading"><a class="sec-num" href="#42-nic-network-interface-card">42</a><span>🖧 NIC — Network Interface Card</span></h2>
+
+<p>Every device that talks over a network — <strong>laptop, phone, server, smart TV, printer</strong> — has a <strong>NIC</strong> inside it.</p>
+<ul>
+<li>🕰️ On <strong>older desktops</strong>, NICs were <strong>separate expansion cards</strong> plugged into the motherboard</li>
+<li>💻 <strong>Today</strong>, NICs are almost always <strong>built into the motherboard</strong> — you don't see them because they're soldered in</li>
+</ul>
+<h3>🖼️ Where the NIC sits</h3>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>┌──────────── 💻 Your Laptop ─────────────┐
+│                                         │
+│   Apps (Chrome, Zoom...)                │
+│        │                                │
+│   Operating System (TCP/IP stack)       │
+│        │                                │
+│   ┌────┴─────────────────────────────┐  │
+│   │  🖧 NIC   MAC: 3C:22:FB:9A:10:7E │  │
+│   │  ├─ 🔌 Wired  (Ethernet port)  ──┼──┼──── LAN cable ────▶ Switch / Router
+│   │  └─ 📶 Wireless (Wi-Fi adapter) ─┼──┼──── radio waves ~~▶ Wi-Fi Router
+│   └──────────────────────────────────┘  │
+└─────────────────────────────────────────┘
+
+Frames from the OS  ──▶  NIC  ──▶  bits as signals on the cable / air</code></pre></div>
+<h3>Two types of NIC</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>🔌 Wired NIC</th>
+<th>📶 Wireless NIC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Has an <strong>Ethernet port</strong> — the rectangular port where you plug in a LAN cable</td>
+<td>Also called a <strong>Wi-Fi adapter</strong></td>
+</tr>
+<tr>
+<td>Communicates through <strong>physical cables</strong></td>
+<td>Communicates through <strong>radio waves</strong> — no cable needed</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote class="callout note"><p>Most modern devices have <strong>both</strong>.</p>
+</blockquote>
+<h3>🔖 MAC address</h3>
+<p>Every NIC in the world has a <strong>unique identifier burned into it at the factory</strong> → the <strong>MAC address</strong> (<strong>M</strong>edia <strong>A</strong>ccess <strong>C</strong>ontrol address).</p>
+<h3>Which layer?</h3>
+<p>A NIC works at <strong>two layers</strong>:</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>Layer 1 (Physical)  → physically sends &amp; receives signals (bits)
+Layer 2 (Data Link) → uses the MAC address for local identification</code></pre></div>
+<h3>🔍 See your MAC address</h3>
+<div class="code"><div class="code-bar"><span class="lang">bash</span><button class="copy" type="button">Copy</button></div><pre><code># macOS (Terminal)
+ifconfig en0 | grep ether
+
+# Linux
+ip link
+
+# Windows (PowerShell)
+getmac</code></pre></div>
+<hr />
+<h2 id="43-hub" class="sec-heading"><a class="sec-num" href="#43-hub">43</a><span>🔌 Hub</span></h2>
+
+<p>Every device has a NIC, and every NIC has a MAC address. When <strong>multiple devices</strong> want to talk to each other, something must <strong>connect them together</strong> → the simplest device for this is a <strong>hub</strong>.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>           💻 PC1  (sender)
+             │
+   💻 PC4 ── HUB ── 💻 PC2
+             │
+           💻 PC3
+
+PC1 sends to PC3 → HUB copies it to PC2, PC3 AND PC4 ❌</code></pre></div>
+<ul>
+<li>⚡ Works at <strong>Layer 1 (Physical)</strong> — it does <strong>not understand MAC addresses</strong></li>
+<li>📢 <strong>Broadcasts</strong> — whatever comes in on one port is sent <strong>out of every other port</strong></li>
+<li>🔢 Has a <strong>small number of ports</strong> (usually 4–12)</li>
+<li>❌ Wastes bandwidth, causes <strong>collisions</strong>, and is insecure (every device sees all traffic)</li>
+<li>🗑️ Mostly <strong>replaced by switches</strong> today</li>
+</ul>
+<hr />
+<h2 id="44-bridge" class="sec-heading"><a class="sec-num" href="#44-bridge">44</a><span>🌉 Bridge</span></h2>
+
+<p>A <strong>bridge</strong> connects <strong>two network segments</strong> (e.g. two hubs / two small LANs) and <strong>filters traffic</strong> between them.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>  [ PC1  PC2 ]──HUB A ──── BRIDGE ──── HUB B──[ PC3  PC4 ]
+     Segment A                             Segment B
+
+PC1 → PC2 : bridge sees both are on Segment A → does NOT forward ✅
+PC1 → PC3 : bridge sees PC3 is on Segment B   → forwards it ✅</code></pre></div>
+<ul>
+<li>🔗 Works at <strong>Layer 2 (Data Link)</strong> — it <strong>understands MAC addresses</strong></li>
+<li>📒 Learns which MAC address is on which side and keeps a <strong>MAC address table</strong></li>
+<li>✅ Forwards a frame <strong>only if</strong> the destination is on the other side → less unnecessary traffic than a hub</li>
+<li>🔢 Usually has only <strong>2 ports</strong></li>
+<li>💡 A <strong>switch</strong> is basically a <strong>multi-port bridge</strong> — the next step up</li>
+</ul>
+<h3>🆚 Hub vs Bridge</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>🔌 Hub</th>
+<th>🌉 Bridge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Layer 1 (Physical)</td>
+<td>Layer 2 (Data Link)</td>
+</tr>
+<tr>
+<td>Doesn't understand MAC addresses</td>
+<td>Uses MAC addresses (MAC table)</td>
+</tr>
+<tr>
+<td>Sends data to <strong>all</strong> ports</td>
+<td>Forwards <strong>only</strong> when needed</td>
+</tr>
+<tr>
+<td>Many ports (4–12)</td>
+<td>Usually 2 ports</td>
+</tr>
+<tr>
+<td>Dumb device ❌</td>
+<td>Smart filtering ✅</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="45-switch" class="sec-heading"><a class="sec-num" href="#45-switch">45</a><span>🔀 Switch</span></h2>
+
+<p>A <strong>switch</strong> connects many devices <strong>inside the same LAN</strong> — and sends data <strong>only to the device it's meant for</strong>.</p>
+<blockquote class="callout tip"><p>💡 A switch = a <strong>smart hub</strong> = a <strong>multi-port bridge</strong>.</p>
+</blockquote>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>           💻 PC1  (sender)
+             │
+   💻 PC4 ── SWITCH ── 💻 PC2
+             │
+           💻 PC3
+
+PC1 sends to PC3 → SWITCH checks MAC table → sends ONLY to PC3 ✅</code></pre></div>
+<h3>How a switch works</h3>
+<ol>
+<li>📥 A frame arrives on a port</li>
+<li>📒 The switch <strong>learns</strong> the sender's MAC address → saves <code>MAC → port</code> in its <strong>MAC address table</strong></li>
+<li>🔍 It looks up the <strong>destination MAC</strong> in the table</li>
+<li>📤 Found → sends <strong>only to that port</strong>. Not found yet → sends to all ports <strong>once</strong> (flooding), then learns</li>
+</ol>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>MAC Address Table
+┌───────────────────┬──────┐
+│ MAC address       │ Port │
+├───────────────────┼──────┤
+│ AA:AA:AA:AA:AA:01 │  1   │  ← PC1
+│ AA:AA:AA:AA:AA:02 │  2   │  ← PC2
+│ AA:AA:AA:AA:AA:03 │  3   │  ← PC3
+└───────────────────┴──────┘</code></pre></div>
+<ul>
+<li>🔗 Works at <strong>Layer 2 (Data Link)</strong> — uses <strong>MAC addresses</strong></li>
+<li>🔢 Many ports (8, 16, 24, 48...)</li>
+<li>✅ Fast, secure (others don't see your traffic), no wasted bandwidth</li>
+<li>⚠️ Connects devices <strong>within one network</strong> — it <strong>cannot</strong> connect you to the Internet by itself (that's the router's job)</li>
+</ul>
+<hr />
+<h2 id="46-router" class="sec-heading"><a class="sec-num" href="#46-router">46</a><span>🗺️ Router</span></h2>
+
+<p>A <strong>router</strong> connects <strong>different networks</strong> together and picks the <strong>best path</strong> for each packet.</p>
+<blockquote class="callout note"><p>Switch = connects devices <strong>inside</strong> a network 🏠
+Router = connects <strong>networks to each other</strong> 🌍</p>
+</blockquote>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>   🏠 Home LAN                                   🌍 Internet
+ 192.168.1.0/24
+ 💻 ──┐
+ 📱 ──┼── SWITCH ── ROUTER ═══════ ISP ═══════ other routers ── 🖥️ Google
+ 🖨️ ──┘            (192.168.1.1)</code></pre></div>
+<ul>
+<li>🗺️ Works at <strong>Layer 3 (Network)</strong> — uses <strong>IP addresses</strong></li>
+<li>📒 Keeps a <strong>routing table</strong> — "to reach network X, send the packet out of this interface / to this next router"</li>
+<li>🛣️ Every hop across the Internet is a router forwarding your packet closer to the destination</li>
+<li>🏠 Your home router also does <strong>NAT</strong> — many devices share <strong>one public IP</strong> from your ISP</li>
+</ul>
+<div class="code"><div class="code-bar"><span class="lang">bash</span><button class="copy" type="button">Copy</button></div><pre><code># See the routers (hops) between you and Google
+traceroute google.com      # macOS / Linux
+tracert google.com         # Windows</code></pre></div>
+<blockquote class="callout tip"><p>💡 <strong>Cloud link:</strong> in AWS, every <strong>VPC has a route table</strong> and an <strong>Internet Gateway</strong> — that's the router's job done in software.</p>
+</blockquote>
+<hr />
+<h2 id="47-modem" class="sec-heading"><a class="sec-num" href="#47-modem">47</a><span>📡 Modem</span></h2>
+
+<p><strong>Modem = MOdulator + DEModulator.</strong></p>
+<p>Your computer speaks <strong>digital</strong> (0s and 1s). The ISP's line (telephone line, cable, fiber) carries signals in a <strong>different form</strong>. The modem <strong>converts</strong> between the two.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>💻 Digital data ──▶ MODEM ──▶ signal on ISP line ──▶ ISP
+    (0101...)     modulate     (analog / light)
+
+💻 Digital data ◀── MODEM ◀── signal on ISP line ◀── ISP
+                 demodulate</code></pre></div>
+<ul>
+<li>⚡ Works at <strong>Layer 1 (Physical)</strong> — just converts signals</li>
+<li>🔌 It is the device that connects your home to the <strong>ISP</strong></li>
+<li>Types: <strong>DSL</strong> (telephone line), <strong>Cable</strong> modem, <strong>ONT</strong> for fiber (Jio Fiber, Airtel Xstream)</li>
+</ul>
+<h3>🏠 Modem vs Router</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>📡 Modem</th>
+<th>🗺️ Router</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connects your home <strong>to the ISP</strong></td>
+<td>Connects <strong>your devices</strong> to each other and to the modem</td>
+</tr>
+<tr>
+<td>Converts signals (digital ↔ line signal)</td>
+<td>Forwards packets using IP addresses</td>
+</tr>
+<tr>
+<td>Layer 1</td>
+<td>Layer 3</td>
+</tr>
+<tr>
+<td>Gives you <strong>one</strong> Internet connection</td>
+<td>Shares it with <strong>many</strong> devices (Wi-Fi + NAT)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote class="callout tip"><p>💡 The box your ISP gives you is usually <strong>modem + router + switch + Wi-Fi access point all in one</strong>.</p>
+</blockquote>
+<hr />
+<h2 id="48-gateway" class="sec-heading"><a class="sec-num" href="#48-gateway">48</a><span>🚪 Gateway</span></h2>
+
+<p>A <strong>gateway</strong> is the <strong>"door" from your network to another network</strong> — usually your router's IP address.</p>
+<blockquote class="callout note"><p>🚪 If a device wants to talk to something <strong>outside</strong> its own network, it sends the packet to the <strong>default gateway</strong>.</p>
+</blockquote>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>💻 192.168.1.10 wants google.com (142.250.0.0)
+      │
+      │  &quot;Is 142.250.0.0 in my network 192.168.1.x?&quot;  → NO
+      ▼
+🚪 Default gateway 192.168.1.1 (your router) ──▶ 🌍 Internet ──▶ 🖥️ Google</code></pre></div>
+<ul>
+<li>🏠 At home, the <strong>default gateway = your router's IP</strong> (usually <code>192.168.1.1</code> or <code>192.168.0.1</code>)</li>
+<li>🔄 A gateway can also <strong>translate between different protocols / network types</strong> — so "gateway" is a <strong>role</strong>, not always a separate box</li>
+<li>Every device on a network is configured with <strong>IP address + subnet mask + default gateway</strong></li>
+</ul>
+<div class="code"><div class="code-bar"><span class="lang">bash</span><button class="copy" type="button">Copy</button></div><pre><code># See your default gateway
+route -n get default | grep gateway   # macOS
+ip route | grep default               # Linux
+ipconfig                              # Windows → &quot;Default Gateway&quot;</code></pre></div>
+<blockquote class="callout tip"><p>💡 <strong>Cloud link:</strong> AWS <strong>Internet Gateway (IGW)</strong> = the door from your VPC to the Internet. <strong>NAT Gateway</strong> = lets private servers reach the Internet without being reachable from it.</p>
+</blockquote>
+<hr />
+<h2 id="49-isp-internet-service-provider" class="sec-heading"><a class="sec-num" href="#49-isp-internet-service-provider">49</a><span>🏢 ISP — Internet Service Provider</span></h2>
+
+<p>An <strong>ISP</strong> is the company that <strong>connects you to the Internet</strong> — and connects to <strong>other ISPs</strong> so you can reach the whole world.</p>
+<p><strong>Examples in India:</strong> Jio, Airtel, BSNL, ACT, Vodafone Idea.</p>
+<h3>🪜 ISPs work in tiers</h3>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>                  🌍 TIER 1 — Global backbone
+         (Tata Communications, AT&amp;T, NTT, Lumen...)
+       own undersea cables + connect continents
+       ════════════════════╦═══════════════════════
+                           ║  (peering — exchange traffic for free)
+         ┌─────────────────╨──────────────────┐
+         ▼                                    ▼
+   🇮🇳 TIER 2 — National / regional       🇺🇸 TIER 2
+   (Airtel, Jio backbone)               (Comcast, Verizon)
+         │                                    │
+         ▼                                    ▼
+   🏙️ TIER 3 — Local / last mile         🏙️ TIER 3
+   (local cable / fiber provider)       (local provider)
+         │                                    │
+         ▼                                    ▼
+      🏠 YOU                              🖥️ Server in USA</code></pre></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Who</th>
+<th>Job</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tier 1</strong></td>
+<td>Global backbone carriers</td>
+<td>Own huge networks + undersea cables, connect countries/continents</td>
+</tr>
+<tr>
+<td><strong>Tier 2</strong></td>
+<td>National / regional ISPs</td>
+<td>Connect cities/regions, buy access from Tier 1</td>
+</tr>
+<tr>
+<td><strong>Tier 3</strong></td>
+<td>Local ISPs</td>
+<td>The "last mile" — the cable/fiber to your home</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>🔁 IXP — Internet Exchange Point</h3>
+<p>An <strong>IXP</strong> is a building where many ISPs plug into each other to <strong>exchange traffic directly</strong> (faster + cheaper than going through a third network). Example: <strong>NIXI</strong> in Mumbai, Delhi, Chennai.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>   Jio ──┐
+ Airtel ─┼──▶ 🏢 IXP (Mumbai) ◀──┬── Google
+  ACT ───┘                       └── Cloudflare</code></pre></div>
+<h3>What your ISP gives you</h3>
+<ul>
+<li>🌐 A <strong>public IP address</strong> for your home (shared by all your devices via NAT)</li>
+<li>📡 The <strong>modem / ONT</strong> + often a router</li>
+<li>🔍 <strong>DNS servers</strong> (unless you use <code>1.1.1.1</code> or <code>8.8.8.8</code>)</li>
+</ul>
+<blockquote class="callout tip"><p>💡 This answers the big question from §2 — <strong>India → USA</strong>:
+<code>You → Tier 3 → Tier 2 (Jio) → IXP / Tier 1 → undersea cable → US Tier 2 → data center → server</code></p>
+</blockquote>
+<hr />
+<h2 id="50-firewall" class="sec-heading"><a class="sec-num" href="#50-firewall">50</a><span>🧱 Firewall</span></h2>
+
+<p>A <strong>firewall</strong> is a <strong>security guard</strong> 💂 that sits between networks and <strong>checks every packet</strong> against <strong>rules</strong> — allowed ✅ packets pass, everything else ❌ is blocked.</p>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>                       🧱 FIREWALL
+  🌍 Internet          ┌──────────┐            🏠 Your network
+                       │  RULES   │
+  ✅ HTTPS :443 ──────▶│  allow   │──────────▶ 🖥️ Web server
+  ✅ SSH :22 (my IP) ─▶│  allow   │──────────▶ 🖥️ Web server
+  ❌ Telnet :23 ──────▶│  DENY ✋ │
+  ❌ Unknown IP :3306 ▶│  DENY ✋ │      (database never exposed)
+                       └──────────┘</code></pre></div>
+<h3>📋 Firewall rules look like this</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Action</th>
+<th>Protocol</th>
+<th>Port</th>
+<th>Source</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>✅ Allow</td>
+<td>TCP</td>
+<td>443</td>
+<td>Anywhere</td>
+<td>Everyone can open the website (HTTPS)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>✅ Allow</td>
+<td>TCP</td>
+<td>80</td>
+<td>Anywhere</td>
+<td>Plain HTTP (usually redirects to HTTPS)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>✅ Allow</td>
+<td>TCP</td>
+<td>22</td>
+<td><strong>My IP only</strong></td>
+<td>Only I can SSH into the server</td>
+</tr>
+<tr>
+<td>4</td>
+<td>❌ Deny</td>
+<td>Any</td>
+<td>Any</td>
+<td>Anywhere</td>
+<td><strong>Block everything else</strong> (default deny)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote class="callout tip"><p>🧠 Rules are checked <strong>top to bottom</strong> — the <strong>first match wins</strong>. Last rule = <strong>deny all</strong>.</p>
+</blockquote>
+<h3>What a firewall checks</h3>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>Source IP?  →  Destination IP?  →  Port?  →  Protocol (TCP/UDP)?  →  ALLOW or DENY
+   (L3)            (L3)            (L4)          (L4)</code></pre></div>
+<h3>Types of firewall</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Where</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>💻 <strong>Host-based</strong> (software)</td>
+<td>On one machine</td>
+<td><code>ufw</code> / <code>iptables</code> (Linux), Windows Defender Firewall, macOS firewall</td>
+</tr>
+<tr>
+<td>🏢 <strong>Network-based</strong> (hardware)</td>
+<td>Between networks</td>
+<td>Fortinet, Palo Alto, Cisco ASA, your home router's firewall</td>
+</tr>
+<tr>
+<td>☁️ <strong>Cloud firewall</strong></td>
+<td>Around cloud resources</td>
+<td>AWS <strong>Security Groups</strong>, <strong>NACLs</strong>, Azure NSG</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>Stateful vs Stateless</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>🧠 Stateful</th>
+<th>📋 Stateless</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Remembers</strong> connections — if you sent a request out, the reply is allowed back in automatically</td>
+<td>Checks <strong>every packet alone</strong>, no memory — you must allow both directions</td>
+</tr>
+<tr>
+<td>AWS <strong>Security Group</strong></td>
+<td>AWS <strong>NACL</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code"><div class="code-bar"><span class="lang">bash</span><button class="copy" type="button">Copy</button></div><pre><code># Linux (Ubuntu) host firewall with ufw
+sudo ufw allow 22/tcp     # allow SSH
+sudo ufw allow 443/tcp    # allow HTTPS
+sudo ufw enable           # turn on (default: deny incoming)
+sudo ufw status           # see rules</code></pre></div>
+<blockquote class="callout warn"><p>⚠️ Always <strong>allow SSH (22) before</strong> running <code>ufw enable</code> on a remote server — or you'll lock yourself out!</p>
+</blockquote>
+<hr />
+<h2 id="51-host-to-host-communication" class="sec-heading"><a class="sec-num" href="#51-host-to-host-communication">51</a><span>🔄 Host-to-Host Communication</span></h2>
+
+<p>How does one host actually reach another? There are <strong>two cases</strong>:</p>
+<ol>
+<li>🏠 Both hosts are in the <strong>same network</strong> → talk directly through the <strong>switch</strong></li>
+<li>🌍 Hosts are in <strong>different networks</strong> → go through the <strong>router (gateway)</strong></li>
+</ol>
+<h3>Case 1 — Same network (PC-A → PC-B)</h3>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>   PC-A                    SWITCH                    PC-B
+ 192.168.1.10                                     192.168.1.20
+ MAC: AA-AA                                       MAC: BB-BB
+
+ ① &quot;Is 192.168.1.20 in my network?&quot; → YES (same 192.168.1.x)
+
+ ② ARP broadcast 📢  &quot;Who has 192.168.1.20? Tell AA-AA&quot;
+    PC-A ─────────────▶ SWITCH ─────────▶ every device
+
+ ③ ARP reply (unicast) &quot;192.168.1.20 is at BB-BB&quot;
+    PC-A ◀───────────── SWITCH ◀───────── PC-B
+
+ ④ PC-A sends the frame
+    ┌─────────────────────────────────────────────────┐
+    │ dst MAC BB-BB │ src MAC AA-AA │ dst IP .20 │ data│
+    └─────────────────────────────────────────────────┘
+    PC-A ─────────────▶ SWITCH ─────(port of BB-BB only)───▶ PC-B ✅</code></pre></div>
+<blockquote class="callout tip"><p>🧠 <strong>ARP</strong> (Address Resolution Protocol) = finds the <strong>MAC address</strong> for a known <strong>IP address</strong>. Results are cached — see with <code>arp -a</code>.</p>
+</blockquote>
+<h3>Case 2 — Different networks (PC-A → Server on the Internet)</h3>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code> PC-A               ROUTER (gateway)                 Server
+ 192.168.1.10       192.168.1.1 | 49.36.x.x (public)  142.250.0.10
+ MAC: AA-AA         MAC: RR-RR
+
+ ① &quot;Is 142.250.0.10 in my network?&quot; → NO → send to DEFAULT GATEWAY
+ ② ARP: &quot;Who has 192.168.1.1?&quot; → &quot;RR-RR&quot; (the router)
+ ③ Frame to the router:
+    dst MAC = RR-RR (router)  │  dst IP = 142.250.0.10 (server)
+ ④ Router checks its routing table → forwards to ISP → hop by hop → Server ✅</code></pre></div>
+<h3>🔑 The golden rule</h3>
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>            HOP 1               HOP 2             HOP 3
+ PC-A ───────────▶ Router1 ───────────▶ Router2 ───────────▶ Server
+ MAC: A → R1          MAC: R1 → R2         MAC: R2 → S        ← CHANGES every hop
+ IP : PC-A → Server   IP : PC-A → Server   IP : PC-A → Server ← SAME end to end*</code></pre></div>
+<blockquote class="callout tip"><p>🧠 <strong>MAC address = next hop</strong> (changes at every router).
+<strong>IP address = final destination</strong> (stays the same end to end).
+*Except when NAT at your home router swaps your private IP for the public one.</p>
+</blockquote>
+<h3>📊 Step summary</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Same network</th>
+<th>Different network</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Check destination IP</td>
+<td>In my network ✅</td>
+<td>Not in my network ❌</td>
+</tr>
+<tr>
+<td>2. ARP for...</td>
+<td>the <strong>destination's</strong> MAC</td>
+<td>the <strong>gateway's (router's)</strong> MAC</td>
+</tr>
+<tr>
+<td>3. Frame goes to</td>
+<td>destination via <strong>switch</strong></td>
+<td><strong>router</strong></td>
+</tr>
+<tr>
+<td>4. Who delivers</td>
+<td>Switch (L2, MAC)</td>
+<td>Routers hop by hop (L3, IP)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="52-putting-it-all-together-your-home-network" class="sec-heading"><a class="sec-num" href="#52-putting-it-all-together-your-home-network">52</a><span>🏠 Putting It All Together — Your Home Network</span></h2>
+
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code> 📱 💻 📺 🖨️                     YOUR HOME (LAN 192.168.1.x)
+ NIC + MAC
+    │  Wi-Fi / LAN cable
+    ▼
+ 🔀 SWITCH ─────────▶ 🗺️ ROUTER + 🧱 FIREWALL ─────────▶ 📡 MODEM / ONT
+ (L2, MAC table)       (L3, IP, NAT)                       (L1, signals)
+                       = 🚪 DEFAULT GATEWAY 192.168.1.1          │
+                                                                 ▼
+                                                    🏢 ISP (Tier 3 → Tier 2)
+                                                                 │
+                                                    🏢 IXP / Tier 1 backbone
+                                                                 │
+                                                    🌊 undersea cable
+                                                                 │
+                                                    🧱 Firewall ─▶ 🖥️ Server (USA)</code></pre></div>
+<blockquote class="callout note"><p>🏠 At home, <strong>switch + router + firewall + Wi-Fi + modem</strong> are usually <strong>one box</strong> from your ISP.</p>
+</blockquote>
+<h3>📊 Network Devices Comparison</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Device</th>
+<th>OSI Layer</th>
+<th>Uses</th>
+<th>Job</th>
+<th>Sends data to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🖧 <strong>NIC</strong></td>
+<td>L1 + L2</td>
+<td>MAC</td>
+<td>Connects one device to the network</td>
+<td>—</td>
+</tr>
+<tr>
+<td>🔌 <strong>Hub</strong></td>
+<td>L1</td>
+<td>—</td>
+<td>Connects devices (dumb)</td>
+<td><strong>All</strong> ports</td>
+</tr>
+<tr>
+<td>🌉 <strong>Bridge</strong></td>
+<td>L2</td>
+<td>MAC</td>
+<td>Connects 2 segments, filters</td>
+<td>Other side only if needed</td>
+</tr>
+<tr>
+<td>🔀 <strong>Switch</strong></td>
+<td>L2</td>
+<td>MAC</td>
+<td>Connects devices in a LAN (smart)</td>
+<td><strong>Only</strong> the right port</td>
+</tr>
+<tr>
+<td>🗺️ <strong>Router</strong></td>
+<td>L3</td>
+<td>IP</td>
+<td>Connects different networks, best path</td>
+<td>Next network / hop</td>
+</tr>
+<tr>
+<td>📡 <strong>Modem</strong></td>
+<td>L1</td>
+<td>—</td>
+<td>Converts digital ↔ ISP line signal</td>
+<td>ISP</td>
+</tr>
+<tr>
+<td>🚪 <strong>Gateway</strong></td>
+<td>L3+ (role)</td>
+<td>IP</td>
+<td>Door to another network</td>
+<td>Outside networks</td>
+</tr>
+<tr>
+<td>🧱 <strong>Firewall</strong></td>
+<td>L3 + L4 (and up)</td>
+<td>IP, ports</td>
+<td>Allows / blocks traffic by rules</td>
+<td>Only allowed traffic</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h1 id="part-9-interview-quick-answers" class="part-heading" style="--part:#0891b2"><span class="part-kicker">🎯 Part 9</span><span class="part-title">Interview Quick Answers</span></h1>
+
+<h2 id="53-common-questions" class="sec-heading"><a class="sec-num" href="#53-common-questions">53</a><span>💬 Common Questions</span></h2>
+
+<blockquote class="callout question"><p>❓ <strong>Q1. What is a network?</strong></p>
+</blockquote>
+<p>Devices connected to share data and resources</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q2. What is a host?</strong></p>
+</blockquote>
+<p>Any device that has an IP address</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q3. What is the Internet?</strong></p>
+</blockquote>
+<p>A network of networks</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q4. Internet vs WWW?</strong></p>
+</blockquote>
+<p>Internet = infrastructure; WWW = service on top (HTML + HTTP + URL)</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q5. Who invented the WWW?</strong></p>
+</blockquote>
+<p>Tim Berners-Lee, 1991</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q6. Client vs server?</strong></p>
+</blockquote>
+<p>Client requests; server listens on a port and responds</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q7. LAN vs WAN?</strong></p>
+</blockquote>
+<p>LAN = small area (office); WAN = countries/continents (Internet)</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q8. Most common topology?</strong></p>
+</blockquote>
+<p>Star</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q9. Most reliable topology?</strong></p>
+</blockquote>
+<p>Mesh</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q10. What is the OSI model?</strong></p>
+</blockquote>
+<p>7-layer conceptual framework for network communication, by ISO</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q11. Which layer does routing?</strong></p>
+</blockquote>
+<p>Layer 3 — Network (Router, IP)</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q12. Which layer uses MAC addresses?</strong></p>
+</blockquote>
+<p>Layer 2 — Data Link (Switch)</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q13. Which layer uses ports?</strong></p>
+</blockquote>
+<p>Layer 4 — Transport (TCP/UDP)</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q14. Which layer does encryption?</strong></p>
+</blockquote>
+<p>Layer 6 — Presentation</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q15. TCP vs UDP?</strong></p>
+</blockquote>
+<p>TCP = reliable, ordered, slower; UDP = fast, no guarantee</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q16. What is encapsulation?</strong></p>
+</blockquote>
+<p>Each layer adds its header (L2 also adds a trailer) as data goes down the stack</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q17. What is decapsulation?</strong></p>
+</blockquote>
+<p>The opposite — the receiver removes headers going up the stack</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q18. What is a PDU?</strong></p>
+</blockquote>
+<p>The name of the data at each layer: Segment/Datagram (L4), Packet (L3), Frame (L2), Bits (L1)</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q19. What is a payload?</strong></p>
+</blockquote>
+<p>The contents carried inside a PDU — e.g. a frame's payload is a packet</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q20. IP vs MAC?</strong></p>
+</blockquote>
+<p>IP = logical, changes with network; MAC = physical, fixed to NIC</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q21. OSI vs TCP/IP?</strong></p>
+</blockquote>
+<p>OSI = theory (7 layers); TCP/IP = what the Internet uses (4/5 layers)</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q22. Unicast vs broadcast vs multicast vs anycast?</strong></p>
+</blockquote>
+<p>One-to-one · one-to-all · one-to-group · one-to-nearest</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q23. Example of anycast?</strong></p>
+</blockquote>
+<p>DNS resolver <code>1.1.1.1</code> — same IP on hundreds of servers, nearest one answers</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q24. What is a NIC?</strong></p>
+</blockquote>
+<p>Network Interface Card — hardware that connects a device to a network; works at L1 + L2</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q25. What is a MAC address?</strong></p>
+</blockquote>
+<p>Unique hardware address burned into every NIC at the factory</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q26. Hub vs bridge?</strong></p>
+</blockquote>
+<p>Hub (L1) sends to all ports; bridge (L2) uses MAC addresses and forwards only when needed</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q27. Hub vs switch?</strong></p>
+</blockquote>
+<p>Hub (L1) sends to all ports; switch (L2) uses a MAC table and sends only to the right port</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q28. Switch vs router?</strong></p>
+</blockquote>
+<p>Switch (L2, MAC) connects devices inside a LAN; router (L3, IP) connects different networks</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q29. What is a modem?</strong></p>
+</blockquote>
+<p>Modulator-demodulator — converts digital data to the ISP line's signal and back (L1)</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q30. Modem vs router?</strong></p>
+</blockquote>
+<p>Modem connects your home to the ISP; router shares that connection with your devices</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q31. What is a default gateway?</strong></p>
+</blockquote>
+<p>The router IP a device sends traffic to when the destination is outside its network</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q32. What is an ISP?</strong></p>
+</blockquote>
+<p>Internet Service Provider — connects you to the Internet; works in tiers (Tier 1 backbone → Tier 2 → Tier 3 local)</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q33. What is an IXP?</strong></p>
+</blockquote>
+<p>Internet Exchange Point — where ISPs connect directly to exchange traffic</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q34. What is a firewall?</strong></p>
+</blockquote>
+<p>A device/software that allows or blocks traffic using rules (IP, port, protocol)</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q35. Stateful vs stateless firewall?</strong></p>
+</blockquote>
+<p>Stateful remembers connections (AWS Security Group); stateless checks each packet alone (AWS NACL)</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q36. How do two hosts on the same network talk?</strong></p>
+</blockquote>
+<p>ARP finds the destination MAC, the switch delivers the frame</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q37. How does a host reach a different network?</strong></p>
+</blockquote>
+<p>Sends the frame to the default gateway's MAC; routers forward it hop by hop using IP</p>
+<hr />
+<blockquote class="callout question"><p>❓ <strong>Q38. What changes at each hop — MAC or IP?</strong></p>
+</blockquote>
+<p>MAC changes every hop; IP stays the same end to end (except NAT)</p>
+<hr />
+<hr />
+<h1 id="part-10-cheat-sheets-mental-model" class="part-heading" style="--part:#0d9488"><span class="part-kicker">✅ Part 10</span><span class="part-title">Cheat Sheets &amp; Mental Model</span></h1>
+
+<h2 id="54-osi-layer-cheat-sheet" class="sec-heading"><a class="sec-num" href="#54-osi-layer-cheat-sheet">54</a><span>📊 OSI Layer Cheat Sheet</span></h2>
+
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Layer</th>
+<th>Unit</th>
+<th>Device</th>
+<th>Address</th>
+<th>Protocols</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>Application</td>
+<td>Data</td>
+<td>—</td>
+<td>—</td>
+<td>HTTP, DNS, SSH, SMTP</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Presentation</td>
+<td>Data</td>
+<td>—</td>
+<td>—</td>
+<td>SSL/TLS, JPEG</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Session</td>
+<td>Data</td>
+<td>—</td>
+<td>—</td>
+<td>Sessions, auth</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Transport</td>
+<td><strong>Segment</strong></td>
+<td>—</td>
+<td><strong>Port</strong></td>
+<td>TCP, UDP</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Network</td>
+<td><strong>Packet</strong></td>
+<td><strong>Router</strong></td>
+<td><strong>IP</strong></td>
+<td>IP, ICMP</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Data Link</td>
+<td><strong>Frame</strong></td>
+<td><strong>Switch</strong></td>
+<td><strong>MAC</strong></td>
+<td>Ethernet, ARP</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Physical</td>
+<td><strong>Bits</strong></td>
+<td><strong>Hub, Cable, NIC</strong></td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="55-common-ports-to-remember" class="sec-heading"><a class="sec-num" href="#55-common-ports-to-remember">55</a><span>🔢 Common Ports to Remember</span></h2>
+
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Service</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>21</td>
+<td>FTP</td>
+</tr>
+<tr>
+<td>22</td>
+<td>SSH</td>
+</tr>
+<tr>
+<td>25</td>
+<td>SMTP (email)</td>
+</tr>
+<tr>
+<td>53</td>
+<td>DNS</td>
+</tr>
+<tr>
+<td>80</td>
+<td>HTTP</td>
+</tr>
+<tr>
+<td>443</td>
+<td>HTTPS</td>
+</tr>
+<tr>
+<td>3306</td>
+<td>MySQL</td>
+</tr>
+<tr>
+<td>5432</td>
+<td>PostgreSQL</td>
+</tr>
+<tr>
+<td>6379</td>
+<td>Redis</td>
+</tr>
+<tr>
+<td>27017</td>
+<td>MongoDB</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="56-concept-cheat-sheet" class="sec-heading"><a class="sec-num" href="#56-concept-cheat-sheet">56</a><span>🧾 Concept Cheat Sheet</span></h2>
+
+<div class="code diagram"><button class="copy" type="button" aria-label="Copy">Copy</button><pre><code>NETWORK            → devices sharing data &amp; resources
+HOST               → any device with an IP address
+INTERNET           → network of networks (infrastructure)
+WWW                → service on the Internet (HTML + HTTP + URL), 1991
+
+CLIENT             → makes requests
+SERVER             → listens on a port &amp; responds
+
+PAN &lt; LAN &lt; MAN &lt; WAN       (Internet = biggest WAN)
+VPC ≈ LAN in the cloud      Region + AZs ≈ MAN
+
+BUS   → one shared cable
+RING  → circular loop
+STAR  → central switch      (most common)
+MESH  → everyone ↔ everyone (most reliable)
+TREE  → hierarchy (bus + star)
+
+OSI (7)    → All People Seem To Need Data Processing
+TCP/IP (5) → Application, Transport, Network, Data Link, Physical
+
+PORT       → Layer 4 → which APP
+IP         → Layer 3 → which HOST     → Router
+MAC        → Layer 2 → which DEVICE on local network → Switch
+BITS       → Layer 1 → signals on the wire
+
+Client: RAW → ENCRYPTED → SEGMENT → PACKET → FRAME → BITS
+Server: BITS → FRAME → PACKET → SEGMENT → DECRYPTED → RAW
+
+ENCAPSULATION → add headers going DOWN   (sender)
+DECAPSULATION → remove headers going UP  (receiver)
+PDU           → Segment/Datagram (L4) · Packet (L3) · Frame (L2) · Bits (L1)
+PAYLOAD       → frame carries packet · packet carries segment · segment carries data
+
+UNICAST    → one to one       (Netflix, API call, SSH)
+BROADCAST  → one to all       (ARP, stays in LAN)
+MULTICAST  → one to group     (live stream to subscribers)
+ANYCAST    → one to nearest   (DNS 1.1.1.1)
+
+NIC    → L1 + L2, has MAC address (wired / wireless)
+HUB    → L1, sends to ALL ports (dumb)
+BRIDGE → L2, MAC table, connects 2 segments, forwards only when needed
+SWITCH  → L2, MAC table, sends only to the right port (multi-port bridge)
+ROUTER  → L3, IP + routing table, connects different networks, NAT at home
+MODEM   → L1, digital ↔ ISP line signal (modulate / demodulate)
+GATEWAY → door to other networks = your router's IP (192.168.1.1)
+
+ISP      → connects you to the Internet · Tier 1 (global) → Tier 2 (national) → Tier 3 (local)
+IXP      → where ISPs plug into each other
+FIREWALL → allow/deny by IP + port + protocol · first match wins · default deny
+           stateful = Security Group · stateless = NACL
+
+Same network      → ARP for destination MAC → switch delivers
+Different network → ARP for GATEWAY MAC → router → hop by hop
+MAC = next hop (changes) · IP = final destination (same)
+
+Home: devices → switch → router/firewall (gateway) → modem → ISP → IXP/Tier 1 → server</code></pre></div>
 
     </article>
   </main>
