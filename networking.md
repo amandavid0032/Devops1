@@ -1,4 +1,4 @@
-# 🌐 Networking — Complete Notes (Basics → Topologies → OSI → TCP/IP → Devices → Interview)
+# 🌐 Networking — Complete Notes (Basics → Topologies → OSI → TCP/IP → Devices → IP Addressing → Subnetting → NAT → Routing & ICMP → Interview)
 
 > One file for networking fundamentals every DevOps / Cloud engineer needs: terminology, the Internet vs the Web, client-server, network types, topologies, the OSI model (all 7 layers), the TCP/IP model, how data travels, interview answers and cheat sheets.
 >
@@ -16,8 +16,12 @@
 - **Part 6 — TCP/IP Model** (§32–35)
 - **Part 7 — Message Delivery** (§36–41)
 - **Part 8 — Network Devices, ISPs, Firewall & Host-to-Host** (§42–52)
-- **Part 9 — Interview Quick Answers** (§53)
-- **Part 10 — Cheat Sheets & Mental Model** (§54–56)
+- **Part 9 — Network Layer & IP Addressing** (§53–57)
+- **Part 10 — Subnetting & CIDR** (§58–62)
+- **Part 11 — IP Packet & NAT** (§63–66)
+- **Part 12 — Routing Scenarios & ICMP** (§67–71)
+- **Part 13 — Interview Quick Answers** (§72)
+- **Part 14 — Cheat Sheets & Mental Model** (§73–75)
 
 ---
 
@@ -535,7 +539,7 @@ Primary functions:
 - ✅ **Error detection & correction**
 - 🚦 **Flow control**
 
-**MAC address** → a **12-digit alphanumeric** (hexadecimal) number of your computer's **network interface (NIC)**.
+**MAC address** → a **48-bit** address written as **12 hexadecimal digits** (0–9, A–F), identifying your computer's **network interface (NIC)**.
 
 ```text
 Example MAC: 00:1A:2B:3C:4D:5E
@@ -717,7 +721,7 @@ You open **YouTube** and **Gmail** at the same time:
                     ┌──────────── APPLICATION LAYER ────────────┐
 👤 User (Browser)                                       🖥️ Google Server
    │                                                     ├─ YouTube → PORT 443 (HTTPS)
-   │                ┌──────────── TRANSPORT LAYER ──────┐ └─ Gmail   → PORT 25  (SMTP)
+   │                ┌──────────── TRANSPORT LAYER ──────┐ └─ Mail    → PORT 25  (SMTP)
    │                   ports decide WHICH app gets the data
    │
    │                ┌──────────── NETWORK LAYER ────────┐
@@ -732,7 +736,7 @@ You open **YouTube** and **Gmail** at the same time:
 **Step by step:**
 
 1. 🧑‍💻 **Application** — browser creates an HTTPS request for YouTube
-2. 🚚 **Transport** — adds port **443** so the server knows it's for the web app (Gmail mail uses **25**)
+2. 🚚 **Transport** — adds destination port **443** (HTTPS) plus a random **source port**, so replies reach the right browser tab. Sending mail server-to-server would use SMTP port **25** instead
 3. 🗺️ **Network** — adds source IP `192.0.0.1` and destination IP `142.250.0.0`; **routers** pick the path
 4. 🔗 **Data Link** — **switches** deliver hop-to-hop inside each local network using **MAC addresses**
 5. ⚡ **Physical** — bits travel as signals over cables / fiber / Wi-Fi
@@ -1327,9 +1331,819 @@ How does one host actually reach another? There are **two cases**:
 
 ---
 
-# 🎯 PART 9 — Interview Quick Answers
+# 🟫 PART 9 — Network Layer & IP Addressing
 
-## 53. 💬 Common Questions
+## 53. ❓ Why Do We Need IP Addresses?
+
+In the previous parts we covered the **Physical** and **Data Link** layers. You now know that a **MAC address** identifies a device on a **local network**.
+
+But here is the problem:
+
+- ❌ MAC addresses only work **locally, inside one LAN**
+- ❌ The moment your data has to **leave** your network and cross the Internet to a server in another country, MAC addresses are **useless**. They were never designed for that (remember: the MAC changes at every hop, see §51)
+
+We need a **different addressing system**, one that:
+
+- ✅ works at a **global scale**
+- ✅ **every device** on the Internet understands
+- ✅ **routers** can use to decide **where to send your data**
+
+👉 That system is **IP addressing**, and it lives at **Layer 3 (Network)**.
+
+---
+
+## 54. 🏷️ What is an IP Address?
+
+An **IP address** (**Internet Protocol address**) is a **unique numerical label** assigned to every device on a network.
+
+An IP address has **two parts**:
+
+| Part | Identifies | Analogy |
+|---|---|---|
+| 🏘️ **Network portion (Network ID)** | **Which network** the device is on | Street name |
+| 🏠 **Host portion (Host ID)** | **Which device** inside that network | House number |
+
+```text
+        172.217.14.206
+        └──┬──┘ └──┬─┘
+       Network    Host
+         ID        ID
+```
+
+> ⚠️ Where the network part ends and the host part begins is **not fixed**. It is decided by the **subnet mask** (e.g. `255.255.0.0` or `/16` → first 2 octets = network). The split above assumes `/16`.
+
+There are **two versions** of IP in use today: **IPv4** and **IPv6**.
+
+---
+
+## 55. 🔢 IPv4 vs IPv6
+
+### IPv4
+
+```text
+192.168.1.1
+ │   │  │ │
+ └───┴──┴─┴── 4 numbers (octets) separated by dots
+```
+
+- Each number is called an **octet** (8 bits) and ranges from **0 to 255**
+- 4 octets × 8 bits = **32 bits**
+- 2³² ≈ **4.3 billion** addresses
+- Defined in **1981** (RFC 791) and switched on across ARPANET in **1983**. Back then 4.3 billion seemed like more than enough. Nobody imagined billions of **smartphones, IoT devices, laptops and servers** all needing addresses.
+- ❌ Result: **IPv4 address exhaustion**. We've run out of fresh IPv4 addresses (NAT and private IPs are what keep IPv4 alive)
+
+### IPv6
+
+The **long-term solution** to address exhaustion, standardized in **1998** and slowly becoming the standard.
+
+```text
+2001:0db8:85a3:0000:0000:8a2e:0370:7334
+└─┬─┘
+  8 groups of 4 hexadecimal characters, separated by colons
+```
+
+- 8 groups × 16 bits = **128 bits**
+- 2¹²⁸ ≈ **3.4 × 10³⁸** (340 undecillion) addresses, effectively unlimited
+- Can be **shortened**: leading zeros dropped, one run of all-zero groups replaced by `::`
+  → `2001:db8:85a3::8a2e:370:7334`
+- ✅ Other improvements: **no need for NAT** (every device can have a public address), simpler headers → **more efficient routing**, **IPsec** support designed in
+- ⏳ Adoption has been **slow**, because changing Internet infrastructure is genuinely hard. Today the Internet runs on a **mix of IPv4 and IPv6** (dual-stack)
+
+### 🆚 Comparison
+
+| | IPv4 | IPv6 |
+|---|---|---|
+| Size | **32 bits** | **128 bits** |
+| Format | 4 decimal octets, dots | 8 hex groups, colons |
+| Example | `192.168.1.1` | `2001:db8::1` |
+| Total addresses | ~4.3 billion | ~3.4 × 10³⁸ |
+| NAT needed? | Yes (address shortage) | No |
+| Loopback | `127.0.0.1` | `::1` |
+
+> 💡 **Cloud link:** AWS VPCs are IPv4 by default; you can add an IPv6 CIDR block to make them **dual-stack**.
+
+---
+
+## 56. 🔐 Private vs Public IP
+
+### 🤔 Two different IPs on the same device?
+
+Run this in your terminal and look at the `inet` field of your active interface:
+
+```bash
+ifconfig en0 | grep "inet "   # macOS
+ip addr                       # Linux
+ipconfig                      # Windows → "IPv4 Address"
+```
+
+You'll see something starting with **`192.168.`**, **`10.`** or **`172.16–31.`**
+
+Now search Google for **"what is my IP"**. You get a **completely different** address. Same device, two IP addresses. Why?
+
+👉 Because there are **two kinds of IP addresses**: **private** and **public**.
+
+```text
+   🏠 YOUR HOME (private)                          🌍 INTERNET (public)
+
+ 💻 192.168.1.10 ──┐
+ 📱 192.168.1.11 ──┼── 🗺️ ROUTER (NAT) ── 49.36.x.x ──▶ 🖥️ Google sees 49.36.x.x
+ 📺 192.168.1.12 ──┘    private ↔ public
+```
+
+### 🏠 Private IP
+
+- Works **only inside a local network**. It is **not visible** to the Internet
+- **Cannot be reached directly** from outside your home/office network
+- When your router gives an IP to your laptop, phone or smart TV, that's a **private IP**. It exists only inside your **LAN**
+- ✅ Your neighbour's network can use the **exact same private range** as yours, and that's completely fine, because private IPs **never leave the local network**
+
+There are **three reserved private ranges**, defined by the standard **RFC 1918**:
+
+| Range | CIDR | Addresses available | Common use |
+|---|---|---|---|
+| `10.0.0.0` – `10.255.255.255` | `10.0.0.0/8` | ~16.7 million | Large enterprises, **cloud VPCs** |
+| `172.16.0.0` – `172.31.255.255` | `172.16.0.0/12` | ~1 million | Mid-size networks, **Docker** (`172.17.0.0/16`) |
+| `192.168.0.0` – `192.168.255.255` | `192.168.0.0/16` | ~65,000 | **Home & small office** networks |
+
+### 🌍 Public IP
+
+- The address that is **visible to the rest of the Internet**
+- **Globally unique**: no two devices on the Internet can have the same public IP at the same time
+- Your home has **one public IP**, assigned to your **router** by your **ISP**. Every device in your house shares it when talking to the Internet (thanks to **NAT**)
+- It's the address **Google sees** when you search, and the address **Netflix sees** when you stream
+
+### 🏛️ Who hands out public IPs?
+
+Public IPs are managed by **IANA**, which gives blocks to 5 **Regional Internet Registries (RIRs)**. They make sure **no two organizations get the same public IP**.
+
+| RIR | Full form | Region |
+|---|---|---|
+| **ARIN** | American Registry for Internet Numbers | USA, Canada, parts of the Caribbean |
+| **APNIC** | Asia Pacific Network Information Centre | Asia-Pacific (🇮🇳 India) |
+| **LACNIC** | Latin America and Caribbean Network Information Centre | Latin America & Caribbean |
+| **RIPE NCC** | Réseaux IP Européens Network Coordination Centre | Europe, Middle East, Central Asia |
+| **AFRINIC** | African Network Information Centre | Africa |
+
+```text
+IANA ──▶ RIR (e.g. APNIC) ──▶ ISP (Jio, Airtel) ──▶ 🏠 your router's public IP
+```
+
+### 🔁 Special address: Loopback (localhost)
+
+- **`127.0.0.1`** = the **loopback** address, a.k.a. **`localhost`** (IPv6: `::1`)
+- It **always refers to the device itself**. The whole `127.0.0.0/8` range is reserved for this
+- When you run a dev server and open `localhost:3000`, that traffic **never leaves your machine**. It loops back to itself
+
+### 📊 Private vs Public summary
+
+| 🏠 Private IP | 🌍 Public IP |
+|---|---|
+| Works only inside the LAN | Visible on the Internet |
+| Assigned by your **router** (DHCP) | Assigned by your **ISP** (from an RIR) |
+| Can repeat across different networks | **Globally unique** |
+| Free | Costs money (limited supply) |
+| `192.168.1.10`, `10.0.0.5` | `49.36.12.34`, `142.250.0.10` |
+
+> 💡 **Cloud link:** an AWS EC2 instance gets a **private IP** from your VPC subnet (e.g. `10.0.1.25`) and optionally a **public IP / Elastic IP** to be reachable from the Internet.
+
+---
+
+## 57. 🔄 Dynamic vs Static IP
+
+### 🔄 Dynamic IP
+
+A **dynamic IP** is **assigned automatically** and **can change over time**.
+
+- This is what happens on **most home and office networks**
+- When your laptop joins Wi-Fi, the router hands it an available IP from its **pool**. Next time you connect, you might get a **different one**
+- The protocol that does this is **DHCP** (Dynamic Host Configuration Protocol)
+- The address is **leased** for a period of time. When the lease expires, it can be **renewed** or **reassigned** to another device
+- ✅ Dynamic IPs are the **default almost everywhere** because they are **efficient**: addresses are reused, and nobody has to configure devices by hand
+
+```text
+💻 Laptop: "I need an IP!"          (DHCP Discover, broadcast)
+🗺️ Router: "Take 192.168.1.10"      (DHCP Offer)
+💻 Laptop: "I'll take it"           (DHCP Request)
+🗺️ Router: "Yours for 24 hours"     (DHCP Acknowledge)
+```
+
+> 🧠 Remember it as **DORA**: **D**iscover → **O**ffer → **R**equest → **A**cknowledge.
+
+### 📌 Static IP
+
+A **static IP** is **manually configured** (or permanently reserved) and **never changes**, unless you deliberately change it.
+
+- If your **DNS record** says *"my server is at `203.0.113.10`"*, that address had better not change. A static IP guarantees it won't
+- Used for things others must **always find at the same address**: **servers, routers, databases, printers, DNS servers**
+
+> 💡 **Cloud link:** in the cloud you **explicitly allocate** a static public IP and **attach** it to your instance. Even if the instance stops and starts, the IP stays the same.
+> AWS → **Elastic IP** · GCP → **Static external IP** · Azure → **Static public IP**.
+> (A normal EC2 public IP is **dynamic**: it changes on stop/start.)
+
+### 🆚 Dynamic vs Static
+
+| 🔄 Dynamic IP | 📌 Static IP |
+|---|---|
+| Assigned **automatically** by **DHCP** | **Manually** set / permanently reserved |
+| Can change on reconnect (lease expires) | **Never** changes |
+| Default for home networks: laptops, phones | Used for **servers, routers, databases** |
+| ❌ Not suitable for hosting servers | ✅ Essential for **DNS & public services** |
+| Cheap, zero setup | Costs more (public static IPs), needs management |
+
+> 🧠 **If something needs to find you → you need a static IP.** If you're just browsing, streaming video or connecting to cloud services → dynamic is perfectly fine.
+
+---
+
+# 🧮 PART 10 — Subnetting & CIDR
+
+## 58. 🏢 Designing a Network — Why Subnets?
+
+Imagine you work at a company with **500 people**: engineers, HR, finance, sales. Everyone sits in the **same office building**, all connected to the **same flat network**.
+
+```text
+                  ONE FLAT NETWORK (500 devices)
+ ┌───────────────────────────────────────────────────────────┐
+ │ 💰 Finance   👩‍💻 Engineers   🧑‍💼 HR   📞 Sales   🖨️ Printers │
+ │        everyone can see everyone's traffic 👀              │
+ └───────────────────────────────────────────────────────────┘
+```
+
+Here's the scary part:
+
+- 🔓 **Security problem:** every time finance processes payroll or approves a bank transaction, that data travels across the **same network** every engineer and salesperson is on. Anyone with the right tools can see it
+- 🐢 **Performance problem:** every device generates constant network noise, and **every broadcast packet** from any one device reaches **all 500 others**
+
+✅ The fix: **split the network into smaller, isolated pieces** → **subnets**.
+
+```text
+ ┌──── Finance subnet ────┐   ┌──── Engineering subnet ──┐   ┌──── HR subnet ────┐
+ │ 10.0.1.0/24  💰💰💰     │   │ 10.0.2.0/24  👩‍💻👩‍💻👩‍💻      │   │ 10.0.3.0/24 🧑‍💼🧑‍💼 │
+ └───────────┬────────────┘   └────────────┬─────────────┘   └─────────┬─────────┘
+             └────────────────────── 🗺️ ROUTER / 🧱 FIREWALL ──────────┘
+                     traffic between subnets is controlled by rules
+```
+
+> 💡 **Cloud link:** this is exactly how an AWS **VPC** works. You split it into **public** and **private subnets** (web servers in public, databases in private).
+
+---
+
+## 59. ✂️ Subnet & Subnet Mask
+
+A **subnet** (short for **subnetwork**) is a **logical division** of a larger IP network into **smaller, isolated segments**.
+
+Every subnet is defined by **two things**:
+
+| Part | Job | Example |
+|---|---|---|
+| 🏷️ **Network address** | Identifies the subnet itself | `192.168.1.0` |
+| 🎭 **Subnet mask** | Decides whether an IP address **belongs** to this subnet | `255.255.255.0` |
+
+The subnet mask **draws a line**: everything to the **left** is the **network**, everything to the **right** is the **host**.
+
+```text
+IP address   192.168.1.10   = 11000000.10101000.00000001.00001010
+Subnet mask  255.255.255.0  = 11111111.11111111.11111111.00000000
+                              └──────── network (1s) ───────┘└host┘
+                                                              (0s)
+→ Network: 192.168.1.0     Host: .10
+```
+
+> 🧠 **1s in the mask = network bits. 0s = host bits.** If two IPs have the same network part, they're in the **same subnet** and talk directly (via switch). Otherwise they need a **router** (see §51).
+
+There are **two ways** of defining subnet masks: **classful** (old) and **classless / CIDR** (modern).
+
+---
+
+## 60. 🏛️ Classful Addressing (the old way)
+
+The idea was simple: IP addresses were divided into **classes**, and each class had a **default subnet mask** automatically assigned to it. No manual work needed.
+
+| Class | First octet | Default mask | Format | Usable hosts per network |
+|---|---|---|---|---|
+| **A** | 1 – 126 | `255.0.0.0` (/8) | `N.H.H.H` | 2²⁴ − 2 = **16,777,214** |
+| **B** | 128 – 191 | `255.255.0.0` (/16) | `N.N.H.H` | 2¹⁶ − 2 = **65,534** |
+| **C** | 192 – 223 | `255.255.255.0` (/24) | `N.N.N.H` | 2⁸ − 2 = **254** |
+| **D** | 224 – 239 | — | — | Reserved for **multicast** |
+| **E** | 240 – 255 | — | — | Reserved for **research / experimental** use |
+
+> ⚠️ `127.x.x.x` is missing from Class A on purpose. It's reserved for **loopback** (`127.0.0.1`, see §56).
+> **Why −2?** In every network, the **first** address is the **network address** and the **last** is the **broadcast address**, so neither can be given to a host.
+
+### ❌ The massive flaw
+
+What if your company has **500 devices**?
+
+```text
+Class C → 254 hosts      ❌ not enough
+Class B → 65,534 hosts   ✅ fits... but wastes 65,034 addresses 🗑️
+```
+
+There is **nothing in between**. That's incredibly **inefficient**, and one of the reasons IPv4 ran out of addresses so fast.
+
+---
+
+## 61. 🎯 CIDR — Classless Inter-Domain Routing
+
+**CIDR** throws out the rigid class system and says: **assign only as many addresses as you actually need.**
+
+Instead of a mask locked to a class, you define **exactly where the network ends and the host begins**.
+
+### 📝 CIDR notation
+
+An IP address + a **slash** + a number called the **prefix length**:
+
+```text
+192.168.1.0/24
+            └─ prefix length = first 24 bits are the NETWORK
+
+32 total bits − 24 network bits = 8 host bits
+2⁸ = 256 addresses − 2 (network + broadcast) = 254 usable hosts
+```
+
+> 🧮 **Formula:** usable hosts = **2^(32 − prefix) − 2**
+
+### 📊 Common prefixes
+
+| CIDR | Subnet mask | Total addresses | Usable hosts | Typical use |
+|---|---|---|---|---|
+| /8 | `255.0.0.0` | 16,777,216 | 16,777,214 | Huge networks |
+| /16 | `255.255.0.0` | 65,536 | 65,534 | AWS **VPC** (e.g. `10.0.0.0/16`) |
+| /24 | `255.255.255.0` | 256 | 254 | A typical **subnet** / home LAN |
+| /25 | `255.255.255.128` | 128 | **126** | |
+| /26 | `255.255.255.192` | 64 | **62** | |
+| /27 | `255.255.255.224` | 32 | 30 | Small subnet |
+| /28 | `255.255.255.240` | 16 | 14 | Smallest AWS subnet |
+| /32 | `255.255.255.255` | 1 | 1 (single host) | One IP in a firewall rule (`my-ip/32`) |
+
+✅ You're no longer stuck with 254 or 65,534. Say **/25** and get **126** hosts, **/26** gives **62**. Take **exactly what you need**.
+
+For the 500-device company: **/23** → 2⁹ − 2 = **510** hosts. ✅ Almost no waste.
+
+> 💡 **Cloud link:** AWS reserves **5** IPs in every subnet (not 2), so a `/24` subnet gives **251** usable IPs.
+
+---
+
+## 62. ⚡ Shortcut: CIDR → Subnet Mask
+
+Each octet is 8 bits. Memorize what **1 to 8 network bits** inside one octet are worth:
+
+| Bits in octet | /1 | /2 | /3 | /4 | /5 | /6 | /7 | /8 |
+|---|---|---|---|---|---|---|---|---|
+| **Value** | 128 | 192 | 224 | 240 | 248 | 252 | 254 | 255 |
+
+```text
+Why? Add up the bit values from the left:
+128 + 64 + 32 + 16 + 8 + 4 + 2 + 1
+128 → 192 → 224 → 240 → 248 → 252 → 254 → 255
+```
+
+**To find the mask for any prefix:** break it into chunks of **/8**, then use the table for the leftover.
+
+```text
+/12 → /8 + /4         = 255.240.0.0
+/18 → /8 + /8 + /2    = 255.255.192.0
+/20 → /8 + /8 + /4    = 255.255.240.0
+/27 → /8 + /8 + /8 + /3 = 255.255.255.224
+```
+
+```bash
+# Check any CIDR quickly (Linux / macOS with ipcalc installed)
+ipcalc 192.168.1.0/26
+```
+
+---
+
+# 📦 PART 11 — IP Packet & NAT
+
+## 63. 📦 IP Packet Anatomy
+
+We usually think of an IP packet as *"data with a source and destination IP"*, but there's more to it.
+
+An IP packet has **two sections**:
+
+```text
+┌──────────────────────────────┐
+│  HEADER     20 – 60 bytes    │  ← routing info, error check, etc.
+├──────────────────────────────┤
+│  DATA       (payload)        │  ← usually ≤ 1480 bytes on Ethernet
+└──────────────────────────────┘
+```
+
+- 📋 **Header:** **20 to 60 bytes**, depending on optional fields. It looks like overhead, but it's essential for **routing, error handling** and other network functions
+- 📦 **Data:** the whole packet (header + data) can be up to **65,535 bytes**, but in practice the **MTU** (**Maximum Transmission Unit**) limits it. On Ethernet the MTU is **1500 bytes**
+- ✂️ If a packet is bigger than the MTU, it gets **fragmented** into smaller pieces. This is generally **avoided** because it adds complexity and causes problems (a lost fragment means the whole packet is lost)
+
+### 🔬 IPv4 header layout (32 bits per row)
+
+```text
+ 0               8               16              24            31
+ ├───────┬───────┼───────────────┼───────────────┴───────────────┤
+ │Version│  IHL  │ Type of Svc   │         Total Length          │
+ │ (4b)  │ (4b)  │ (DSCP + ECN)  │            (16b)              │
+ ├───────┴───────┴───────────────┼─────┬─────────────────────────┤
+ │        Identification         │Flags│     Fragment Offset     │
+ │            (16b)              │(3b) │         (13b)           │
+ ├───────────────┬───────────────┼─────┴─────────────────────────┤
+ │ Time To Live  │   Protocol    │        Header Checksum        │
+ │     (8b)      │     (8b)      │            (16b)              │
+ ├───────────────┴───────────────┴───────────────────────────────┤
+ │                    Source IP Address (32b)                    │
+ ├───────────────────────────────────────────────────────────────┤
+ │                 Destination IP Address (32b)                  │
+ ├───────────────────────────────────────────────────────────────┤
+ │                  Options (0 – 40 bytes)                       │
+ ├───────────────────────────────────────────────────────────────┤
+ │                            DATA                               │
+ └───────────────────────────────────────────────────────────────┘
+   5 fixed rows × 4 bytes = 20 bytes minimum header
+```
+
+### 📋 Header fields
+
+| Field | What it does |
+|---|---|
+| **Version** | IP version: **4** or **6** |
+| **IHL** (Internet Header Length) | Length of the header in **32-bit words** (5 = 20 bytes, 15 = 60 bytes) |
+| **Type of Service** | **Prioritizes / classifies** packets (now split into **DSCP** + **ECN**) |
+| **Total Length** | Total size of the packet, **header + data** (max 65,535 bytes) |
+| **Identification** | Unique ID shared by all **fragments** of one packet |
+| **Flags** | Control fragmentation (e.g. **DF** = Don't Fragment, **MF** = More Fragments) |
+| **Fragment Offset** | **Position** of this fragment within the original packet |
+| **TTL** (Time To Live) | **Hop count**: each router subtracts 1, at 0 the packet is dropped → prevents **infinite loops** |
+| **Protocol** | Which upper-layer protocol is inside: **TCP (6)**, **UDP (17)**, **ICMP (1)** |
+| **Header Checksum** | **Error detection** for the header only |
+| **Source / Destination IP** | The **endpoints** of the communication |
+| **Options** | Rarely used extras (0–40 bytes) |
+
+> 📶 **ECN (Explicit Congestion Notification):** instead of abruptly **dropping** packets when there's congestion, routers can **mark** them, so the sender slows down **without packet loss**.
+
+> 💡 **DevOps link:** `traceroute` works by sending packets with **TTL = 1, 2, 3...**. Each router that drops one (TTL hit 0) replies, revealing every hop.
+
+---
+
+## 64. 🔁 How NAT Works
+
+**NAT (Network Address Translation)** lets many devices with **private IPs** share **one public IP**.
+
+The router keeps a **NAT table** that maps **internal (private IP + port)** ↔ **external (public IP + port)**.
+
+### ⚙️ The process
+
+1. 🏠 Your home has **multiple devices**: laptops, smartphones, smart TVs
+2. 🏷️ Each device has a **private IP** (e.g. `192.168.1.x`)
+3. 🌍 All devices share **one public IP**, assigned to your router by your **ISP**
+4. 🔄 When a device sends data to the Internet, the router **replaces** the private IP (and port) with its **public IP** (and a port), and **records the mapping** in the NAT table
+5. ↩️ When the reply comes back, the router looks up the table and sends it to the **right device**
+
+### 🖼️ NAT example
+
+```text
+   🏠 PRIVATE SIDE                    🗺️ ROUTER                     🌍 INTERNET
+                              LAN: 192.168.1.1
+                              WAN: 72.23.86.11 (public)
+
+ 💻 192.168.1.2                                                   🖥️ 142.250.0.0
+                                                                     (Google)
+ ① request
+ src 192.168.1.2:3000 ─────▶  NAT rewrites source
+ dst 142.250.0.0:443          src 72.23.86.11:8888 ─────────────▶ dst 142.250.0.0:443
+
+ ③ reply                      ② reply arrives
+ dst 192.168.1.2:3000 ◀─────  dst 72.23.86.11:8888 ◀───────────── src 142.250.0.0:443
+                              looks up NAT table ✅
+```
+
+**NAT table**
+
+| Private IP : port | Public IP : port | Destination |
+|---|---|---|
+| `192.168.1.2:3000` | `72.23.86.11:8888` | `142.250.0.0:443` |
+| `192.168.1.3:5000` | `72.23.86.11:8889` | `142.250.0.0:443` |
+
+> 🧠 Google only ever sees **72.23.86.11**. It has no idea `192.168.1.2` exists.
+
+---
+
+## 65. 🧩 Types of NAT
+
+| Type | Mapping | How it works | Used for |
+|---|---|---|---|
+| 1️⃣ **Static NAT** | **One-to-one** | One private IP is **permanently** mapped to one public IP | A specific device (e.g. a server) that must be **reachable from the Internet** |
+| 2️⃣ **Dynamic NAT** | **Many-to-many** (pool) | Router assigns a public IP **from a pool** to a device when it starts a connection; returned to the pool afterwards | Companies with several public IPs |
+| 3️⃣ **PAT** (Port Address Translation) | **Many-to-one** | Also called **NAT overload**. Many devices share **one public IP**, told apart by **different port numbers** | 🏠 **Every home router** (the example in §64) |
+
+```text
+Static NAT    192.168.1.10 ───────────▶ 203.0.113.10        (always)
+Dynamic NAT   192.168.1.x  ───────────▶ 203.0.113.10–20     (next free one)
+PAT           192.168.1.x  ───────────▶ 203.0.113.1 : port  (one IP, many ports)
+```
+
+> 💡 **Cloud link:** an AWS **NAT Gateway** does **PAT**: private-subnet servers share one Elastic IP to reach the Internet, but nobody outside can start a connection to them.
+
+---
+
+## 66. 🛠️ NAT in Practice
+
+### a. 🏠 Sharing one public IP
+
+Multiple devices **share a single public IP** address (PAT, see §65). This is the main reason IPv4 hasn't fully run out.
+
+### b. 🚪 Port forwarding
+
+NAT can also let **external devices reach a service inside** your network.
+
+Example: you run a **web server** at home.
+
+```text
+Public IP:            203.0.113.1
+Internal web server:  192.168.1.10
+Rule:                 203.0.113.1:80  ──▶  192.168.1.10:80
+
+🌍 Visitor ──▶ 203.0.113.1:80 ──▶ 🗺️ Router (port forward) ──▶ 🖥️ 192.168.1.10:80
+```
+
+> 💡 **DevOps link:** `docker run -p 8080:80 nginx` is port forwarding: host port **8080** → container port **80** (Docker uses NAT rules in `iptables` to do it).
+
+### c. ⚖️ Load balancing
+
+NAT can **distribute incoming requests** across multiple servers by mapping **one public IP** to **many internal IPs**.
+
+```text
+Public IP:         203.0.113.1
+Internal servers:  192.168.1.10, 192.168.1.11, 192.168.1.12
+Rule:              round-robin
+
+                              ┌──▶ 🖥️ 192.168.1.10   (request 1, 4, 7...)
+🌍 Users ──▶ 203.0.113.1 ─────┼──▶ 🖥️ 192.168.1.11   (request 2, 5, 8...)
+                              └──▶ 🖥️ 192.168.1.12   (request 3, 6, 9...)
+```
+
+> 💡 **Cloud link:** in practice this job is done by a dedicated **load balancer** (AWS ALB/NLB, Nginx, HAProxy), which uses the same idea.
+
+---
+
+# 🛣️ PART 12 — Routing Scenarios & ICMP
+
+Now let's put **IP, MAC, ARP, switches, routers and NAT** together and follow a packet in **3 real scenarios**, from simplest to most complex. (Quick version of this is in §51.)
+
+## 67. 🏠 Routing Scenario 1 — Same Network
+
+**Host A (computer) sends a packet to Host B (printer).** Both are in the **same network** `192.168.1.0/24`, connected through a **switch**.
+
+```text
+   💻 Host A                    🔀 SWITCH                    🖨️ Host B (printer)
+ 192.168.1.10  ───────────────── ◀  ▶ ─────────────────────  192.168.1.20
+ MAC: AA-AA                                                  MAC: BB-BB
+
+                   sending a packet from A → B
+```
+
+### Step 1 — 📢 ARP Request
+
+- A wants to send a packet to printer B, and it knows B's **IP** (`192.168.1.20`)
+- A checks: is `192.168.1.20` in my subnet `192.168.1.0/24`? → **YES**, so it can deliver directly
+- But to build a frame, A needs B's **MAC address**
+- A sends an **ARP request** as a **broadcast** to everyone: *"Who has 192.168.1.20? Tell 192.168.1.10"*
+
+### Step 2 — ↩️ ARP Reply
+
+- **B** recognizes its own IP and replies (**unicast**) with its MAC: *"192.168.1.20 is at BB-BB"*
+- A saves `192.168.1.20 → BB-BB` in its **ARP cache** (so it doesn't have to ask again)
+- 🔀 Along the way, the **switch learns** which **port** each **MAC** is on (`AA-AA → port 1`, `BB-BB → port 2`) and saves it in its **MAC address table**
+
+> ⚠️ The switch works at **Layer 2**: it maps **MAC → port**, it does **not** look at IP addresses. The **IP → MAC** mapping lives in the **host's ARP cache**.
+
+### Step 3 — 📦 Frame transmission
+
+- A now knows B's MAC
+- A **encapsulates** the packet in a **frame** addressed to **dst MAC BB-BB**
+- The switch looks up `BB-BB` in its MAC table and forwards the frame **only to B's port** ✅
+
+```text
+┌──────────────┬──────────────┬─────────────────┬─────────────────┬──────┐
+│ dst MAC BB-BB│ src MAC AA-AA│ src IP .1.10    │ dst IP .1.20    │ data │
+└──────────────┴──────────────┴─────────────────┴─────────────────┴──────┘
+```
+
+> 🧠 **No router involved.** Same network = ARP + switch only.
+
+---
+
+## 68. 🔀 Routing Scenario 2 — Different Private Networks
+
+**Host A sends a packet to Host C**, which is in a **different private network**. A **router** connects the two networks.
+
+```text
+     PRIVATE NET 1 (192.168.1.0/24)                     PRIVATE NET 2 (10.5.3.0/24)
+
+ 💻 Host A ──── 🔀 SWITCH ──── 🗺️ ROUTER R ──────────────────────── 💻 Host C
+ 192.168.1.10                  192.168.1.1  |  10.5.3.1               10.5.3.2
+ MAC: AA-AA                    MAC: R1      |  MAC: R2                MAC: CC-CC
+                              (interface 1)   (interface 2)
+
+                        sending a packet from A → C
+```
+
+> 🧠 A router has **one interface (with its own IP + MAC) in each network** it connects.
+
+### Step 1 — 🚪 Determining the gateway
+
+- A checks: is `10.5.3.2` in my subnet `192.168.1.0/24`? → **NO**
+- So A can't deliver directly. It must send the packet to its **default gateway**: router R at `192.168.1.1`
+
+### Step 2 — 📢 ARP request for the gateway
+
+- A sends an ARP request: *"Who has **192.168.1.1**?"* (the **router's** IP, not C's!)
+- Router R replies with its MAC (**R1**)
+
+### Step 3 — 📦 Frame transmission to the gateway
+
+- A sends the packet in a frame addressed to the **router's MAC**:
+
+```text
+dst MAC = R1 (router)      ← next hop
+dst IP  = 10.5.3.2 (C)     ← final destination
+```
+
+### Step 4 — 🗺️ Router processing
+
+1. Router R receives the frame, removes the L2 header, and checks the **destination IP** (`10.5.3.2`)
+2. It looks at its **routing table** → `10.5.3.0/24` is directly connected on **interface 2**
+3. It decreases the **TTL** by 1
+4. It sends an **ARP request** on network 2: *"Who has 10.5.3.2?"* → C replies with **CC-CC**
+5. It builds a **new frame** (`src MAC R2 → dst MAC CC-CC`) and forwards the packet to C ✅
+
+> 🧠 The **MAC addresses changed** (A→R1, then R2→C) but the **IP addresses stayed the same** (`192.168.1.10 → 10.5.3.2`) the whole way.
+
+---
+
+## 69. 🌍 Routing Scenario 3 — To a Server on the Internet
+
+**Host M (your phone) sends a packet to Host S (a server on the Internet).** Now **NAT** joins the party.
+
+```text
+     PRIVATE NET (192.168.1.0/24)                      🌍 INTERNET
+
+ 📱 Host M ────────── 🗺️ ROUTER (+ NAT) ──────────── ☁️ many routers ──────── 🖥️ Host S
+ 192.168.1.3          192.168.1.1 | 1.2.3.4                                    142.250.0.0
+                      (private)     (public)
+
+                        sending a packet from M → S
+```
+
+### Step 1 — 🚪 Determining the gateway
+
+- M wants to send a packet to S (`142.250.0.0`)
+- M checks: is `142.250.0.0` in my subnet `192.168.1.x`? → **NO** → send to the **default gateway** (`192.168.1.1`)
+
+### Step 2 — 📢 ARP request for the gateway
+
+- M sends an ARP request: *"Who has 192.168.1.1?"* → the router replies with its MAC
+- (if the router's MAC is already in M's **ARP cache**, this step is skipped)
+- M sends the packet in a frame addressed to the **router's MAC**
+
+### Step 3 — 🔁 Router processing & NAT
+
+- The router receives the frame and checks the destination IP (`142.250.0.0`) → not a local network, so it goes out the **Internet (WAN) side**
+- 🔁 **NAT:** the router **replaces the private source IP** with its **public IP** and records it in the **NAT table** (see §64):
+
+```text
+BEFORE NAT   src 192.168.1.3:5000   →  dst 142.250.0.0:443
+AFTER NAT    src 1.2.3.4:6000       →  dst 142.250.0.0:443
+NAT table    192.168.1.3:5000  ↔  1.2.3.4:6000
+```
+
+### Step 4 — 🌍 Internet routing
+
+- The packet is routed through **many routers** (ISP → backbone → Google's network) to reach `142.250.0.0`
+- Each router forwards the packet based on the **destination IP** and its own **routing table**, decrements **TTL**, and builds a **new frame** for the next hop
+- When S replies to `1.2.3.4:6000`, your router looks up the NAT table and sends it back to **192.168.1.3:5000** (your phone) ✅
+
+### 📊 The 3 scenarios compared
+
+| | Scenario 1 | Scenario 2 | Scenario 3 |
+|---|---|---|---|
+| Destination | Same network | Different private network | Internet |
+| ARP for... | **Destination's** MAC | **Gateway's** MAC | **Gateway's** MAC |
+| Devices used | Switch | Switch + router | Switch + router + NAT + Internet routers |
+| IP changes? | No | No | **Source IP changes** (NAT) |
+| MAC changes? | No | Yes, at the router | Yes, at **every** hop |
+
+---
+
+## 70. 📡 ICMP — Internet Control Message Protocol
+
+**ICMP** (**Internet Control Message Protocol**) lives at **Layer 3 (Network)**.
+
+- 🧩 It works **on top of IP**: ICMP messages travel **inside IP packets** (IP header **Protocol = 1**, see §63)
+- 💬 It's used to send **informational and error messages** between network devices. It does **not** carry user data
+- 🛠️ If you've ever used **`ping`** or **`traceroute`**, you've used ICMP
+- 🔍 Crucial for **troubleshooting** network problems
+- 📶 Helps keep the network efficient by giving **feedback on errors and problems** (e.g. *"that host is unreachable"*, *"your packet is too big"*)
+
+```text
+┌───────────┬──────────────────────────────┐
+│ IP header │ ICMP message (type + code…)  │   ← ICMP rides inside IP
+│ proto = 1 │                              │
+└───────────┴──────────────────────────────┘
+```
+
+### 📋 ICMP messages
+
+| Message | What it means | Used by |
+|---|---|---|
+| 📤 **Echo Request** / 📥 **Echo Reply** | *"Are you there?"* / *"Yes, I'm here"*: checks if a host is reachable | `ping` |
+| 🚫 **Destination Unreachable** | The destination **network, host or port** can't be reached | Routers, hosts |
+| ✂️ **Fragmentation Needed** | Packet is **too big** for the next link (MTU) but has the **Don't Fragment** flag set → sender must send smaller packets | Path MTU Discovery |
+| ⏱️ **Time Exceeded (TTL exceeded)** | The packet's **TTL hit 0** and it was dropped | `traceroute` |
+| ↪️ **Redirect** | A router telling a device *"use a better route / gateway for this destination"* | Routers |
+
+### ⚠️ ICMP limitations
+
+- 🧱 **Some firewalls block ICMP** for security reasons (e.g. to prevent **ping floods** or network scanning). That makes **troubleshooting harder**: a server may be up but not answer `ping`
+- 🕳️ Blocking **all** ICMP can break things. Example: the **"black hole" connection** problem. The TCP connection is established, but large packets silently vanish because the **"Fragmentation Needed"** messages are blocked, so the sender never learns to send smaller packets
+- 📭 ICMP messages themselves have **no guaranteed delivery** (no retries, no acknowledgement)
+
+> 💡 **Cloud link:** AWS Security Groups **block ICMP by default**. That's why `ping` to a fresh EC2 instance times out even though SSH works. Allow **"All ICMP – IPv4"** to enable it.
+
+---
+
+## 71. 🏓 Ping & Traceroute
+
+### 🏓 Ping
+
+**Ping** uses ICMP to check whether a host is **up and reachable**:
+
+1. Your machine sends an **ICMP Echo Request**
+2. If the host is reachable, it responds with an **ICMP Echo Reply**
+3. Ping measures the **round-trip time** (how long the reply took)
+
+```bash
+ping chaicode.com        # runs until you press Ctrl+C (macOS / Linux)
+ping -c 4 chaicode.com   # send only 4 pings
+```
+
+```text
+PING chaicode.com (104.21.16.156): 56 data bytes
+64 bytes from 104.21.16.156: icmp_seq=0 ttl=59 time=153.834 ms
+64 bytes from 104.21.16.156: icmp_seq=1 ttl=59 time=155.758 ms
+64 bytes from 104.21.16.156: icmp_seq=2 ttl=59 time=156.631 ms
+64 bytes from 104.21.16.156: icmp_seq=3 ttl=59 time=157.014 ms
+```
+
+| Field | Meaning |
+|---|---|
+| `104.21.16.156` | The IP the domain resolved to (via **DNS**) |
+| `56 data bytes` / `64 bytes` | 56 bytes of data + 8-byte ICMP header = 64 bytes |
+| `icmp_seq` | Sequence number of each ping: **0, 1, 2, 3…** (a gap = a lost packet) |
+| `ttl=59` | TTL left when the reply arrived (started at 64 → about **5 hops** away) |
+| `time` | **Round-trip time (latency)** in milliseconds |
+
+### 🗺️ Traceroute
+
+**Traceroute** shows the **path** (every router) a packet takes to the destination:
+
+1. It sends packets with **TTL = 1**, then **TTL = 2**, then **3**… (gradually increasing)
+2. Each router along the path **decrements the TTL**
+3. When the TTL reaches **0**, that router drops the packet and sends back an **ICMP Time Exceeded** message, revealing its address
+4. Repeating this maps **every hop** until the destination answers
+
+```text
+TTL=1 ──▶ Router 1 ✋ "Time Exceeded" → hop 1 = Router 1
+TTL=2 ──▶ Router 1 ──▶ Router 2 ✋     → hop 2 = Router 2
+TTL=3 ──▶ Router 1 ──▶ Router 2 ──▶ Router 3 ✋ → hop 3 …
+...until the destination itself replies ✅
+```
+
+```bash
+traceroute chaicode.com   # macOS / Linux
+tracert chaicode.com      # Windows
+```
+
+```text
+traceroute: Warning: chaicode.com has multiple addresses; using 172.67.213.172
+traceroute to chaicode.com (172.67.213.172), 64 hops max, 40 byte packets
+ 1  dsldevice.lan (192.168.1.1)  5.225 ms  3.322 ms  2.416 ms
+ 2  106.213.111.255 (106.213.111.255)  8.970 ms  8.489 ms  8.541 ms
+ 3  nsg-corporate-153.212.186.122.airtel.in (122.186.212.153)  12.660 ms
+ ...
+ 7  172.67.213.172 (172.67.213.172)  111.749 ms  109.043 ms
+```
+
+| Hop | What it is |
+|---|---|
+| **1** `192.168.1.1` | Your **home router** (default gateway) |
+| **2–3** `airtel.in` | Your **ISP's** routers |
+| **…** | Backbone / IXP routers (a line of `* * *` means that router doesn't reply to ICMP) |
+| **7** `172.67.213.172` | The **destination** (Cloudflare, which hosts chaicode.com) ✅ |
+
+> 🧠 Each hop shows **3 times** because traceroute sends **3 probes** per TTL. "Multiple addresses" = the site sits behind a CDN with several IPs (**anycast**, see §40).
+
+---
+
+# 🎯 PART 13 — Interview Quick Answers
+
+## 72. 💬 Common Questions
 
 | Question | Short answer |
 |---|---|
@@ -1371,12 +2185,44 @@ How does one host actually reach another? There are **two cases**:
 | How do two hosts on the same network talk? | ARP finds the destination MAC, the switch delivers the frame |
 | How does a host reach a different network? | Sends the frame to the default gateway's MAC; routers forward it hop by hop using IP |
 | What changes at each hop — MAC or IP? | MAC changes every hop; IP stays the same end to end (except NAT) |
+| Why do we need IP if we have MAC? | MAC only works inside a LAN; IP is a global, routable address routers use across networks |
+| Two parts of an IP address? | Network ID (which network) + Host ID (which device); the subnet mask decides the split |
+| IPv4 vs IPv6? | IPv4 = 32-bit, ~4.3 billion addresses; IPv6 = 128-bit, ~3.4 × 10³⁸ addresses, no NAT needed |
+| Private IP ranges? | `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16` (RFC 1918) |
+| Private vs public IP? | Private = only inside the LAN, reusable; public = globally unique, visible on the Internet |
+| What is 127.0.0.1? | Loopback / localhost: always the device itself, traffic never leaves the machine |
+| Who assigns public IPs? | IANA → 5 RIRs (ARIN, APNIC, LACNIC, RIPE NCC, AFRINIC) → ISPs |
+| Dynamic vs static IP? | Dynamic = auto-assigned by DHCP, can change; static = fixed, used for servers (AWS Elastic IP) |
+| What is DHCP? | Protocol that auto-assigns IPs with a lease: Discover → Offer → Request → Acknowledge (DORA) |
+| When do you need a static IP? | When something must always find you at the same address: servers, DNS records, public services |
+| What is a subnet? | A logical division of a large IP network into smaller, isolated segments (better security + less broadcast noise) |
+| What does a subnet mask do? | Separates network bits (1s) from host bits (0s), deciding whether an IP is in the same subnet |
+| Classful vs classless? | Classful = fixed masks per class (A /8, B /16, C /24), wasteful; classless (CIDR) = any prefix length you need |
+| What does /24 mean? | First 24 bits are network → 8 host bits → 256 addresses, 254 usable |
+| Usable hosts formula? | 2^(32 − prefix) − 2 (network + broadcast address reserved) |
+| Convert /20 to a mask? | /8 + /8 + /4 → 255.255.240.0 |
+| IPv4 header size? | 20 bytes minimum, up to 60 bytes with options |
+| What is MTU? | Maximum Transmission Unit: largest packet a link carries without fragmenting (1500 bytes on Ethernet) |
+| What is TTL? | Hop counter; each router subtracts 1, packet dropped at 0, which prevents infinite loops |
+| What is NAT? | Router rewrites private IP:port to its public IP:port and tracks it in a NAT table |
+| Types of NAT? | Static (1:1), Dynamic (pool, many:many), PAT / NAT overload (many:1 using ports) |
+| What is port forwarding? | A NAT rule sending traffic from public IP:port to an internal IP:port (e.g. `docker -p 8080:80`) |
+| Same network: how does A reach B? | Subnet check → ARP broadcast for B's MAC → B replies → switch forwards the frame to B's port |
+| Different network: who does A ARP for? | The default gateway (router), not the destination; dst MAC = router, dst IP = final host |
+| What does a router do with a packet? | Strips the frame, checks dst IP in its routing table, decrements TTL, ARPs for the next hop, sends a new frame |
+| Does the switch know IP addresses? | No. A switch maps MAC → port; the IP → MAC mapping is in the host's ARP cache |
+| What is ICMP? | Layer 3 control/error protocol carried inside IP (protocol 1); used by ping and traceroute |
+| Common ICMP messages? | Echo Request/Reply, Destination Unreachable, Fragmentation Needed, Time Exceeded, Redirect |
+| How does ping work? | Sends ICMP Echo Request, host answers with Echo Reply; shows round-trip time and TTL |
+| How does traceroute work? | Sends packets with TTL 1, 2, 3…; each router where TTL hits 0 returns ICMP Time Exceeded, revealing the path |
+| Why can't I ping my EC2 instance? | Security Groups block ICMP by default; allow ICMP inbound |
+| Why not block all ICMP? | Breaks Path MTU Discovery ("black hole" connections) and makes troubleshooting harder |
 
 ---
 
-# ✅ PART 10 — Cheat Sheets & Mental Model
+# ✅ PART 14 — Cheat Sheets & Mental Model
 
-## 54. 📊 OSI Layer Cheat Sheet
+## 73. 📊 OSI Layer Cheat Sheet
 
 | # | Layer | Unit | Device | Address | Protocols |
 |---|---|---|---|---|---|
@@ -1390,7 +2236,7 @@ How does one host actually reach another? There are **two cases**:
 
 ---
 
-## 55. 🔢 Common Ports to Remember
+## 74. 🔢 Common Ports to Remember
 
 | Port | Service |
 |---|---|
@@ -1407,7 +2253,7 @@ How does one host actually reach another? There are **two cases**:
 
 ---
 
-## 56. 🧾 Concept Cheat Sheet
+## 75. 🧾 Concept Cheat Sheet
 
 ```text
 NETWORK            → devices sharing data & resources
@@ -1465,105 +2311,34 @@ Same network      → ARP for destination MAC → switch delivers
 Different network → ARP for GATEWAY MAC → router → hop by hop
 MAC = next hop (changes) · IP = final destination (same)
 
+IP ADDRESS → Layer 3 global address = Network ID + Host ID (split by subnet mask)
+IPv4       → 32 bits, 4 octets (0–255), ~4.3 billion, exhausted
+IPv6       → 128 bits, 8 hex groups, ~3.4 × 10³⁸, no NAT needed
+PRIVATE    → 10.0.0.0/8 · 172.16.0.0/12 · 192.168.0.0/16 (RFC 1918), LAN only
+PUBLIC     → globally unique, given by ISP ← RIR ← IANA
+LOOPBACK   → 127.0.0.1 / ::1 = localhost (never leaves the machine)
+DYNAMIC IP → DHCP (DORA), leased, can change
+STATIC IP  → fixed, for servers (AWS Elastic IP)
+
+SUBNET      → smaller isolated piece of a network (security + less broadcast)
+SUBNET MASK → 1s = network, 0s = host
+CLASSFUL    → A 1–126 /8 · B 128–191 /16 · C 192–223 /24 · D multicast · E experimental
+CIDR        → IP/prefix, e.g. 192.168.1.0/24 · hosts = 2^(32−prefix) − 2
+MASK TRICK  → 128 192 224 240 248 252 254 255  (/1 … /8 inside an octet)
+              /12 = 255.240.0.0 · /18 = 255.255.192.0
+
+IP PACKET   → header 20–60 bytes + data · MTU 1500 · TTL stops loops
+NAT         → private IP:port ↔ public IP:port (NAT table)
+NAT TYPES   → Static 1:1 · Dynamic pool · PAT many:1 (home routers, AWS NAT GW)
+NAT USES    → share one IP · port forwarding · load balancing
+
+ROUTING 1   → same net: ARP for dest MAC → switch → done
+ROUTING 2   → other net: ARP for GATEWAY → router → ARP for dest → new frame
+ROUTING 3   → Internet: gateway → NAT (src IP → public) → routers hop by hop
+ICMP        → L3, inside IP (proto 1), control & error messages
+ICMP MSGS   → Echo Req/Reply · Dest Unreachable · Frag Needed · Time Exceeded · Redirect
+PING        → Echo Request → Echo Reply · shows RTT, TTL, lost packets
+TRACEROUTE  → TTL 1,2,3… → each hop returns Time Exceeded → maps the path
+
 Home: devices → switch → router/firewall (gateway) → modem → ISP → IXP/Tier 1 → server
 ```
-
-
-
-
-Network layer && IP Addressing
-
-In Previous chapters we covered the physical layer and data link layer you now know that a mac address identifies a device on a local network 
-but here is the problme MAC addresses only work locally within a lan 
-the moment your data needs to leave your local network and travel across the internet to a server in another country MAC addresses are useless they are not designed for that 
-we need a different addressing system. one that works at a global scale one that every device on the internet understands one that routers can use to make decisions about where to send your data 
-
-IP addressing 
-An ip address (internet protocal address) is a unique numerical lable assigned to every device on a network 
-An IP address has two parts:
-   . Network Portion identifies the network 
-   . host portion: identifies the specific device within the network.
-                         Host ID
-            172.217.14.206
-     network id   
-
-There are two versions of ip addresses in use today IPv4 and IPv6 
-
-
-IPv4
-An IPv4 address looks like this 192.168.1.1
-four numbers separated by dots.
-Each number - called an octet which can range from 0 to 255.
-so a full IPv4 address is 32 bits of information four group of 8 bits each 
-two to the power of 32 gives us approximately 4.3 billion addreses.
-
-in 1983 when IPv4 was designed -4.3 billion seemed like more than enough nobody imagined billions of smartphones, IOt devices laptops and serevers all needing unique addresses.
-
-
-IPv6 
-the long-term solution to address exhaustion is IPv6- the next generation of ip addressing introduced in 1998 and slowly becoming the standard 
-
-An IPv6 address looks like this 2001:0db8:85a3:0000:0000:8a2e:0370:7334
-Eight groups of four hexadecimal characters,separated bt colons that is 128 bits.
-
-Two to the power of 128 that is approximately 340*10^36 addresses
-IPv6 also brings other improvements like better security built in more efficient routing no need for NAT.
-BUt adoption has been slow becasue changing internet infrastructure is genuinely hard today the internet runs on a mix of both IPv4 and IPv6 
-
-Nature of IP
-if you open your terminal and run ifconfig on Mac or linux or ipconfig on windows and look for the "inet" filed next to your active network interface you will get your current ip address starting with 192.168 or 10 172.16.
-But here is something interesting Go to Google right now and search "what is my ip" you will get a completely different address back some device two different ip addresses why ?
-because there are two kinds of ip addresses private and public 
-one more special address worth knowing 127.0.0.1 this is called the loopback address also known as localhost it always refers to the device itself. 
-when you run a local development server and open your browser to localhost:3000 that 127.0.0.1 never leaves your macghine it looops back to itself.
-
-
-two type of ip 
-private and public 
-
-
-Private ip 
-- It only works within a local network it is not visbile to the outside internet 
-- it cannot be accessed from outside your home or office network directyl 
-- when your router assigns an ip address to your laptop your phone your smart TV those are private IPs they exist only within your LAN
-
-your neighbour's network could be using the exact same private ip range as your s and thar is completely fine because private IPs never leave the local network 
-
-there are three reserved ranges for private IPs and these are defined by standard caleed RFC 1918.
-
-Private IP
-
-Range.                                Addresses available                   common use
-
-10.0.0.0 - 10.255.255.255               ~16 million                      Large enterprise.cloud VPCs
-
-172.16.0.0 -172.31.255.255              ~1 million                         Mid-size network 
-
-192.168.0.0-192.168.255.255             ~65,000                         Home & Small office networks 
-
-
-Public IP
-
-It's the address that is visible to the rest of the internet.
-it is globally unique no two devices on the internet can have the same public ip at the same time 
-your home network has one public IP -assigned yo your router by your ISP every device in your house your laptop your phone your tablet all share that one public Ip when talking to the internet 
-that is the address google sees when you make a serach. that is the address netflix sees when you stram a video 
-
-public ip are mananged and assigned by orgs called Regional internet registies.
-
-ARIN- America registry informatin center 
-APNIC- Aisa pacific Network information center.
-LATNIC- latin america network information center 
-RIPE NCC- RIPE network co-ordination center
-AFRNIC- Africa network information center
-
-they are responsible for ensuring no two organisations get the same public ip
-
-Dynamic ip 
-Dynamic ip address in one that is assigned automatically and can change over time 
-this is what happens on most home and office networks 
-when your laptop connects to wifi your router hands it an available Ip address from its pool.
-next time you connect you might get a different one 
-
-the address us keased for period of time and when the lease expires it can be renewed or reassigned 
-dynamic ips are the default almost everywhere becasue they are efficient 
